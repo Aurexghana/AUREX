@@ -1,5 +1,4 @@
 import { formatGhs, formatDisplayDate } from "@/lib/formatters";
-import { SLOT_PACKAGE_LABEL } from "@/lib/investmentSlots";
 import type { InvestmentHolding } from "@/lib/investorPortfolio";
 
 function StatusBadge({ status }: { status: InvestmentHolding["status"] }) {
@@ -37,7 +36,7 @@ function Stat({ label, value, emphasize = false }: { label: string; value: strin
  * beyond picking a display label.
  */
 export default function HoldingRow({ holding }: { holding: InvestmentHolding }) {
-  const title = holding.businessName ?? SLOT_PACKAGE_LABEL[holding.package];
+  const title = holding.businessName ?? holding.packageName;
 
   return (
     <div className="flex flex-col gap-4 border-b border-grid-line py-5 first:pt-0 last:border-b-0 sm:flex-row sm:items-center sm:justify-between sm:gap-6">

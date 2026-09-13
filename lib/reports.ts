@@ -9,7 +9,6 @@ import { apiFetch, apiUpload } from "@/lib/api/client";
 import type { SelectOption } from "@/lib/optionalDetails";
 import { formatGhs } from "@/lib/formatters";
 import type { BusinessListing } from "@/lib/businessListing";
-import { SLOT_PACKAGE_LABEL } from "@/lib/investmentSlots";
 import type { InvestmentHolding } from "@/lib/investorPortfolio";
 
 export type ReportRole = "investor" | "business";
@@ -76,7 +75,7 @@ export const NOT_RELATED_OPTION: SelectOption = { value: NOT_RELATED_VALUE, labe
 export function getInvestorRelatedRecordOptions(holdings: InvestmentHolding[]): SelectOption[] {
   return holdings.map((h) => ({
     value: h.id,
-    label: `${h.businessName ?? SLOT_PACKAGE_LABEL[h.package]} · ${formatGhs(h.amountInvestedGhs)}`,
+    label: `${h.businessName ?? h.packageName} · ${formatGhs(h.amountInvestedGhs)}`,
   }));
 }
 /** A Business Owner only ever has the one listing, so this is a single

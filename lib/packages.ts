@@ -3,6 +3,7 @@ import type { InvestmentSlot, SlotPackage } from "@/lib/investmentSlots";
 
 type PackageApiRow = {
   id: string;
+  name: string;
   package_type: SlotPackage;
   business_name: string | null;
   min_investment: string;
@@ -16,6 +17,7 @@ type PackageApiRow = {
 function toInvestmentSlot(row: PackageApiRow): InvestmentSlot {
   return {
     id: row.id,
+    name: row.name,
     package: row.package_type,
     businessName: row.business_name ?? undefined,
     minInvestmentGhs: Number(row.min_investment),

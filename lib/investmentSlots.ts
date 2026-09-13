@@ -10,6 +10,7 @@ export const SLOT_PACKAGE_LABEL: Record<SlotPackage, string> = {
 
 export type InvestmentSlot = {
   id: string;
+  name: string;
   package: SlotPackage;
   /** Only set for Ventures slots — the specific business the slot raises
    *  funds for. Core slots pool into AUREX itself, so there's no single

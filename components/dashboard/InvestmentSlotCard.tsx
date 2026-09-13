@@ -32,11 +32,11 @@ function StatRow({ label, value }: { label: string; value: string }) {
  */
 export default function InvestmentSlotCard({ slot }: { slot: InvestmentSlot }) {
   const isOpen = slot.status === "open";
-  const title = slot.businessName ?? SLOT_PACKAGE_LABEL[slot.package];
+  const title = slot.businessName ?? slot.name;
   const whatsappMessage =
     slot.package === "ventures" && slot.businessName
-      ? `AUREX Ventures · ${slot.businessName}`
-      : SLOT_PACKAGE_LABEL[slot.package];
+      ? `AUREX Ventures · ${slot.businessName} · ${slot.name}`
+      : `${SLOT_PACKAGE_LABEL[slot.package]} · ${slot.name}`;
 
   return (
     <motion.div
