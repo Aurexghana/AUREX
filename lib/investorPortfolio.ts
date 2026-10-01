@@ -20,6 +20,7 @@ export type HoldingStatus = "active" | "matured";
 export type InvestmentHolding = {
   id: string;
   package: HoldingPackage;
+  packageName: string;
   /** Only set for Ventures holdings, same reasoning as
    *  InvestmentSlot.businessName in lib/investmentSlots.ts. */
   businessName?: string;
@@ -33,6 +34,7 @@ export type InvestmentHolding = {
 type InvestmentApiRow = {
   id: string;
   package_type: HoldingPackage;
+  package_name: string;
   business_name: string | null;
   amount_invested: string;
   current_value: string;
@@ -45,6 +47,7 @@ function toInvestmentHolding(row: InvestmentApiRow): InvestmentHolding {
   return {
     id: row.id,
     package: row.package_type,
+    packageName: row.package_name,
     businessName: row.business_name ?? undefined,
     amountInvestedGhs: Number(row.amount_invested),
     ratePercentLabel: `${Number(row.roi_rate)}% p.a.`,
