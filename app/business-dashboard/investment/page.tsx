@@ -5,7 +5,7 @@ import ListingStatusSection from "@/components/dashboard/business/ListingStatusS
 import ListingDetailsSection from "@/components/dashboard/business/ListingDetailsSection";
 import { useAuth } from "@/lib/auth/AuthContext";
 import { getMyListing, type BusinessListing } from "@/lib/businessListing";
-import { getSuperAdminWhatsAppNumber } from "@/lib/whatsapp";
+import { getWhatsAppNumber } from "@/lib/whatsapp";
 
 export default function BusinessDashboardInvestmentPage() {
   const { user, isLoading } = useAuth();
@@ -18,7 +18,7 @@ export default function BusinessDashboardInvestmentPage() {
     getMyListing().then((data) => {
       if (!cancelled) setListing(data ?? null);
     });
-    getSuperAdminWhatsAppNumber().then((phone) => {
+    getWhatsAppNumber().then((phone) => {
       if (!cancelled) setWhatsappNumber(phone);
     });
     return () => {
