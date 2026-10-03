@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import OpenSlotsSection from "@/components/dashboard/OpenSlotsSection";
 import { useAuth } from "@/lib/auth/AuthContext";
 import { getOpenPackages } from "@/lib/packages";
-import { getSuperAdminWhatsAppNumber } from "@/lib/whatsapp";
+import { getWhatsAppNumber } from "@/lib/whatsapp";
 import type { InvestmentSlot } from "@/lib/investmentSlots";
 
 export default function DashboardInvestmentPage() {
@@ -18,7 +18,7 @@ export default function DashboardInvestmentPage() {
     getOpenPackages().then((data) => {
       if (!cancelled) setSlots(data);
     });
-    getSuperAdminWhatsAppNumber().then((phone) => {
+    getWhatsAppNumber().then((phone) => {
       if (!cancelled) setWhatsappNumber(phone);
     });
     return () => {

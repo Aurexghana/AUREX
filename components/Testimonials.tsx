@@ -1,30 +1,10 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { motion, useReducedMotion } from "framer-motion";
 import { staggerContainer, staggerItem, hoverLift } from "@/lib/motion";
 import SectionBackgroundVector from "@/components/SectionBackgroundVector";
-
-const TESTIMONIALS = [
-  {
-    quote:
-      "The level of transparency and strategic foresight AUREX provides is unparalleled. My portfolio has seen consistent growth since joining.",
-    initials: "J.R.",
-    title: "Managing Partner",
-  },
-  {
-    quote:
-      "The level of transparency and strategic foresight AUREX provides is unparalleled. My portfolio has seen consistent growth since joining.",
-    initials: "A.K.",
-    title: "Managing Partner",
-  },
-  {
-    quote:
-      "Access to private investment opportunities used to be incredibly opaque. AUREX has completely revolutionized how I approach wealth building.",
-    initials: "E.C.",
-    title: "Tech Executive",
-  },
-];
+import { getTestimonials, type Testimonial } from "@/lib/testimonials";
 
 // Continuous marquee speed, not a discrete "advance every N seconds" —
 // per request, this should always be gently scrolling on its own at
@@ -33,19 +13,30 @@ const TESTIMONIALS = [
 const AUTO_SCROLL_PX_PER_SEC = 40;
 const RESUME_AFTER_INTERACTION_MS = 2500;
 
-// Rendered twice back-to-back so the marquee can loop seamlessly: once
-// scrollLeft passes the first copy's width we snap back by exactly that
-// width, which — because the second copy is identical — is visually
-// indistinguishable from the scroll continuing.
-const DISPLAY_TESTIMONIALS = [...TESTIMONIALS, ...TESTIMONIALS];
-
 export default function Testimonials() {
+  const [testimonials, setTestimonials] = useState<Testimonial[]>([]);
   const scrollerRef = useRef<HTMLDivElement>(null);
   const rafRef = useRef<number | null>(null);
   const lastTsRef = useRef<number | null>(null);
   const pausedRef = useRef(false);
   const resumeTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const prefersReducedMotion = useReducedMotion();
+
+  useEffect(() => {
+    let cancelled = false;
+    getTestimonials().then((data) => {
+      if (!cancelled) setTestimonials(data);
+    });
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
+  // Rendered twice back-to-back so the marquee can loop seamlessly: once
+  // scrollLeft passes the first copy's width we snap back by exactly that
+  // width, which — because the second copy is identical — is visually
+  // indistinguishable from the scroll continuing.
+  const displayTestimonials = [...testimonials, ...testimonials];
 
   useEffect(() => {
     if (prefersReducedMotion) return;
@@ -95,6 +86,8 @@ export default function Testimonials() {
       pausedRef.current = false;
     }, RESUME_AFTER_INTERACTION_MS);
   };
+
+  if (testimonials.length === 0) return null;
 
   return (
     <section
@@ -159,12 +152,12 @@ export default function Testimonials() {
           }}
           className="no-scrollbar -mx-6 flex w-[calc(100%+3rem)] gap-6 overflow-x-auto pb-2 sm:-mx-10 sm:w-[calc(100%+5rem)] sm:pb-0 md:-mx-16 md:w-[calc(100%+8rem)] lg:-mx-[100px] lg:w-[calc(100%+200px)]"
         >
-          {DISPLAY_TESTIMONIALS.map((t, i) => (
+          {displayTestimonials.map((t, i) => (
             <motion.div
               key={`${t.initials}-${i}`}
               variants={staggerItem}
               {...hoverLift}
-              aria-hidden={i >= TESTIMONIALS.length}
+              aria-hidden={i >= testimonials.length}
               className="relative flex w-[85%] shrink-0 flex-col items-start justify-between gap-6 border border-gold/20 bg-panel/40 p-6 backdrop-blur-[15px] sm:w-[360px] sm:p-8"
             >
               <span

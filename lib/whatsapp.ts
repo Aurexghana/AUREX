@@ -1,12 +1,8 @@
-import { apiFetch } from "@/lib/api/client";
+import { getSiteContact } from "@/lib/siteContact";
 
-export async function getSuperAdminWhatsAppNumber(): Promise<string | null> {
-  try {
-    const { data } = await apiFetch<{ phone: string | null }>("/admins/whatsapp-contact");
-    return data.phone;
-  } catch {
-    return null;
-  }
+export async function getWhatsAppNumber(): Promise<string | null> {
+  const { whatsappNumber } = await getSiteContact();
+  return whatsappNumber;
 }
 
 function toWaMeLink(phone: string, message: string): string {
