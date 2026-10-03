@@ -33,7 +33,7 @@ export default function DashboardEarningsPage() {
 
       <div className="flex items-center justify-end border-t border-grid-line pt-6">
         <Link
-          href="/coming-soon"
+          href="/dashboard/transactions"
           className="flex items-center gap-1.5 font-jakarta text-sm font-medium text-gold-bright underline-offset-4 transition-colors hover:text-gold-light hover:underline"
         >
           Transaction History

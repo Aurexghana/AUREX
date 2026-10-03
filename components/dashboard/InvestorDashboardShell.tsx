@@ -7,6 +7,7 @@ import { motion } from "framer-motion";
 import { staggerContainer, staggerItem } from "@/lib/motion";
 import { formatGhs } from "@/lib/formatters";
 import BrandMark from "@/components/BrandMark";
+import { LogoutIcon } from "@/components/icons";
 import DashboardTabs from "@/components/dashboard/DashboardTabs";
 import { useAuth } from "@/lib/auth/AuthContext";
 import { useRequireAuth } from "@/lib/auth/useRequireAuth";
@@ -79,8 +80,9 @@ export default function InvestorDashboardShell({ children }: { children: React.R
           <button
             type="button"
             onClick={handleLogout}
-            className="font-sans text-sm text-cream-dim transition-colors hover:text-gold-light"
+            className="flex items-center gap-2 border border-[#f87171]/40 px-4 py-2 font-jakarta text-sm font-medium text-[#f87171] transition-colors hover:border-[#f87171] hover:bg-[#f87171]/10"
           >
+            <LogoutIcon className="size-4" />
             Log out
           </button>
         </div>
