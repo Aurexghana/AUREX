@@ -10,34 +10,38 @@ import SectionBackgroundVector from "@/components/SectionBackgroundVector";
 // design's own image tile is a small line-icon centered in a lot of empty
 // dark space (see its own node - a 24-33px glyph in a ~192px-tall box),
 // which read as an unfinished placeholder rather than a finished tile per
-// request, so each pillar gets a real photo instead. The first set read as
-// dated, so they were swapped for brighter, more current ones: a flowing
-// gold 3D ribbon for Exclusivity (Mohammed Kara), a phone showing a
-// "Secured" lock screen for Security (Dan Nelson), a sunlit glass facade
-// for Transparency (Joel Filipe), and a 3D orange/blue bar chart for
-// Growth (Nick Brunner). All from Unsplash (free license, no attribution
-// required).
+// request, so each pillar gets a real image instead. The first set of
+// stock photos read as dated, so they were swapped for bright, modern 3D
+// cutouts supplied by the team: a gold award medal for Exclusivity, the
+// gold AUREX vault for Security, a gold parachute drop for Transparency
+// and a glass growth-chart tile for Growth.
 const PILLARS = [
   {
     title: "Exclusivity",
     description: "Access to off-market private equity and specialized funds.",
-    image: "/brand/why-aurex-exclusivity.jpg",
+    image: "/brand/why-aurex-exclusivity.png",
+    cutout: true,
   },
   {
     title: "Security",
     description: "Institutional-grade encryption and secure vault technology.",
-    image: "/brand/why-aurex-security.jpg",
+    image: "/brand/why-aurex-security.png",
+    // Transparent cutout (gold AUREX vault) rather than a full-bleed photo —
+    // shown whole on a light backdrop instead of cropped to fill the tile.
+    cutout: true,
   },
   {
     title: "Transparency",
     description: "Real-time performance reporting and clear fee structures.",
-    image: "/brand/why-aurex-transparency.jpg",
+    image: "/brand/why-aurex-transparency.png",
+    cutout: true,
   },
   {
     title: "Growth",
     description:
       "Curated strategies designed for sophisticated capital appreciation.",
-    image: "/brand/why-aurex-growth.jpg",
+    image: "/brand/why-aurex-growth.png",
+    cutout: true,
   },
 ];
 
@@ -67,7 +71,7 @@ export default function WhyAurex() {
             stacks on top of <main>'s lg:px-20), so padding/gap/title size
             are trimmed at lg specifically and relax again at xl. */}
         <div className="grid w-full grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4 lg:gap-2 xl:gap-6">
-          {PILLARS.map(({ title, description, image }) => (
+          {PILLARS.map(({ title, description, image, cutout }) => (
             <motion.div
               key={title}
               variants={staggerItem}
@@ -96,18 +100,24 @@ export default function WhyAurex() {
                   in their own bright colors (only a faint bottom shade on
                   top) - the old gold-brown wash was removed since it
                   dulled them. */}
-              <div className="relative h-40 overflow-hidden border border-gold/20 lg:h-32 xl:h-40">
+              <div
+                className={`relative h-40 overflow-hidden border border-gold/20 lg:h-32 xl:h-40 ${
+                  cutout ? "bg-gradient-to-br from-[#fffaf0] to-[#f3e4c0]" : ""
+                }`}
+              >
                 <Image
                   src={image}
                   alt=""
                   fill
                   sizes="(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw"
-                  className="object-cover"
+                  className={cutout ? "object-contain p-2" : "object-cover"}
                 />
-                <div
-                  aria-hidden="true"
-                  className="absolute inset-0 bg-gradient-to-t from-black/25 via-transparent to-transparent"
-                />
+                {!cutout && (
+                  <div
+                    aria-hidden="true"
+                    className="absolute inset-0 bg-gradient-to-t from-black/25 via-transparent to-transparent"
+                  />
+                )}
               </div>
             </motion.div>
           ))}
