@@ -5,10 +5,10 @@ import { motion } from "framer-motion";
 import { staggerContainer, staggerItem, hoverLiftStrong } from "@/lib/motion";
 import SectionBackgroundVector from "@/components/SectionBackgroundVector";
 
-// Per Figma node 85:11775 — new section added between How it Works and
+// Per Figma node 85:11775 - new section added between How it Works and
 // Investment Packages, restating AUREX's core value pillars. The source
 // design's own image tile is a small line-icon centered in a lot of empty
-// dark space (see its own node — a 24-33px glyph in a ~192px-tall box),
+// dark space (see its own node - a 24-33px glyph in a ~192px-tall box),
 // which read as an unfinished placeholder rather than a finished tile per
 // request, so each pillar gets a real photo instead. The first set read as
 // dated, so they were swapped for brighter, more current ones: a flowing
@@ -62,7 +62,7 @@ export default function WhyAurex() {
           Why Aurex
         </motion.h2>
 
-        {/* 4-up in one row from lg, matching Figma — same tight-at-lg
+        {/* 4-up in one row from lg, matching Figma - same tight-at-lg
             squeeze as HowItWorks.tsx (this section's own lg:px-[100px]
             stacks on top of <main>'s lg:px-20), so padding/gap/title size
             are trimmed at lg specifically and relax again at xl. */}
@@ -77,7 +77,7 @@ export default function WhyAurex() {
               // overlays), this section's cards are meant to actually flip
               // to a near-white translucent surface in light mode, so this
               // uses the theme-aware panel token (like every other content
-              // card) instead — bg-ink-light/30 stayed muddy dark-gray in
+              // card) instead - bg-ink-light/30 stayed muddy dark-gray in
               // light mode because that token deliberately never flips.
               className="flex flex-col gap-6 border border-gold/20 bg-panel/40 p-5 backdrop-blur-[20px] lg:p-4 xl:p-6"
             >
@@ -94,7 +94,7 @@ export default function WhyAurex() {
                   and where each one came from) instead of the small
                   centered line-icon this tile used to hold. Photos are shown
                   in their own bright colors (only a faint bottom shade on
-                  top) — the old gold-brown wash was removed since it
+                  top) - the old gold-brown wash was removed since it
                   dulled them. */}
               <div className="relative h-40 overflow-hidden border border-gold/20 lg:h-32 xl:h-40">
                 <Image

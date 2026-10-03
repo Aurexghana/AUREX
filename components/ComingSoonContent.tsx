@@ -8,7 +8,7 @@ import SectionBackgroundVector from "@/components/SectionBackgroundVector";
 import { ArrowUpRightIcon } from "@/components/icons";
 
 /**
- * The actual animated /coming-soon content — split out from
+ * The actual animated /coming-soon content - split out from
  * app/coming-soon/page.tsx for the same reason components/NotFoundContent.tsx
  * is split from app/not-found.tsx: that file needs to stay a Server
  * Component to export `metadata`, but this needs "use client" for the
@@ -17,7 +17,7 @@ import { ArrowUpRightIcon } from "@/components/icons";
  * This page is structurally a sibling of the 404 page (same centered-hero-
  * card shape, BrandMark, SectionBackgroundVector, gradient heading, "Back
  * to Home" pill) and previously rendered with zero entrance animation while
- * NotFoundContent got the full staggered treatment — this brings it in
+ * NotFoundContent got the full staggered treatment - this brings it in
  * line using the same shared variants, rather than inventing a new motion
  * pattern for it.
  */

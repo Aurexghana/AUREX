@@ -4,7 +4,7 @@ import HoldingRow from "@/components/dashboard/HoldingRow";
 import type { InvestmentHolding } from "@/lib/investorPortfolio";
 
 /**
- * A trust surface, not a marketing one — per the brief this section should
+ * A trust surface, not a marketing one - per the brief this section should
  * feel calm and factual, so unlike OpenSlotsSection it gets no hover
  * lifts, no gradient CTAs, no filter tabs, just plain figures. Every
  * number here (including the running total below) is a sum of figures
@@ -12,7 +12,7 @@ import type { InvestmentHolding } from "@/lib/investorPortfolio";
  * would be, since there's no live payment data yet to calculate from.
  */
 export default function EarningsSection({ holdings }: { holdings: InvestmentHolding[] }) {
-  // "Running total across all active investments" per the brief — matured
+  // "Running total across all active investments" per the brief - matured
   // holdings still get their own row below (with their own recorded
   // earnings), they just aren't folded into this headline figure.
   const activeHoldings = holdings.filter((h) => h.status === "active");

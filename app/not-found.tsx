@@ -9,7 +9,7 @@ export const metadata: Metadata = {
 };
 
 /**
- * App Router's dedicated 404 file — automatically rendered for any
+ * App Router's dedicated 404 file - automatically rendered for any
  * unmatched URL (and for a manual notFound() call, if one's ever added),
  * replacing Next's bare default 404 with the site's own branded page.
  * Same page chrome (Navbar/Footer) and section-card layout as

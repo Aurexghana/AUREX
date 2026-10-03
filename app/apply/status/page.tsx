@@ -9,15 +9,15 @@ export const metadata: Metadata = {
 
 /**
  * Standalone landing spot for a returning applicant checking their status
- * later (e.g. a "check my application status" link) — distinct from
+ * later (e.g. a "check my application status" link) - distinct from
  * reaching this same screen as Step 6 right after submitting (see
  * components/apply/investor/ConfirmationStep.tsx, reached only through the
  * Investor Application flow itself).
  *
  * There's no backend/auth yet to look an application up by session or
  * account, so status/nickname/phone are read straight from the URL's own
- * query string as a stub data source — e.g.
- * /apply/status?status=approved&nickname=GoldFalcon — defaulting to a
+ * query string as a stub data source - e.g.
+ * /apply/status?status=approved&nickname=GoldFalcon - defaulting to a
  * generic "pending" view for a bare /apply/status with no query string at
  * all. Swapping this for a real lookup later means changing this file, not
  * ApplicationStatusScreen itself.

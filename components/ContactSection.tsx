@@ -11,7 +11,7 @@ import ContactInfo from "@/components/ContactInfo";
  * cards, in the same two-column-on-md pattern AboutSection already uses
  * for its heading + visual panel. No Figma design exists for a Contact
  * page (the file only has "Contact" as a nav-link label, same situation
- * How It Works was in before its own page existed) — built from scratch
+ * How It Works was in before its own page existed) - built from scratch
  * following the site's established section conventions instead.
  */
 export default function ContactSection() {

@@ -21,7 +21,7 @@ const ROLE_OPTIONS: { role: LoginRole; title: string; description: string; Icon:
 ];
 
 /**
- * The first thing you see on /login, before either credentials form — the
+ * The first thing you see on /login, before either credentials form - the
  * two roles land on entirely separate dashboards (see LoginFlow), so which
  * one you're logging in as has to be picked before there's a form to fill
  * in at all. Text-only cards (no photos, unlike JoinAurexModal's own two-

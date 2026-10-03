@@ -7,13 +7,13 @@ import { motion, AnimatePresence } from "framer-motion";
 import { easing, hoverLift } from "@/lib/motion";
 import { ArrowUpRightIcon } from "@/components/icons";
 
-// Both options route into their own real application flows — see
+// Both options route into their own real application flows - see
 // app/apply/investor/page.tsx / app/apply-business/page.tsx and
 // components/apply/.
 //
 // Images: public/brand/modal-invest.jpg (Flickr, "Graph With Stacks Of
 // Coins" by kenteegardin, CC BY-SA 2.0) and modal-business.jpg (Flickr,
-// "Women In Tech - 81" by wocintechchat.com / Mike Ngo, CC BY 2.0) — both
+// "Women In Tech - 81" by wocintechchat.com / Mike Ngo, CC BY 2.0) - both
 // freely reusable stock photography picked for actually matching their
 // option's theme (gold coins + a growth line for investing, a business
 // conversation for the venture/listing side) rather than generic filler.
@@ -36,12 +36,12 @@ const OPTIONS = [
 
 /**
  * Opened from the navbar's "Join Aurex" button (see Navbar.tsx). Splits
- * the single old "Invest With Us" CTA into the site's two real audiences —
- * investors and business owners raising capital — so each is routed
+ * the single old "Invest With Us" CTA into the site's two real audiences -
+ * investors and business owners raising capital - so each is routed
  * toward its own (not-yet-built) application instead of one generic link.
  *
  * The two options sit side by side (a "horizontal" pair) from sm and stack
- * into a single vertical column below it, per request — the same
+ * into a single vertical column below it, per request - the same
  * grid-cols-1/sm:grid-cols-2 pattern InvestmentPackages and
  * HowItWorksProcess already use for their own 2-up cards, not a new
  * one-off breakpoint choice.
@@ -132,7 +132,7 @@ export default function JoinAurexModal({
                     className="group flex h-full flex-col overflow-hidden border border-gold/20 bg-ink-light/20 transition-colors hover:border-gold light:bg-white/50"
                   >
                     <div className="relative h-36 w-full shrink-0 overflow-hidden sm:h-40">
-                      {/* Decorative — the card's own heading/description
+                      {/* Decorative - the card's own heading/description
                           right below already say what this option is, so
                           the image doesn't need its own (redundant) alt
                           text, same convention as AboutVisualPanel's
@@ -146,7 +146,7 @@ export default function JoinAurexModal({
                       />
                       {/* Gold tint + bottom fade ties the photo into the
                           rest of the app's gold/dark palette instead of
-                          sitting on the card as an untouched stock photo —
+                          sitting on the card as an untouched stock photo -
                           same mix-blend-color approach AboutVisualPanel
                           uses over its own background photo. */}
                       <div className="absolute inset-0 bg-gold/15 mix-blend-color" />

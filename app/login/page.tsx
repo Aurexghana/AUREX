@@ -10,13 +10,13 @@ export const metadata: Metadata = {
 
 /**
  * Reached from the navbar's "Login" link (see Navbar.tsx). There's no real
- * account system yet, so this doesn't check credentials — entering
+ * account system yet, so this doesn't check credentials - entering
  * anything and submitting takes you straight to the dashboard matching
  * whichever role you picked (see LoginFlow), the only place logging in
  * currently needs to lead.
  *
  * Same minimal chrome as the application flows and ApplicationStatusScreen
- * (logo + centered card, no site Navbar/Footer) — this is a focused,
+ * (logo + centered card, no site Navbar/Footer) - this is a focused,
  * single-purpose screen, not a marketing page.
  */
 export default function LoginPage() {

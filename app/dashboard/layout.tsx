@@ -2,7 +2,7 @@ import { Suspense } from "react";
 import InvestorDashboardShell from "@/components/dashboard/InvestorDashboardShell";
 
 /**
- * Thin wrapper only — the actual shell (header, tabs, auth guard) is a
+ * Thin wrapper only - the actual shell (header, tabs, auth guard) is a
  * Client Component (components/dashboard/InvestorDashboardShell.tsx)
  * because it needs useAuth/useRequireAuth, and its own DashboardTabs
  * child calls useSearchParams(). Next.js requires that hook to sit

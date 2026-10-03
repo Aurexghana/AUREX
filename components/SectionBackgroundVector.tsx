@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 
 /**
  * A subtle decorative backdrop for a content section: a small "mish-mash"
- * of gold line-art layered behind the real content — two copies of the
+ * of gold line-art layered behind the real content - two copies of the
  * abstract "Looper BG" swirl (the same vector used behind the hero), at
  * different scale/rotation/mirror so they don't read as one flat repeated
  * shape.
@@ -15,34 +15,34 @@ import { motion } from "framer-motion";
  * line rather than subtle texture, so that layer was removed. The
  * continuously-drifting soft gold glow orb that used to move across the
  * swirls was removed too, per request to remove every golden glow
- * happening in the page background — only the static-position line art
+ * happening in the page background - only the static-position line art
  * swirls remain.)
  *
  * The swirls animate on their own: they slowly rotate/breathe, each on its
  * own duration so the whole thing never looks like it's pulsing in
  * lockstep. It's a fully ambient effect (not cursor-tracked like
- * HeroLooperVector) — these sections don't have the hero's large empty
+ * HeroLooperVector) - these sections don't have the hero's large empty
  * canvas for a pointer-following effect to read well.
  *
  * Deliberately the *boosted-opacity* swirl asset (public/brand/looper-bg-
  * glow.svg), not the dim resting one (looper-bg.svg) HeroLooperVector
  * layers underneath its own hover-lit copy: that resting asset has many
  * individual paths at near-zero opacity, so whether it was visible at all
- * came down to luck — which random cluster of paths a given crop/rotation
+ * came down to luck - which random cluster of paths a given crop/rotation
  * happened to land on. The glow variant's paths are uniformly opaque, so
  * a single low CSS opacity reads consistently across every placement.
  *
  * Light mode gets its own treatment, not just the same gold at the same
  * opacity: the source art is a pale gold gradient designed to glow
  * against a near-black page, and at any opacity that stays washed out
- * against a near-white one — pale gold and off-white sit too close in
+ * against a near-white one - pale gold and off-white sit too close in
  * lightness for opacity alone to fix. A `brightness`/`saturate`/`contrast`
  * filter darkens it into a deeper amber that actually reads as linework
  * on a light surface, plus a straightforwardly higher opacity on top.
  *
  * Every animated value here is opacity or a transform (x/y/rotate/scale),
  * matching the pattern already used for ambient/always-on decoration
- * elsewhere in this project (AboutVisualPanel's rotating grain bloom) —
+ * elsewhere in this project (AboutVisualPanel's rotating grain bloom) -
  * genuinely continuous background motion isn't gated on
  * prefers-reduced-motion the way interactive or timer-driven UI is; the
  * transform values are still auto-neutered by the root layout's
@@ -55,7 +55,7 @@ import { motion } from "framer-motion";
  */
 const SWIRL_SRC = "/brand/looper-bg-glow.svg";
 
-// Applied to every swirl <img> — a fixed gold-gradient asset can't be
+// Applied to every swirl <img> - a fixed gold-gradient asset can't be
 // recolored via a Tailwind text-color class the way currentColor SVGs
 // can, so this reaches for a CSS filter instead.
 const LIGHT_MODE_FILTER = "light:brightness-50 light:saturate-150 light:contrast-125";

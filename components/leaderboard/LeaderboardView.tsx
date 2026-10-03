@@ -7,26 +7,26 @@ import JoinAurexModal from "@/components/JoinAurexModal";
 import { toPoints, type LeaderboardEntry } from "@/lib/leaderboard";
 
 // How many ranks (beyond the top 3) are shown before "Load More" is needed
-// — with 20 mock rows total (see lib/leaderboard.ts) this shows one full
+// - with 20 mock rows total (see lib/leaderboard.ts) this shows one full
 // page of 10 up front and needs exactly one click to reveal the rest, so
 // both the initial state and the "more available" state are easy to see
 // without scrolling through a wall of rows first.
 const PAGE_SIZE = 10;
 
 // Same per-rank medal treatment as the home page's teaser (components/
-// Leaderboard.tsx) — kept independent here rather than shared, since this
+// Leaderboard.tsx) - kept independent here rather than shared, since this
 // page's podium cards are a different size/copy and that component's own
 // comments are specific to being a home-page teaser section. Per Figma node
-// 252:5570 (the actual Investor Leaderboard section design — see
+// 252:5570 (the actual Investor Leaderboard section design - see
 // Leaderboard.tsx's own comment on why 252:5577 from the link isn't it):
 // `trophy` is the exported per-rank badge icon (public/brand/leaderboard-
 // trophy-{1st,2nd,3rd}.svg) and `label` the "First/Second/Third place" text
 // shown with it. `stepHeight` gives three genuinely distinct step heights
-// (sm+ only — see the home page teaser's own comment for the mobile-only
+// (sm+ only - see the home page teaser's own comment for the mobile-only
 // `mobileBg`/`mobileText`/`mobileTextDim`/`mobileNumberSize` fields' own
 // reasoning, including why only 1st keeps its own standout color and 2nd/
 // 3rd both use the app's regular gold-button gradient instead), per
-// request that the podium not read as equal-height blocks — including
+// request that the podium not read as equal-height blocks - including
 // 2nd vs 3rd, not just 1st vs the other two.
 const MEDALS: Record<
   number,
@@ -78,7 +78,7 @@ const MEDALS: Record<
 };
 
 // Podium display order (silver, gold, bronze), rank 1 raised above the
-// other two — used by both the sm+ podium below and the separate mobile-
+// other two - used by both the sm+ podium below and the separate mobile-
 // only podium further down. See the home page teaser's own comment
 // (components/Leaderboard.tsx) for why this no longer needs an sm: split.
 const PODIUM_ORDER: Record<number, string> = { 1: "order-2", 2: "order-1", 3: "order-3" };
@@ -111,15 +111,15 @@ function YouTag() {
  * here changes when that's swapped for a real endpoint later.
  *
  * `currentUserNickname` is optional and drives three things: which row (if
- * any, anywhere in the list — podium included) gets a "You" tag and a
+ * any, anywhere in the list - podium included) gets a "You" tag and a
  * gold highlight; whether the bottom join CTA renders at all (a
  * registered investor viewing their own dashboard's link here doesn't need
- * to be pitched to join); and — when that nickname actually appears in
- * `entries` — a "Your Position" callout up top with a jump-to-your-row
+ * to be pitched to join); and - when that nickname actually appears in
+ * `entries` - a "Your Position" callout up top with a jump-to-your-row
  * action, so finding yourself doesn't mean scrolling/Load-More-ing
  * through everyone ranked above you. Passed in from app/leaderboard/
  * page.tsx as a `?me=` query param, or from the dashboard's own embedded
- * leaderboard tab with the signed-in member's real nickname — see each
+ * leaderboard tab with the signed-in member's real nickname - see each
  * call site's own comment.
  */
 export default function LeaderboardView({
@@ -132,7 +132,7 @@ export default function LeaderboardView({
   const [visibleCount, setVisibleCount] = useState(PAGE_SIZE);
   const [joinModalOpen, setJoinModalOpen] = useState(false);
   // Set by "Jump to My Rank" when the target row isn't rendered yet (rank
-  // beyond the current visibleCount) — a ref, not state, since it doesn't
+  // beyond the current visibleCount) - a ref, not state, since it doesn't
   // need to trigger its own re-render: growing visibleCount already does
   // that, and the effect below just needs to read it once that happens.
   const pendingScrollRankRef = useRef<number | null>(null);
@@ -147,18 +147,18 @@ export default function LeaderboardView({
     : undefined;
 
   // A registered member (identified by the presence of their own nickname)
-  // never sees the "come join us" pitch — it's aimed at the logged-out
+  // never sees the "come join us" pitch - it's aimed at the logged-out
   // visitors who are this page's primary audience, per the brief.
   const showJoinCta = !currentUserNickname;
 
-  // Ranks 1-3 render twice now — once in the sm+ podium, once in the
+  // Ranks 1-3 render twice now - once in the sm+ podium, once in the
   // mobile-only podium (components/leaderboard/LeaderboardView.tsx's own
-  // "hidden below sm" / "sm:hidden" pair) — so an `id` per rank would
+  // "hidden below sm" / "sm:hidden" pair) - so an `id` per rank would
   // collide between the two copies. Both use `data-leaderboard-rank`
   // instead (ranks 4+ only ever render once, but use the same attribute
   // for one consistent lookup rather than splitting id vs data-attribute
   // by rank range), and this picks whichever copy is actually the
-  // currently-visible one (`offsetParent !== null` — cheap, reliable
+  // currently-visible one (`offsetParent !== null` - cheap, reliable
   // "is this laid out/visible" check that doesn't require reading computed
   // styles) rather than always the first in document order, which would
   // silently scroll to a `display:none` element on the "wrong" breakpoint.
@@ -168,7 +168,7 @@ export default function LeaderboardView({
     target?.scrollIntoView({ behavior: "smooth", block: "center" });
   }
 
-  // Re-runs whenever visibleCount grows — the one moment a row that didn't
+  // Re-runs whenever visibleCount grows - the one moment a row that didn't
   // exist yet (rank > 3, beyond the previous page) shows up in the DOM.
   useEffect(() => {
     const rank = pendingScrollRankRef.current;
@@ -200,7 +200,7 @@ export default function LeaderboardView({
         animate="animate"
         className="flex w-full flex-col gap-12 py-12 sm:gap-16 sm:py-16"
       >
-        {/* "Your Position" — only when the current user's own nickname
+        {/* "Your Position" - only when the current user's own nickname
             actually appears in `entries` (an investor; a Business Owner
             viewing this from their own dashboard never matches a row).
             Sits above the podium so it's the first thing you see, not
@@ -250,7 +250,7 @@ export default function LeaderboardView({
             (Figma's own literal podium metaphor), no glow blob behind the
             row anymore (removed per request to remove every golden glow
             from the page background), and no border on the step itself in
-            either theme — the current Figma reference blends the step into
+            either theme - the current Figma reference blends the step into
             the page background rather than framing it as a distinct card.
             See the home page teaser's own comment (components/
             Leaderboard.tsx) for the full reasoning on both.
@@ -259,7 +259,7 @@ export default function LeaderboardView({
             one (per Figma node 241:2622, the design's own dedicated mobile
             podium layout) takes over there instead. */}
         <motion.div variants={staggerItem} className="relative hidden w-full sm:block">
-          {/* sm:gap-0 — see the home page teaser's own comment
+          {/* sm:gap-0 - see the home page teaser's own comment
               (components/Leaderboard.tsx) for why: per the Figma reference,
               the three steps sit flush against each other, not spaced apart
               like separate cards. */}
@@ -329,7 +329,7 @@ export default function LeaderboardView({
                       literal "podium step" the reference uses whether or
                       not it happens to be the viewer's own rank. */}
                   <div className="mt-4 flex w-full flex-col items-center">
-                    {/* Beveled top facet — see the home page teaser's own
+                    {/* Beveled top facet - see the home page teaser's own
                         comment for the shape/gradient reasoning; same
                         white-to-gray (light) / gray-to-black (dark)
                         highlight-to-shadow treatment here. */}
@@ -367,17 +367,17 @@ export default function LeaderboardView({
           </div>
         </motion.div>
 
-        {/* Mobile podium — see the home page teaser's own comment
+        {/* Mobile podium - see the home page teaser's own comment
             (components/Leaderboard.tsx) for the full reasoning (Figma node
             286:3172, replacing the arch-pillar design from 241:2622); same
             structure here, plus this page's own "mine" highlight (a gold
             ring around the step, same accent the sm+ version uses, and
             YouTag above the avatar). No change-indicator corner badge on
-            this page's own podium — unlike the home teaser's own mock data
+            this page's own podium - unlike the home teaser's own mock data
             (INVESTORS, with its own `change` field), `LeaderboardEntry`
             carries no rank-change data to show one for. */}
         <motion.div variants={staggerItem} className="relative w-full sm:hidden">
-          {/* gap-0 — see the home page teaser's own comment for why: the
+          {/* gap-0 - see the home page teaser's own comment for why: the
               three blocks sit flush against each other in the reference,
               not spaced apart. */}
           <div className="relative mx-auto flex max-w-3xl items-end justify-center gap-0">
@@ -442,7 +442,7 @@ export default function LeaderboardView({
           </div>
         </motion.div>
 
-        {/* Ranks 4+: a clean, scannable, paginated list — per the Figma
+        {/* Ranks 4+: a clean, scannable, paginated list - per the Figma
             reference, each row a plain HorizontalBorder divider
             (border-gold/20), not a grouped/pill row. */}
         <motion.div variants={staggerItem} className="mx-auto flex w-full max-w-3xl flex-col items-center gap-8">
@@ -494,7 +494,7 @@ export default function LeaderboardView({
           </>
         )}
 
-        {/* Bottom CTA — hidden entirely for a viewer we already know is a
+        {/* Bottom CTA - hidden entirely for a viewer we already know is a
             registered member (currentUserNickname set), per the brief. */}
         {showJoinCta && (
           <motion.div
@@ -517,7 +517,7 @@ export default function LeaderboardView({
         )}
       </motion.div>
 
-      {/* Same JoinAurexModal used by the navbar/CTASection — rendered as a
+      {/* Same JoinAurexModal used by the navbar/CTASection - rendered as a
           sibling of the scrolling content above rather than nested inside
           it, so its `fixed inset-0` resolves against the viewport (see
           Navbar.tsx / CTASection.tsx's own comments on this). */}

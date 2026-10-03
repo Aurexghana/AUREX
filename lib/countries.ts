@@ -3,11 +3,11 @@ import { getCountries } from "libphonenumber-js/min";
 /**
  * Country list for "Country of residence" dropdowns. Built from
  * libphonenumber-js's own country registry (already a dependency for
- * phone validation — see components/apply/investor/IdentityContactStep.tsx)
+ * phone validation - see components/apply/investor/IdentityContactStep.tsx)
  * paired with Intl.DisplayNames for human-readable names, rather than a
  * hand-maintained ~195-row array.
  *
- * Note: `Intl.supportedValuesOf` cannot be used for this — despite the
+ * Note: `Intl.supportedValuesOf` cannot be used for this - despite the
  * name, its only valid keys are "calendar" | "collation" | "currency" |
  * "numberingSystem" | "timeZone" | "unit"; it has no "region"/country
  * option, so there's no built-in way to enumerate countries without

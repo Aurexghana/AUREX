@@ -12,7 +12,7 @@ export const metadata: Metadata = {
  * Confirmation). Reached from the "Invest with AUREX" option in
  * JoinAurexModal.
  *
- * Deliberately skips the site's usual Navbar/Footer chrome — this is a
+ * Deliberately skips the site's usual Navbar/Footer chrome - this is a
  * focused, low-friction application flow, not a marketing page, so
  * MultiStepFormShell renders its own minimal header (logo + exit link)
  * instead. Steps 3-6 aren't built yet; see

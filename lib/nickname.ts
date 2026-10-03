@@ -2,7 +2,7 @@
  * Nickname rules for Step 2 of the Investor Application (see
  * components/apply/investor/NicknameStep.tsx). Split into two concerns:
  *   - getNicknameFormatError: synchronous, client-only checks (length,
- *     allowed characters, impersonation) — real validation today.
+ *     allowed characters, impersonation) - real validation today.
  *   - isNicknameAvailable: a stub for the uniqueness check that needs a
  *     real backend, which doesn't exist yet at this stage of the build.
  */
@@ -10,7 +10,7 @@
 export const NICKNAME_MIN_LENGTH = 3;
 export const NICKNAME_MAX_LENGTH = 20;
 
-// Letters (Unicode-aware — nicknames aren't limited to ASCII names),
+// Letters (Unicode-aware - nicknames aren't limited to ASCII names),
 // numbers, spaces, and a small set of basic punctuation.
 const ALLOWED_CHARACTERS_PATTERN = /^[\p{L}\p{N} '_.-]+$/u;
 
@@ -26,7 +26,7 @@ function normalizeForReservedCheck(value: string): string {
 
 /**
  * Returns a user-facing error message, or null if the nickname's format is
- * valid. Doesn't check availability — see isNicknameAvailable for that.
+ * valid. Doesn't check availability - see isNicknameAvailable for that.
  */
 export function getNicknameFormatError(nickname: string): string | null {
   const trimmed = nickname.trim();
@@ -49,7 +49,7 @@ export function getNicknameFormatError(nickname: string): string | null {
 }
 
 /**
- * Stub — there's no backend to check real uniqueness against yet (see the
+ * Stub - there's no backend to check real uniqueness against yet (see the
  * brief for Step 2). Always resolves available, but is already async and
  * already the single call site NicknameStep uses for this check, so
  * swapping in a real API call later means changing only this function's

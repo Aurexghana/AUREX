@@ -1,6 +1,6 @@
 /**
  * The Report tab shared by both dashboards (see
- * components/dashboard/ReportSection.tsx) — a member flagging a problem
+ * components/dashboard/ReportSection.tsx) - a member flagging a problem
  * or asking Admin a question. Backed by Aurex-backend's `/reports` and
  * `/investments` endpoints.
  */
@@ -21,12 +21,12 @@ export const REPORT_STATUS_LABEL: Record<ReportStatus, string> = {
   resolved: "Resolved",
 };
 
-// Category lists straight from the brief, one per role — a category
+// Category lists straight from the brief, one per role - a category
 // meaningful to an Investor (e.g. "Leaderboard issue") isn't necessarily
 // meaningful to a Business Owner and vice versa, so ReportSection picks
 // between these by its `role` prop rather than showing one combined list.
 // The backend stores whatever label is picked here as free text (not a
-// shared enum) — see reports.table.ts's own comment on that column.
+// shared enum) - see reports.table.ts's own comment on that column.
 export const INVESTOR_REPORT_CATEGORIES: SelectOption[] = [
   { value: "investment-not-showing", label: "Investment not showing on dashboard" },
   { value: "incorrect-earnings", label: "Incorrect earnings figure" },
@@ -57,19 +57,19 @@ const PRIORITY_LABEL_LOOKUP: Record<string, string> = Object.fromEntries(
 
 // The backend's priority enum also allows "critical" (used elsewhere by
 // Admin), which never appears in REPORT_PRIORITY_OPTIONS since members
-// never choose it here — fall back to a capitalized raw value for it
+// never choose it here - fall back to a capitalized raw value for it
 // rather than throwing away an unrecognized priority.
 function priorityLabelFor(value: string): string {
   return PRIORITY_LABEL_LOOKUP[value] ?? value.charAt(0).toUpperCase() + value.slice(1);
 }
 
-// Sentinel "related record" value for "Not related to a specific record" —
+// Sentinel "related record" value for "Not related to a specific record" -
 // always the first option and the default selection, ahead of whatever
 // role-specific records ReportSection is given.
 export const NOT_RELATED_VALUE = "none";
 export const NOT_RELATED_OPTION: SelectOption = { value: NOT_RELATED_VALUE, label: "Not related to a specific record" };
 
-/** An Investor's own recorded holdings, as "related record" choices — e.g.
+/** An Investor's own recorded holdings, as "related record" choices - e.g.
  *  "GreenHarvest Foods · GHS 3,000". Same title logic as HoldingRow's own
  *  (businessName for a Ventures holding, the package label otherwise). */
 export function getInvestorRelatedRecordOptions(holdings: InvestmentHolding[]): SelectOption[] {
@@ -79,7 +79,7 @@ export function getInvestorRelatedRecordOptions(holdings: InvestmentHolding[]): 
   }));
 }
 /** A Business Owner only ever has the one listing, so this is a single
- *  option naming it — still routed through the same "related record"
+ *  option naming it - still routed through the same "related record"
  *  dropdown (rather than assumed automatically) so a report about
  *  something else entirely can still pick "Not related to a specific
  *  record" instead. No backend "business listing" record exists yet, so
@@ -96,15 +96,15 @@ type InvestmentApiRow = {
   status: string;
 };
 
-/** An Investor's own recorded investments, as "related record" choices —
- *  e.g. "GreenHarvest Foods — GHS 3,000". Each option's `value` is the
+/** An Investor's own recorded investments, as "related record" choices -
+ *  e.g. "GreenHarvest Foods - GHS 3,000". Each option's `value` is the
  *  investment's id, which submitReport sends straight through as
  *  `investment_id`. */
 export async function getMyInvestmentOptions(): Promise<SelectOption[]> {
   const { data } = await apiFetch<InvestmentApiRow[]>("/investments");
   return data.map((row) => ({
     value: row.id,
-    label: `${row.business_name ?? row.package_name} — ${formatGhs(Number(row.amount_invested))}`,
+    label: `${row.business_name ?? row.package_name}: ${formatGhs(Number(row.amount_invested))}`,
   }));
 }
 
@@ -169,7 +169,7 @@ function toReport(row: ReportApiRow): Report {
 }
 
 /** The member's own report history, newest first (the API's own default
- *  sort). Capped at 100 — nobody files that many reports. */
+ *  sort). Capped at 100 - nobody files that many reports. */
 export async function getMyReports(): Promise<Report[]> {
   const { data } = await apiFetch<ReportApiRow[]>("/reports/mine?limit=100");
   return data.map(toReport);
@@ -182,15 +182,15 @@ export type SubmitReportInput = {
   description: string;
   priorityLabel: string;
   attachmentName: string | null;
-  /** Raw enum value backing `priorityLabel` — the API stores this, not the label. */
+  /** Raw enum value backing `priorityLabel` - the API stores this, not the label. */
   priorityValue: ReportPriority;
-  /** The selected investment's id (investor track only) — null when "Not
+  /** The selected investment's id (investor track only) - null when "Not
    *  related to a specific record" was chosen, or when the related-record
    *  dropdown's selection isn't a real investment (the business track's
    *  single "listing" option), in which case `relatedRecordLabel` is sent
    *  instead as free text. */
   investmentId: string | null;
-  /** The actual file to upload — attachmentName above is only ever used
+  /** The actual file to upload - attachmentName above is only ever used
    *  for immediate display, the API needs the file itself. */
   attachment: File | null;
 };

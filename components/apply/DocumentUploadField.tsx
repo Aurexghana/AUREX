@@ -37,7 +37,7 @@ type DocumentUploadFieldProps = {
 };
 
 /**
- * A single drag-and-drop document upload field — extracted from the
+ * A single drag-and-drop document upload field - extracted from the
  * Investor flow's original ID Upload step once the Business Owner flow
  * needed the exact same drag-drop/preview/remove behavior for not one but
  * two separate document fields (ID + business registration). Fully
@@ -47,7 +47,7 @@ type DocumentUploadFieldProps = {
  * message, the image preview URL).
  *
  * The preview is derived from the `file` prop via an effect rather than
- * only being set at the moment a file is chosen — the original version of
+ * only being set at the moment a file is chosen - the original version of
  * this (Investor Step 3, before this was its own component) only ever set
  * the preview inside its own "file was just selected" handler, so
  * navigating Back to a step that already had an image file attached from
@@ -99,7 +99,7 @@ export default function DocumentUploadField({ id, label, hint, file, onFileSelec
     setFileError(null);
     onRemove();
     // Cleared so selecting the exact same file again still fires
-    // onChange — browsers don't re-fire it for an unchanged file path
+    // onChange - browsers don't re-fire it for an unchanged file path
     // unless the input's own value is reset first.
     if (inputRef.current) inputRef.current.value = "";
   };

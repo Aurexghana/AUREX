@@ -10,7 +10,7 @@ import ConfirmationStep from "@/components/apply/business/ConfirmationStep";
 import { initialBusinessOwnerFormData, type BusinessOwnerFormData } from "@/components/apply/business/types";
 import type { StepDefinition } from "@/components/apply/types";
 
-// Parallel to components/apply/investor/InvestorApplication.tsx — same
+// Parallel to components/apply/investor/InvestorApplication.tsx - same
 // shell, same 6-step shape, business-specific step components. See that
 // file's own comments for the reasoning behind each shell-level flag
 // (skippable, hideContinueButton, fullScreen) reused identically here.
@@ -38,7 +38,7 @@ const STEPS: StepDefinition<BusinessOwnerFormData>[] = [
     label: STEP_LABELS[4],
     hideContinueButton: true,
     // This step renders its own "Save & Exit" beside its Submit button
-    // (see ReviewSubmitFooter's onSaveAndExit) — hides the shell's header
+    // (see ReviewSubmitFooter's onSaveAndExit) - hides the shell's header
     // copy so there isn't a second, disconnected one up top.
     hideExitLink: true,
     render: (props) => <ReviewSubmitStep {...props} />,

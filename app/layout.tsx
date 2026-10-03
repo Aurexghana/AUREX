@@ -59,7 +59,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
     <html
       lang="en"
       // The theme-init script below sets `data-theme` on this exact element
-      // before hydration, based on localStorage — a real, expected attribute
+      // before hydration, based on localStorage - a real, expected attribute
       // mismatch between the server-rendered markup (which has no idea what
       // was in localStorage) and the client's first paint. That's precisely
       // what suppressHydrationWarning exists for; without it React logs a
@@ -81,7 +81,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
             for motion-safety, kept here so no page has to opt in itself.
 
             The sitewide cursor glow (components/CursorGlow.tsx) is turned
-            off for now per request — the hero's Looper vector has its own
+            off for now per request - the hero's Looper vector has its own
             scoped hover-glow instead (see HeroLooperVector). The component
             file is kept in place in case it's wanted again later. */}
         <MotionConfig reducedMotion="user">

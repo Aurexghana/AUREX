@@ -12,7 +12,7 @@ export type InvestmentSlot = {
   id: string;
   name: string;
   package: SlotPackage;
-  /** Only set for Ventures slots — the specific business the slot raises
+  /** Only set for Ventures slots - the specific business the slot raises
    *  funds for. Core slots pool into AUREX itself, so there's no single
    *  business to name. */
   businessName?: string;
@@ -20,13 +20,13 @@ export type InvestmentSlot = {
   termLabel: string;
   opensAt: string;
   closesAt: string;
-  /** e.g. "12% p.a." — Admin's own figure, not something computed from a
+  /** e.g. "12% p.a." - Admin's own figure, not something computed from a
    *  rate + term. */
   ratePercentLabel: string;
   status: SlotStatus;
 };
 
-/** "Open until 30 Mar 2026" / "Closed on 20 Dec 2025" — reads off `status`
+/** "Open until 30 Mar 2026" / "Closed on 20 Dec 2025" - reads off `status`
  *  and `closesAt` as given, doesn't decide open/closed itself. */
 export function getSlotWindowLabel(slot: InvestmentSlot): string {
   return slot.status === "closed"

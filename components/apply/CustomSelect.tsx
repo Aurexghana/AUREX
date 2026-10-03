@@ -8,7 +8,7 @@ import type { SelectOption } from "@/lib/optionalDetails";
 /**
  * Custom listbox replacing every native <select> in the app (apply flow,
  * dashboard Report tab). A native <select>'s own open popup is rendered by
- * the OS/browser, not by our CSS — the only thing we could ever reach was
+ * the OS/browser, not by our CSS - the only thing we could ever reach was
  * each <option>'s background/text color (see the old `optionStyle`), never
  * the hover/highlight color (a system blue on most platforms) or the row
  * layout itself. This renders the whole popup ourselves instead, so both
@@ -17,8 +17,8 @@ import type { SelectOption } from "@/lib/optionalDetails";
  * own sharp-edged chrome rather than the soft rounded-md list a generic
  * dropdown pattern would otherwise use.
  *
- * The trigger reuses fieldClassName — the exact same border/bg/padding
- * every text input and the old <select> already shared — so swapping this
+ * The trigger reuses fieldClassName - the exact same border/bg/padding
+ * every text input and the old <select> already shared - so swapping this
  * in doesn't change a form's rhythm, just what opens when you click it.
  *
  * Keyboard behavior mirrors a native <select> closely enough that this
@@ -27,7 +27,7 @@ import type { SelectOption } from "@/lib/optionalDetails";
  * first option starting with what's been typed (important for the ~200-
  * entry country lists, where scrolling to find "Ghana" by hand isn't
  * reasonable). Only real gap vs. native: no `required`/native constraint
- * validation, since this was never a real form control to begin with —
+ * validation, since this was never a real form control to begin with -
  * every call site already does its own manual required-field check
  * (`touched`/`error` state), so nothing actually relied on that.
  */
@@ -53,17 +53,17 @@ export default function CustomSelect({
   hasError?: boolean;
   disabled?: boolean;
   onBlur?: () => void;
-  /** Only needed when this isn't paired with a FormField <label htmlFor> —
+  /** Only needed when this isn't paired with a FormField <label htmlFor> -
    *  e.g. the inline phone-country-code picker beside the phone input. */
   ariaLabel?: string;
-  /** Sizing/width overrides for the trigger — the same string every call
+  /** Sizing/width overrides for the trigger - the same string every call
    *  site used to pass as fieldClassName's own `extra` param. */
   triggerClassName?: string;
   /** e.g. "shrink-0" for the phone-country-code picker sitting beside the
    *  phone number input in a flex row. */
   wrapperClassName?: string;
   /** "compact" is the narrow phone-country-code chevron (smaller icon,
-   *  tighter right inset) — every other select uses the default sizing. */
+   *  tighter right inset) - every other select uses the default sizing. */
   size?: "default" | "compact";
 }) {
   const [open, setOpen] = useState(false);
@@ -78,15 +78,15 @@ export default function CustomSelect({
   const isPlaceholder = !selectedOption && !value;
   // `||`, not `??`: `value` starts as `""` on every unselected field (not
   // null/undefined), which `??` treats as already "present" and returns
-  // as-is — rendering the trigger's label span truly empty instead of
+  // as-is - rendering the trigger's label span truly empty instead of
   // falling through to `placeholder`. An empty span collapses to ~0 height
   // in a flex row (no text to establish a line box), which is exactly the
   // "field is short until something's selected" bug this was causing on
   // every CustomSelect in the app. `||` treats "" as falsy and falls
   // through correctly, while still preserving the original fallback intent
-  // below for when `value` is a real, non-empty, not-yet-matched value —
+  // below for when `value` is a real, non-empty, not-yet-matched value -
   // e.g. phoneCountry during the brief window before IdentityContactStep's
-  // effect populates the real option list — showing something sensible
+  // effect populates the real option list - showing something sensible
   // instead of going blank.
   const displayLabel = selectedOption?.label || value || placeholder;
 
@@ -102,8 +102,8 @@ export default function CustomSelect({
   }, [open]);
 
   // Highlighting the current value is something that only ever needs to
-  // happen at the moment the panel opens (every place that can open it —
-  // click, or Up/Down/Enter/Space while closed — calls this instead of
+  // happen at the moment the panel opens (every place that can open it -
+  // click, or Up/Down/Enter/Space while closed - calls this instead of
   // setOpen(true) directly), not something to keep in sync with `open` via
   // an effect: an effect reacting to `open` would fire on every render
   // where it's already true, fighting the arrow-key navigation below.
@@ -201,7 +201,7 @@ export default function CustomSelect({
         className={fieldClassName(hasError, `text-left disabled:cursor-not-allowed disabled:opacity-60 ${triggerClassName}`)}
       >
         {/* min-w-0 is required for truncate to work at all inside a flex
-            row (fieldClassName's own `flex items-center`) — a flex item's
+            row (fieldClassName's own `flex items-center`) - a flex item's
             default min-width is `auto`, which lets it grow past its
             container instead of ever triggering the ellipsis. */}
         <span className={`block min-w-0 flex-1 truncate ${isPlaceholder ? "text-cream-dim/60" : ""}`}>
@@ -228,7 +228,7 @@ export default function CustomSelect({
                 onMouseEnter={() => setHighlighted(index)}
                 onClick={() => commit(index)}
                 // "Selected" (gold text, persists regardless of hover) and
-                // "highlighted" (gold background — keyboard position, or
+                // "highlighted" (gold background - keyboard position, or
                 // whatever the mouse is over) are deliberately separate: the
                 // instant this panel opens, Chromium re-runs hit-testing
                 // under a stationary cursor and can hand it a fresh
@@ -238,7 +238,7 @@ export default function CustomSelect({
                 // its own always-on indicator, that reassignment would make
                 // the real selection look unmarked the moment the panel
                 // opens, purely because of where the cursor happened to
-                // rest — same fix either way (a stray hover, or the user
+                // rest - same fix either way (a stray hover, or the user
                 // deliberately hovering elsewhere): show the true selection
                 // regardless of what's currently highlighted.
                 className={`cursor-pointer px-4 py-2.5 font-sans text-sm transition-colors ${

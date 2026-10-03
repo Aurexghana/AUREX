@@ -25,14 +25,14 @@ function getPhoneCountryOptions(): PhoneCountryOption[] {
 }
 
 /**
- * Step 1 of 6 — "Identity & Contact Details". Four required fields: full
+ * Step 1 of 6 - "Identity & Contact Details". Four required fields: full
  * legal name, email, phone (with country-code support, validated as a
- * real dialable number since it's used for WhatsApp contact later — see
+ * real dialable number since it's used for WhatsApp contact later - see
  * the libphonenumber-js import), and country of residence.
  *
  * Validation is computed on every render from `values` (cheap: four field
  * checks, no need to memo further) and reported up via onValidityChange.
- * Errors only render once a field has been blurred (`touched`) — required-
+ * Errors only render once a field has been blurred (`touched`) - required-
  * field validation runs from the first keystroke, but nothing turns red
  * before the applicant has actually had a chance to fill it in.
  */
@@ -45,14 +45,14 @@ export default function IdentityContactStep({ values, updateValues, onValidityCh
   });
 
   // Both lists are built with Intl.DisplayNames, and computing them during
-  // the render (e.g. via useMemo) would run on the server too — where
+  // the render (e.g. via useMemo) would run on the server too - where
   // Node's own bundled ICU/CLDR data can disagree with the browser's for a
   // handful of regions (observed: "Falkland Islands (Islas Malvinas)"
   // server-side vs "Falkland Islands" client-side), which is a genuine
   // hydration mismatch, not a bug in this component's logic. Populating
   // them from an effect means the server (and the client's first paint,
   // pre-hydration) render an empty list, then the browser's own Intl fills
-  // it in right after mount — nothing for hydration to disagree about,
+  // it in right after mount - nothing for hydration to disagree about,
   // since the mismatched values never make it into the SSR'd HTML at all.
   const [countryList, setCountryList] = useState<Country[]>([]);
   const [phoneCountryOptions, setPhoneCountryOptions] = useState<PhoneCountryOption[]>([]);
@@ -61,7 +61,7 @@ export default function IdentityContactStep({ values, updateValues, onValidityCh
     // Deliberately setState-in-effect, not a "you might not need an
     // effect" case: computing this during render (even via a lazy
     // useState initializer) would run on the server too, which is the
-    // hydration mismatch described above — the effect only exists to
+    // hydration mismatch described above - the effect only exists to
     // skip that SSR execution, not to synchronize derived state.
     // eslint-disable-next-line react-hooks/set-state-in-effect
     setCountryList(getCountryList());
@@ -87,7 +87,7 @@ export default function IdentityContactStep({ values, updateValues, onValidityCh
 
   useEffect(() => {
     onValidityChange(isValid);
-    // Only isValid should re-trigger this — onValidityChange is a stable
+    // Only isValid should re-trigger this - onValidityChange is a stable
     // useCallback from the shell, and re-running on every `values` change
     // (rather than just when the derived isValid flips) would be wasteful.
     // eslint-disable-next-line react-hooks/exhaustive-deps

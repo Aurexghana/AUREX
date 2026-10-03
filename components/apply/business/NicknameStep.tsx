@@ -8,9 +8,9 @@ import type { StepProps } from "@/components/apply/types";
 import type { BusinessOwnerFormData } from "@/components/apply/business/types";
 
 /**
- * Step 2 of 6 — "Nickname / Display Name". Identical behavior to the
+ * Step 2 of 6 - "Nickname / Display Name". Identical behavior to the
  * Investor flow's own Nickname step (same lib/nickname.ts format rules,
- * same isNicknameAvailable stub, same NicknamePreview) — see that file's
+ * same isNicknameAvailable stub, same NicknamePreview) - see that file's
  * own comment for the full reasoning. The only real difference is this
  * step's intro copy, which mentions the business name alongside the
  * applicant's real name per the brief, since here there are two identities

@@ -1,6 +1,6 @@
 /**
  * Generic document-upload rules shared by every "attach a file" field
- * across both application flows — the Investor flow's ID Upload step (see
+ * across both application flows - the Investor flow's ID Upload step (see
  * lib/idUpload.ts, now a thin investor-specific wrapper around this file)
  * and the Business Owner flow's two document fields (see
  * lib/businessDocuments.ts). Extracted here once a second flow needed the
@@ -18,7 +18,7 @@ export const FILE_INPUT_ACCEPT = [...ACCEPTED_FILE_MIME_TYPES, ...ACCEPTED_FILE_
 
 export type SelectOption = { value: string; label: string };
 
-// Which kind of government-issued ID was uploaded — optional context for
+// Which kind of government-issued ID was uploaded - optional context for
 // AUREX admin, doesn't gate "Continue" the way the file itself does.
 // Shared by both flows' ID fields since the options themselves don't vary
 // by what the applicant is applying for.

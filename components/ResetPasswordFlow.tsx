@@ -61,7 +61,7 @@ type FieldName = "password" | "confirmPassword";
 type Phase = "checking" | "expired" | "form" | "done";
 
 /**
- * Standalone page for the link ForgotPasswordFlow emails — same token-based
+ * Standalone page for the link ForgotPasswordFlow emails - same token-based
  * shape as account activation (see ActivationFlow.tsx): the token is read
  * from the URL and validated before the form renders, and it alone
  * authorizes the reset, rather than the applicant typing in their own email
@@ -69,7 +69,7 @@ type Phase = "checking" | "expired" | "form" | "done";
  *
  * Wrapped in <Suspense> by app/reset-password/page.tsx: useSearchParams
  * requires a Suspense boundary for static builds (same reason
- * DashboardTabs.tsx needs one — see that file's own comment).
+ * DashboardTabs.tsx needs one - see that file's own comment).
  */
 export default function ResetPasswordFlow() {
   const token = useSearchParams().get("token");

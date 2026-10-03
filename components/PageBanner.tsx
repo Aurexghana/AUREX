@@ -5,13 +5,13 @@ import { staggerContainer, staggerItem } from "@/lib/motion";
 
 /**
  * Shared full-bleed title banner for standalone pages below the home page
- * (currently /how-it-works and /contact) — generalized from the original
+ * (currently /how-it-works and /contact) - generalized from the original
  * /how-it-works-only banner (Figma node 110:13581) so a second page could
  * reuse the exact same background treatment instead of a copy-pasted file.
  *
  * The background is NOT the "Looper BG" thin-line swirl used behind the
  * home hero (an earlier pass here wrongly assumed it was, since a same-
- * named/rotated asset also happens to sit at the page root in Figma) —
+ * named/rotated asset also happens to sit at the page root in Figma) -
  * inspecting the /how-it-works banner node in isolation showed a
  * completely different background: a wavy monochrome sheen
  * (how-it-works-banner-wave.png, mix-blend-overlay) plus a tiny dot-grid
@@ -23,28 +23,28 @@ import { staggerContainer, staggerItem } from "@/lib/motion";
  * standalone page shares one consistent "title band" look rather than
  * inventing a new background per page.
  *
- * Per request, light mode gets its own dedicated look here — a solid,
+ * Per request, light mode gets its own dedicated look here - a solid,
  * vivid warm-gold band (reference: a gold banner with a diagonal light
- * sheen and a faint dot-grid running through it) — rather than the normal
+ * sheen and a faint dot-grid running through it) - rather than the normal
  * auto-flipping page background (dark ink -> near-white) the rest of the
  * site uses. Two earlier attempts at this both missed the reference:
  *   1. A near-white base with the same overlays at very low opacity read
  *      as barely-there off-white, not gold at all.
  *   2. Reusing dark mode's exact recipe (near-black base + this same wave
  *      PNG at `mix-blend-overlay`, tinted gold via `mix-blend-color`) is
- *      what dark mode itself renders as — but that turned out to be a
+ *      what dark mode itself renders as - but that turned out to be a
  *      mostly-black band with a thin gold streak, not the solid golden
  *      look in the reference either (confirmed by screenshotting both).
  * `mix-blend-overlay`'s math is why #2 fails: for the wave PNG's darkest
  * pixels (~7% gray, not literally 0 but close), overlay's shadow formula
- * is `2 * base * overlay`, i.e. ~14% of the base color — crushed almost
+ * is `2 * base * overlay`, i.e. ~14% of the base color - crushed almost
  * to black regardless of how gold the base is.
  *
  * So light mode instead gets: a genuine gold gradient as the base (dark
  * amber top-right fading to bright gold bottom-left, tracking the wave
  * photo's own dark-corner/bright-streak layout); the wave photo applied
  * with `mix-blend-screen` instead of `overlay` (screen only ever
- * lightens — `1 - (1-base)(1-overlay)` — so the photo's dark corner
+ * lightens - `1 - (1-base)(1-overlay)` - so the photo's dark corner
  * leaves the gold base untouched instead of crushing it toward black,
  * while its bright streaks still lighten through as a highlight sheen);
  * and the same gold `mix-blend-color` tint layer from dark mode kept on
@@ -52,12 +52,12 @@ import { staggerContainer, staggerItem } from "@/lib/motion";
  * (screen alone would push bright spots toward washed-out white) so nothing
  * in the sheen reads as plain white, matching the reference's all-gold
  * tonal range. The dot-grid tile is unchanged (still light-colored dots,
- * just at lower opacity — they're a much smaller texture on a mid-tone
+ * just at lower opacity - they're a much smaller texture on a mid-tone
  * gold base than the near-black one they were tuned for).
  *
  * Title/description text colors are pinned to an explicit hex per theme
  * rather than routed through `text-cream` (which already flips dark in
- * light mode, but to the wrong dark — it targets ink-black text on a
+ * light mode, but to the wrong dark - it targets ink-black text on a
  * near-white page, not this banner's own gold backdrop): dark mode keeps
  * the light/cream text this banner always had, while light mode uses the
  * same near-black ink color per request, which reads fine here since the
@@ -67,7 +67,7 @@ import { staggerContainer, staggerItem } from "@/lib/motion";
  * a plain `relative` element (no z-index of its own) doesn't establish
  * its own stacking context, a `-z-10` child here would actually be
  * compared against the page root's stacking context instead of just this
- * section — meaning the section's own background could paint after (i.e.
+ * section - meaning the section's own background could paint after (i.e.
  * on top of) it. Leaving these children at the default z-index and
  * relying on DOM order (image stack first, text content after) keeps
  * everything correctly layered within this section alone, same as

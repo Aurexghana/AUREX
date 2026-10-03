@@ -8,7 +8,7 @@ import SectionBackgroundVector from "@/components/SectionBackgroundVector";
 import { ArrowUpRightIcon } from "@/components/icons";
 
 /**
- * The actual animated 404 content — split out from app/not-found.tsx
+ * The actual animated 404 content - split out from app/not-found.tsx
  * because that file needs to stay a Server Component to export metadata
  * (a client component can't export `metadata`), while this needs "use
  * client" for the motion/stagger entrance, same split used nowhere else
@@ -16,7 +16,7 @@ import { ArrowUpRightIcon } from "@/components/icons";
  *
  * Structurally a sibling of the /coming-soon page (same centered-hero-
  * card shape, BrandMark, SectionBackgroundVector, gradient heading, "Back
- * to Home" pill) but with its own copy and a staggered entrance — 404 is
+ * to Home" pill) but with its own copy and a staggered entrance - 404 is
  * reached by mistake/typo far more often than /coming-soon is reached
  * deliberately, so it gets a "Contact Support" fallback link too.
  */

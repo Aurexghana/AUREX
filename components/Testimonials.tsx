@@ -6,7 +6,7 @@ import { staggerContainer, staggerItem, hoverLift } from "@/lib/motion";
 import SectionBackgroundVector from "@/components/SectionBackgroundVector";
 import { getTestimonials, type Testimonial } from "@/lib/testimonials";
 
-// Continuous marquee speed, not a discrete "advance every N seconds" —
+// Continuous marquee speed, not a discrete "advance every N seconds" -
 // per request, this should always be gently scrolling on its own at
 // every breakpoint (not just a mobile slideshow), while still letting
 // the user take over with a manual drag/swipe/wheel scroll at any time.
@@ -34,7 +34,7 @@ export default function Testimonials() {
 
   // Rendered twice back-to-back so the marquee can loop seamlessly: once
   // scrollLeft passes the first copy's width we snap back by exactly that
-  // width, which — because the second copy is identical — is visually
+  // width, which - because the second copy is identical - is visually
   // indistinguishable from the scroll continuing.
   const displayTestimonials = [...testimonials, ...testimonials];
 
@@ -68,7 +68,7 @@ export default function Testimonials() {
   }, [prefersReducedMotion]);
 
   // Pause while the user is actually hovering, dragging, or wheeling the
-  // carousel, then pick the marquee back up shortly after they stop — so
+  // carousel, then pick the marquee back up shortly after they stop - so
   // it never fights a manual scroll, but still keeps drifting on its own
   // the rest of the time.
   const handleInteractionStart = () => {
@@ -80,7 +80,7 @@ export default function Testimonials() {
     if (resumeTimeoutRef.current) clearTimeout(resumeTimeoutRef.current);
     resumeTimeoutRef.current = setTimeout(() => {
       // Reset the timestamp baseline so the next frame's dt is measured
-      // from "now", not from however long ago the marquee was paused —
+      // from "now", not from however long ago the marquee was paused -
       // otherwise it would jump forward to catch up.
       lastTsRef.current = null;
       pausedRef.current = false;
@@ -120,18 +120,18 @@ export default function Testimonials() {
             The quote mark is absolutely positioned (matching the Figma
             source, which floats it in the corner rather than stacking it
             in the flex flow) so it doesn't consume its own line above the
-            text — that was the main source of the extra height. */}
-        {/* A horizontal marquee at every breakpoint — always drifting on
+            text - that was the main source of the extra height. */}
+        {/* A horizontal marquee at every breakpoint - always drifting on
             its own (via the rAF loop above), pausing the instant the user
             hovers, drags, touches, or wheels it, and picking back up a
             couple seconds after they let go. Scrollbar hidden via
             .no-scrollbar since this reads as a ticker, not a visibly-
             scrollable list, even though the underlying overflow-x-auto is
-            genuinely native-scrollable — a mouse drag, trackpad swipe, or
+            genuinely native-scrollable - a mouse drag, trackpad swipe, or
             shift+wheel moves it just like any other scroll container. The
             testimonial list is rendered twice back-to-back (see
             DISPLAY_TESTIMONIALS) so the loop-reset in the rAF step is
-            invisible. Zero horizontal padding on this strip, on purpose —
+            invisible. Zero horizontal padding on this strip, on purpose -
             the first/last card should touch this div's true edges rather
             than sit behind an inset gutter. The negative margin/width pair
             below bleeds this div out past the section's own horizontal

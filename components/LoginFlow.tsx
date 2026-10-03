@@ -17,30 +17,30 @@ const ROLE_LABEL: Record<LoginRole, string> = {
 /**
  * The whole /login experience: which dashboard you land on (Investor vs
  * Business Owner) depends on which role you're logging in as, so that has
- * to be picked before there's a credentials form to show at all — see
+ * to be picked before there's a credentials form to show at all - see
  * app/login/page.tsx for how this replaces what used to be a single
  * always-visible LoginForm.
  *
  * `role` starts null (the picker); choosing one reveals that role's form
  * in its place, with a "Choose a different role" link back to the picker
- * rather than a second, separate page — nothing here needs its own route,
+ * rather than a second, separate page - nothing here needs its own route,
  * this is one screen with two phases. The picker phase gets its own
  * "Back to Home" link (the page's own logo up top already links home, but
- * it's icon-only — this is the same escape hatch as an actual visible
+ * it's icon-only - this is the same escape hatch as an actual visible
  * link, matching "Choose a different role"'s own treatment one step
  * later in the flow).
  *
  * The "AUREX Login" eyebrow that used to sit above "Welcome Back" is
- * gone per request — the outer card, the logo above it (see
+ * gone per request - the outer card, the logo above it (see
  * app/login/page.tsx), and the page's own <title> already say what this
  * screen is, so it was a redundant label rather than new information.
  *
- * Content is grouped into its own sub-section (this header, then —
- * inside LoginForm — the fields and the submit button each get one
+ * Content is grouped into its own sub-section (this header, then -
+ * inside LoginForm - the fields and the submit button each get one
  * too) all sharing the same `gap-5` rhythm, so the spacing between
  * every section reads as one consistent system rather than whatever
  * margin each part happened to need before. No border on any of
- * these — just the grouping and padding, so it doesn't compete with
+ * these - just the grouping and padding, so it doesn't compete with
  * the outer card's own gold border.
  */
 export default function LoginFlow() {

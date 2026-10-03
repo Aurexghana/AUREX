@@ -5,22 +5,22 @@ import { staggerContainer, staggerItem } from "@/lib/motion";
 import SectionBackgroundVector from "@/components/SectionBackgroundVector";
 import { TrendUpIcon, TrendDownIcon, TrendFlatIcon } from "@/components/icons";
 
-// Per Figma node 252:5570 ("Section" — the actual home-page Investor
+// Per Figma node 252:5570 ("Section" - the actual home-page Investor
 // Leaderboard section; node 252:5577 from the link given for this section
-// is just that frame's empty background-paint layer, not the content — see
+// is just that frame's empty background-paint layer, not the content - see
 // its parent for the real design). Heading/subtitle copy and all 10 mock
 // investors' numbers below are taken directly from that node, which is why
 // they already lined up exactly with what this section had before this
-// pass — only the visual treatment changes here.
+// pass - only the visual treatment changes here.
 //
-// Points scale: 1 point per $100 invested, rounded to the nearest 10 —
+// Points scale: 1 point per $100 invested, rounded to the nearest 10 -
 // arbitrary but consistent, purely to turn a dollar figure into a
 // "leaderboard score" that isn't literally a bank balance.
 const POINTS_PER_DOLLAR = 1 / 100;
 const toPoints = (invested: number) => Math.round((invested * POINTS_PER_DOLLAR) / 10) * 10;
 
 // `change` is how many places each investor has moved since the last
-// ranking period — positive climbs, negative drops, 0 holds position.
+// ranking period - positive climbs, negative drops, 0 holds position.
 const INVESTORS = [
   { nickname: "IronVault", invested: 1_240_000, change: 1 },
   { nickname: "GoldFalcon", invested: 980_000, change: -1 },
@@ -42,28 +42,28 @@ const INVESTORS = [
 const TOP_THREE = INVESTORS.slice(0, 3);
 const REST = INVESTORS.slice(3);
 
-// Per-rank medal treatment — the avatar ring gradient plus the exported
+// Per-rank medal treatment - the avatar ring gradient plus the exported
 // trophy badge icon from the Figma reference (public/brand/leaderboard-
 // trophy-{1st,2nd,3rd}.svg, downloaded from that node rather than redrawn,
 // per the design-to-code asset-fidelity rule), its "First/Second/Third
-// place" label, and `stepHeight` — three genuinely distinct step heights
+// place" label, and `stepHeight` - three genuinely distinct step heights
 // (sm+ only; below sm the mobile-only podium markup further down has its
 // own separate `mobileStepHeight`/`mobileCorner`), per request that the
-// podium not read as equal-height blocks — including 2nd vs 3rd, not just
+// podium not read as equal-height blocks - including 2nd vs 3rd, not just
 // 1st vs the other two. Paired with `sm:items-end` on the row below, the
-// height difference alone is what visually elevates 1st place — no
+// height difference alone is what visually elevates 1st place - no
 // separate negative-margin hack needed on top of it.
 //
 // `mobileBg`/`mobileText`/`mobileNumberSize` are for the separate mobile-
-// only podium further down (per Figma node 286:3172 — a later, distinct
+// only podium further down (per Figma node 286:3172 - a later, distinct
 // reference from 241:2622's arch pillars, confirmed against the user's own
 // real data: same nicknames/points as this file's own INVESTORS). Per
 // follow-up feedback, only 1st keeps its own distinct standout color
-// (`mobileBg`/#b68409) — 2nd and 3rd now both use the exact same gold
+// (`mobileBg`/#b68409) - 2nd and 3rd now both use the exact same gold
 // gradient the rest of the app's buttons already use (Join Aurex,
-// LeaderboardView's "Get Started" — see lib's own gold/gold-light tokens),
+// LeaderboardView's "Get Started" - see lib's own gold/gold-light tokens),
 // rather than two different one-off gold-brown shades, so they read as
-// "the system's regular gold," secondary to 1st's own standout look —
+// "the system's regular gold," secondary to 1st's own standout look -
 // which is also why they need dark text (mobileText) instead of white:
 // that gradient is light enough that white stops being readable on it,
 // same reasoning every other gold button on the site already follows.
@@ -135,7 +135,7 @@ function ChangeIndicator({ change }: { change: number }) {
 }
 
 // Podium display order (silver, gold, bronze), rank 1 elevated above the
-// other two — used by both the sm+ podium below and the separate mobile-
+// other two - used by both the sm+ podium below and the separate mobile-
 // only podium further down. No sm: split needed anymore: the mobile podium
 // used to stack full-width steps in plain rank order (1, 2, 3) since the
 // side-by-side effect only read once there was room, but it's now its own
@@ -175,38 +175,38 @@ export default function Leaderboard() {
             row (removed per request to remove every golden glow from the
             page background). Per follow-up feedback ("the podium doesn't
             need to be black for light mode"), the step's own colors flip
-            with the theme like every other card in the app — dark mode
+            with the theme like every other card in the app - dark mode
             keeps the Figma reference's black top, light mode gets its own
             warm, light equivalent instead of staying pinned dark. Every
             color on/in the step (avatar circle, trophy label, points,
             divider) uses the normal flipping tokens again for the same
             reason.
 
-            No border on the step itself, in either theme — the current
+            No border on the step itself, in either theme - the current
             Figma reference blends the step into the page background rather
             than framing it as a distinct card. The beveled top facet and
             the step's own content (trophy, label, points) are what define
             its shape, not an outline or a fill color of its own: the
-            gradient's bottom stop is `ink` in both themes — the exact page
-            background color, not an approximation — so the step trails off
+            gradient's bottom stop is `ink` in both themes - the exact page
+            background color, not an approximation - so the step trails off
             into the page seamlessly instead of visibly ending partway
-            down. (Light mode's bottom stop used to be a warm cream — closer
+            down. (Light mode's bottom stop used to be a warm cream - closer
             to the intent than a plain white card, but still its own tint
             rather than a true blend, and read as a soft yellow glow at the
-            step's base — `ink` is the actual fix, not just a duller cream.)
+            step's base - `ink` is the actual fix, not just a duller cream.)
 
             hidden below sm: the mobile-only podium markup right after this
             one (per Figma node 241:2622, the design's own dedicated mobile
             podium layout) takes over there instead of this sm+ version
             reflowing to a narrow-screen layout of its own. */}
         <motion.div variants={staggerItem} className="relative hidden w-full max-w-3xl sm:block">
-          {/* sm:gap-0 — per the Figma reference, the three steps sit flush
+          {/* sm:gap-0 - per the Figma reference, the three steps sit flush
               against each other (confirmed against the raw node positions:
               the middle step's right edge and the right step's left edge
               are 1px apart, i.e. touching), not spaced apart like separate
               cards. The narrower top of each step's own beveled facet still
               leaves a small triangular notch of page background visible
-              between neighbors near the top — that's the reference's own
+              between neighbors near the top - that's the reference's own
               look, not a gap that needs closing. gap-6 below sm is kept:
               stacked full-width steps need real separation to read as
               distinct rows once they're no longer side-by-side. */}
@@ -238,21 +238,21 @@ export default function Leaderboard() {
                   </p>
 
                   <div className="mt-4 flex w-full flex-col items-center">
-                    {/* Beveled top facet — reproduces the Figma reference's
+                    {/* Beveled top facet - reproduces the Figma reference's
                         "Vector 193" shape exactly: a trapezoid, narrower at
                         the top than the bottom, giving the step a faceted
                         3D edge instead of a plain rounded corner (there's no
                         border-radius anywhere on this element in the
-                        source design — square corners are AUREX's own
+                        source design - square corners are AUREX's own
                         established chrome, same as CustomSelect's popup).
-                        The facet is also its own gradient, not a flat fill —
+                        The facet is also its own gradient, not a flat fill -
                         the light-mode source asset shades from white at the
                         top to a cool gray (#cbd5e0) at the bottom, giving
                         the facet a soft highlight-to-shadow look rather than
                         a flat paper cutout. Dark mode has no equivalent
                         asset in the source file (it's a light-mode-only
                         design), so this carries the same idea over in dark
-                        mode's own palette — a dark gray highlight fading to
+                        mode's own palette - a dark gray highlight fading to
                         the step's own black, kept subtle (not the lighter
                         gray it started as, per feedback that read as too
                         light against the step) rather than inventing a new
@@ -292,24 +292,24 @@ export default function Leaderboard() {
           </div>
         </motion.div>
 
-        {/* Mobile podium — per Figma node 286:3172 ("top three"), a later,
+        {/* Mobile podium - per Figma node 286:3172 ("top three"), a later,
             distinct reference from the arch-pillar design this replaces
-            (node 241:2622 — confirmed as the newer direction against the
+            (node 241:2622 - confirmed as the newer direction against the
             user's own real data: same nicknames/points as this file's own
-            INVESTORS). Solid flat color per rank (mobileBg — deliberately
+            INVESTORS). Solid flat color per rank (mobileBg - deliberately
             NOT a theme-flipping token: the reference shows one fixed look
             regardless of page theme, unlike the sm+ podium's own light/
             dark-aware "blend into background" treatment, which is
             untouched and still sm+ only) instead of an arch shape: name +
             points sit inside the block near the top, the rank-change
             indicator in its top-left corner, and a huge rank number
-            anchored to the bottom — tallest/brightest/biggest-numeral for
+            anchored to the bottom - tallest/brightest/biggest-numeral for
             1st, per the source. Square corners throughout (no
-            border-radius anywhere on this element in the source design —
+            border-radius anywhere on this element in the source design -
             AUREX's own established chrome, same as CustomSelect's popup).
             No crown accent this time; the source doesn't have one. */}
         <motion.div variants={staggerItem} className="relative w-full max-w-3xl sm:hidden">
-          {/* gap-0 — per the Figma reference, the three blocks sit flush
+          {/* gap-0 - per the Figma reference, the three blocks sit flush
               against each other (the "top three" frame is exactly 288px
               wide, 96px × 3 with no gap between), not spaced apart. */}
           <div className="relative flex items-end justify-center gap-0">
@@ -350,7 +350,7 @@ export default function Leaderboard() {
           </div>
         </motion.div>
 
-        {/* Ranks 4-10 as a plain scannable list, per the Figma reference —
+        {/* Ranks 4-10 as a plain scannable list, per the Figma reference -
             each row a HorizontalBorder divider (border-gold/20), not a
             grouped/pill row. */}
         <motion.div variants={staggerItem} className="flex w-full max-w-3xl flex-col">

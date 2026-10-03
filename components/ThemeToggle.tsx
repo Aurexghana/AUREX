@@ -30,24 +30,24 @@ function MoonIcon(props: React.SVGProps<SVGSVGElement>) {
 }
 
 /**
- * Manual light/dark toggle — independent of the OS-level prefers-color-
+ * Manual light/dark toggle - independent of the OS-level prefers-color-
  * scheme (this site is dark by default regardless of system setting; the
  * toggle is the only way to reach the light theme from Figma node 37:2570).
  *
  * Rendered once, globally (see app/layout.tsx), as a fixed floating
  * control pinned to the bottom-right corner rather than living inside the
- * navbar — per request, so it stays reachable at a constant spot on
+ * navbar - per request, so it stays reachable at a constant spot on
  * screen regardless of scroll position instead of scrolling away with the
  * rest of the header content.
  *
  * State is applied via a `data-theme` attribute on <html> (see lib/theme.ts
  * for the persistence + no-flash init script) and every color that needs
  * to change per theme is driven by CSS custom properties in globals.css,
- * not by this component — it only flips the switch. bg-ink/border-grid-
+ * not by this component - it only flips the switch. bg-ink/border-grid-
  * line/text-cream are all theme tokens, so this button re-colors itself
  * for free without any `light:` overrides of its own.
  *
- * Rendered on every page, including the /apply/* application flow — per
+ * Rendered on every page, including the /apply/* application flow - per
  * request, this control stays available everywhere rather than being
  * hidden on any particular route.
  */
@@ -64,7 +64,7 @@ export default function ThemeToggle() {
       aria-pressed={isLight}
       className="fixed bottom-6 right-6 z-50 flex size-12 items-center justify-center overflow-hidden border border-grid-line bg-ink/80 text-cream shadow-lg backdrop-blur-md transition-colors hover:text-gold-light"
     >
-      {/* Icon crossfades on toggle instead of swapping instantly — a small,
+      {/* Icon crossfades on toggle instead of swapping instantly - a small,
           consistent micro-interaction like every other clickable control
           on the site, reusing the shared duration token rather than a new
           one-off transition value. */}

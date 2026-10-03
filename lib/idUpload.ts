@@ -1,8 +1,8 @@
 /**
  * Investor-flow-specific names for Step 3 of the Investor Application (see
  * components/apply/investor/IdUploadStep.tsx). The actual validation rules
- * and ID-type list are generic — shared with the Business Owner flow's own
- * document fields — and live in lib/fileValidation.ts; this file just
+ * and ID-type list are generic - shared with the Business Owner flow's own
+ * document fields - and live in lib/fileValidation.ts; this file just
  * re-exports them under the names IdUploadStep.tsx already imports.
  */
 

@@ -22,7 +22,7 @@ import type { StepProps } from "@/components/apply/types";
 import type { BusinessOwnerFormData } from "@/components/apply/business/types";
 
 // One "file is attached" row, reused for both documents in the Documents
-// section below — confirms a file is attached without re-rendering the
+// section below - confirms a file is attached without re-rendering the
 // document itself, same reasoning as the Investor flow's own ID Document
 // review section.
 function DocumentRow({ label, file, idType }: { label: string; file: File | null; idType?: string }) {
@@ -45,15 +45,15 @@ function DocumentRow({ label, file, idType }: { label: string; file: File | null
 }
 
 /**
- * Step 5 of 6 — "Review & Submit". Same shape as the Investor flow's own
+ * Step 5 of 6 - "Review & Submit". Same shape as the Investor flow's own
  * Review & Submit step (see that file's own comment for the shared
  * section/badge/row/submit-button chrome in
- * components/apply/ReviewSectionUI.tsx) — the only real difference is
+ * components/apply/ReviewSectionUI.tsx) - the only real difference is
  * which fields go in which section, and that this flow splits its single
  * combined Step 1 ("Applicant & Business Details") into two review
  * sections with different visibility: the applicant's own identity/
  * contact details are admin-only, but the business's own name/pitch/
- * funding ask are public — a prospective investor browsing listed
+ * funding ask are public - a prospective investor browsing listed
  * businesses needs to see exactly those, unlike an individual investor
  * applicant's private contact information.
  */

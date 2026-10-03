@@ -11,7 +11,7 @@ export const metadata: Metadata = {
 /**
  * Reached from LoginForm's "Forgot password?" link. Same minimal chrome as
  * /login and the application flows (logo + centered card, no site Navbar/
- * Footer) — a focused, single-purpose screen.
+ * Footer) - a focused, single-purpose screen.
  */
 export default function ForgotPasswordPage() {
   return (

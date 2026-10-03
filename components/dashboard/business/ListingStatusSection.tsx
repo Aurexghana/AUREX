@@ -2,7 +2,7 @@ import type { BusinessListing, ListingStatus } from "@/lib/businessListing";
 import { LISTING_STATUS_LABEL } from "@/lib/businessListing";
 
 // Tone per status: gold for "actionable/in-progress" (live), the same
-// green Leaderboard.tsx already uses for a positive change (funded — a
+// green Leaderboard.tsx already uses for a positive change (funded - a
 // distinct, good outcome from just "still open"), and a plain neutral
 // treatment for pending/closed, since neither is something to celebrate
 // or act on right now.
@@ -14,7 +14,7 @@ const STATUS_TONE: Record<ListingStatus, string> = {
 };
 
 /**
- * Always the first thing on the dashboard — this single badge is the
+ * Always the first thing on the dashboard - this single badge is the
  * answer to "how's my listing doing" at a glance. Only the pending state
  * gets its own explanatory copy here; live/funded/closed instead get the
  * full Funding Progress + Listing Details sections below (see

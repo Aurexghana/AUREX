@@ -2,7 +2,7 @@ import type { SelectOption } from "@/lib/optionalDetails";
 
 /**
  * "Amount of funding sought" for Step 1 of the Business Owner Application
- * — banded ranges rather than a raw numeric field, matching the Investor
+ * - banded ranges rather than a raw numeric field, matching the Investor
  * flow's own "Intended Investment Range" pattern (see
  * lib/optionalDetails.ts's INVESTMENT_RANGE_OPTIONS) so the two flows ask
  * for a monetary figure the same way. GHS-denominated per the brief.

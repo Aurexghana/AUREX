@@ -12,7 +12,7 @@ import { useRequireAuth } from "@/lib/auth/useRequireAuth";
 import { getMyListing, type BusinessListing } from "@/lib/businessListing";
 
 /**
- * Shared shell for the Business Owner Dashboard — logo/log-out header,
+ * Shared shell for the Business Owner Dashboard - logo/log-out header,
  * welcome banner, and the same Investment / Earnings / Leaderboard tab
  * bar the Investor Dashboard uses, reinterpreted for this role: Investment
  * is the listing itself (status + details), Earnings is the funding
@@ -21,7 +21,7 @@ import { getMyListing, type BusinessListing } from "@/lib/businessListing";
  *
  * Lives in its own file (rather than directly in
  * app/business-dashboard/layout.tsx) purely so that file can wrap this
- * in a <Suspense> boundary — its DashboardTabs child calls
+ * in a <Suspense> boundary - its DashboardTabs child calls
  * useSearchParams(), which Next.js requires to sit inside Suspense for
  * static builds; a route's own layout.tsx can't wrap its own returned
  * JSX in Suspense and have that cover itself.
