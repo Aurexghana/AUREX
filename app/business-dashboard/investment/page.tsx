@@ -5,16 +5,21 @@ import ListingStatusSection from "@/components/dashboard/business/ListingStatusS
 import ListingDetailsSection from "@/components/dashboard/business/ListingDetailsSection";
 import { useAuth } from "@/lib/auth/AuthContext";
 import { getMyListing, type BusinessListing } from "@/lib/businessListing";
+import { getSuperAdminWhatsAppNumber } from "@/lib/whatsapp";
 
 export default function BusinessDashboardInvestmentPage() {
   const { user, isLoading } = useAuth();
   const [listing, setListing] = useState<BusinessListing | null | undefined>(undefined);
+  const [whatsappNumber, setWhatsappNumber] = useState<string | null>(null);
 
   useEffect(() => {
     if (isLoading || !user) return;
     let cancelled = false;
     getMyListing().then((data) => {
       if (!cancelled) setListing(data ?? null);
+    });
+    getSuperAdminWhatsAppNumber().then((phone) => {
+      if (!cancelled) setWhatsappNumber(phone);
     });
     return () => {
       cancelled = true;
@@ -39,7 +44,7 @@ export default function BusinessDashboardInvestmentPage() {
   return (
     <div className="flex flex-col gap-8">
       <ListingStatusSection listing={listing} />
-      {isPublished && <ListingDetailsSection listing={listing} />}
+      {isPublished && <ListingDetailsSection listing={listing} whatsappNumber={whatsappNumber} />}
     </div>
   );
 }

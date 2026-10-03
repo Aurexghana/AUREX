@@ -19,7 +19,13 @@ function DetailField({ label, value }: { label: string; value: string }) {
  * "no in-platform action, route to Admin on WhatsApp" pattern the
  * Investor Dashboard's own Invest button uses).
  */
-export default function ListingDetailsSection({ listing }: { listing: BusinessListing }) {
+export default function ListingDetailsSection({
+  listing,
+  whatsappNumber,
+}: {
+  listing: BusinessListing;
+  whatsappNumber: string | null;
+}) {
   return (
     <section className="flex flex-col gap-6 border border-grid-line bg-panel/20 p-6 sm:p-8">
       <h2 className="font-jakarta text-xl font-semibold text-cream sm:text-2xl">Business Listing Details</h2>
@@ -32,15 +38,17 @@ export default function ListingDetailsSection({ listing }: { listing: BusinessLi
 
       <div className="flex flex-col gap-3 border-t border-grid-line pt-6 sm:flex-row sm:items-center sm:justify-between">
         <p className="font-sans text-sm text-cream-dim">To request changes to your listing, contact AUREX admin.</p>
-        <a
-          href={getListingChangeRequestWhatsAppLink(listing.businessName)}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="flex w-fit items-center gap-1.5 font-jakarta text-sm font-medium text-gold-bright underline-offset-4 transition-colors hover:text-gold-light hover:underline"
-        >
-          Contact Admin on WhatsApp
-          <ArrowUpRightIcon className="size-3" />
-        </a>
+        {whatsappNumber && (
+          <a
+            href={getListingChangeRequestWhatsAppLink(whatsappNumber, listing.businessName)}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex w-fit items-center gap-1.5 font-jakarta text-sm font-medium text-gold-bright underline-offset-4 transition-colors hover:text-gold-light hover:underline"
+          >
+            Contact Admin on WhatsApp
+            <ArrowUpRightIcon className="size-3" />
+          </a>
+        )}
       </div>
     </section>
   );

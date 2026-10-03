@@ -30,8 +30,15 @@ function StatRow({ label, value }: { label: string; value: string }) {
  * lib/whatsapp.ts). A closed slot renders a disabled "Closed" state
  * instead of a working link.
  */
-export default function InvestmentSlotCard({ slot }: { slot: InvestmentSlot }) {
+export default function InvestmentSlotCard({
+  slot,
+  whatsappNumber,
+}: {
+  slot: InvestmentSlot;
+  whatsappNumber: string | null;
+}) {
   const isOpen = slot.status === "open";
+  const canInvest = isOpen && whatsappNumber !== null;
   const title = slot.businessName ?? slot.name;
   const whatsappMessage =
     slot.package === "ventures" && slot.businessName
@@ -73,10 +80,10 @@ export default function InvestmentSlotCard({ slot }: { slot: InvestmentSlot }) {
         <StatRow label="Availability" value={getSlotWindowLabel(slot)} />
       </div>
 
-      {isOpen ? (
+      {canInvest && whatsappNumber ? (
         <motion.a
           {...hoverScale}
-          href={getSlotWhatsAppLink(whatsappMessage)}
+          href={getSlotWhatsAppLink(whatsappNumber, whatsappMessage)}
           target="_blank"
           rel="noopener noreferrer"
           className="flex items-center justify-center gap-2 bg-gradient-to-r from-gold via-gold-light via-50% to-gold px-6 py-3 font-jakarta text-sm font-medium text-amainblack transition-opacity"
@@ -89,7 +96,7 @@ export default function InvestmentSlotCard({ slot }: { slot: InvestmentSlot }) {
           disabled
           className="flex cursor-not-allowed items-center justify-center gap-2 border border-grid-line px-6 py-3 font-jakarta text-sm font-medium text-cream-dim opacity-60"
         >
-          Closed
+          {isOpen ? "Unavailable" : "Closed"}
         </button>
       )}
     </motion.div>

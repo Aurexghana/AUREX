@@ -23,7 +23,13 @@ const FILTERS: { value: Filter; label: string }[] = [
  * is explicit this dashboard uses React state only, no localStorage/
  * sessionStorage.
  */
-export default function OpenSlotsSection({ slots }: { slots: InvestmentSlot[] }) {
+export default function OpenSlotsSection({
+  slots,
+  whatsappNumber,
+}: {
+  slots: InvestmentSlot[];
+  whatsappNumber: string | null;
+}) {
   const [filter, setFilter] = useState<Filter>("all");
 
   const visibleSlots = slots.filter((slot) => filter === "all" || slot.package === filter);
@@ -64,7 +70,7 @@ export default function OpenSlotsSection({ slots }: { slots: InvestmentSlot[] })
         >
           {visibleSlots.map((slot) => (
             <motion.div key={slot.id} variants={staggerItem}>
-              <InvestmentSlotCard slot={slot} />
+              <InvestmentSlotCard slot={slot} whatsappNumber={whatsappNumber} />
             </motion.div>
           ))}
         </motion.div>
