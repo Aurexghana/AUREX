@@ -1,143 +1,114 @@
-import { apiFetch } from "@/lib/api/client";
+import { apiFetch, apiFetchPaginated } from "@/lib/api/client";
 
-/**
- * The investor's Transaction History: the money-in side (GET /investments)
- * and the money-out side (GET /payouts) merged into one chronological list.
- * Same convention as the rest of lib/: the API's snake_case rows are mapped
- * to camelCase here so no component ever touches a raw row.
- */
-
-export type TransactionKind = "investment" | "payout";
-
-export type InvestmentStatus = "pending_payment" | "active" | "matured";
 export type PayoutStatus = "scheduled" | "paid" | "missed" | "late";
-export type TransactionStatus = InvestmentStatus | PayoutStatus;
 
-export const TRANSACTION_STATUS_LABEL: Record<TransactionStatus, string> = {
-  pending_payment: "Pending Payment",
-  active: "Active",
-  matured: "Matured",
+export const PAYOUT_STATUS_LABEL: Record<PayoutStatus, string> = {
   scheduled: "Scheduled",
   paid: "Paid",
-  missed: "Missed",
   late: "Late",
+  missed: "Missed",
 };
 
-export const TRANSACTION_KIND_LABEL: Record<TransactionKind, string> = {
-  investment: "Investment",
-  payout: "Payout",
-};
-
-export type Transaction = {
-  /** Prefixed with the kind, since an investment's and a payout's ids come
-   *  from two different tables and could otherwise collide. */
+export type Payout = {
   id: string;
-  kind: TransactionKind;
-  /** Package name, or the business's name for a Ventures investment. */
-  title: string;
-  packageType: "core" | "ventures" | null;
-  status: TransactionStatus;
-  /** ISO date this entry is placed at: an investment's start date, a payout's
-   *  paid date (or its scheduled date while still unpaid). */
-  date: string;
-  /** Money in (investment) or out (payout) — the amount actually moved, or
-   *  for a not-yet-paid payout the scheduled amount. */
-  amountGhs: number;
-  // Investment-only detail
-  currentValueGhs?: number;
-  earningsGhs?: number;
-  ratePercentLabel?: string;
-  maturityDate?: string | null;
-  // Payout-only detail
-  scheduledAmountGhs?: number;
-  paidAmountGhs?: number | null;
-  scheduledDate?: string;
-  paidDate?: string | null;
-  seasonId?: string | null;
-  investmentId?: string | null;
+  investmentId: string;
+  packageName: string;
+  businessName: string | null;
+  scheduledAmountGhs: number;
+  paidAmountGhs: number | null;
+  scheduledDate: string;
+  paidDate: string | null;
+  status: PayoutStatus;
+  seasonId: string | null;
 };
 
-type InvestmentApiRow = {
+export type Season = {
   id: string;
-  package_type: "core" | "ventures";
-  package_name: string;
-  business_name: string | null;
-  amount_invested: string;
-  current_value: string;
-  roi_rate: string;
-  start_date: string | null;
-  maturity_date: string | null;
-  created_at?: string;
-  status: InvestmentStatus;
+  name: string;
+};
+
+export type PayoutFilters = {
+  status?: PayoutStatus;
+  seasonId?: string;
+  startDate?: string;
+  endDate?: string;
+  packageQuery?: string;
+  firstPendingOnly?: boolean;
+  page: number;
+  limit: number;
+};
+
+export type PayoutPage = {
+  data: Payout[];
+  page: number;
+  totalPages: number;
+  total: number;
 };
 
 type PayoutApiRow = {
   id: string;
-  investment_id: string | null;
-  season_id: string | null;
-  package_name?: string | null;
-  package_type?: "core" | "ventures" | null;
-  business_name?: string | null;
-  scheduled_amount: string;
+  investment_id: string;
+  package_name: string;
+  business_name: string | null;
+  amount: string;
   paid_amount: string | null;
   scheduled_date: string;
   paid_date: string | null;
   status: PayoutStatus;
+  season_id: string | null;
 };
 
-function toInvestmentTransaction(row: InvestmentApiRow): Transaction {
-  const invested = Number(row.amount_invested);
-  const currentValue = Number(row.current_value);
+type SeasonApiRow = {
+  id: string;
+  name: string;
+};
+
+function toPayout(row: PayoutApiRow): Payout {
   return {
-    id: `investment-${row.id}`,
-    kind: "investment",
-    title: row.business_name ?? row.package_name,
-    packageType: row.package_type,
+    id: row.id,
+    investmentId: row.investment_id,
+    packageName: row.package_name,
+    businessName: row.business_name,
+    scheduledAmountGhs: Number(row.amount),
+    paidAmountGhs: row.paid_amount === null ? null : Number(row.paid_amount),
+    scheduledDate: row.scheduled_date,
+    paidDate: row.paid_date,
     status: row.status,
-    date: row.start_date ?? row.created_at ?? "",
-    amountGhs: invested,
-    currentValueGhs: currentValue,
-    earningsGhs: currentValue - invested,
-    ratePercentLabel: `${Number(row.roi_rate)}% p.a.`,
-    maturityDate: row.maturity_date,
+    seasonId: row.season_id,
   };
 }
 
-function toPayoutTransaction(row: PayoutApiRow, investments: Map<string, InvestmentApiRow>): Transaction {
-  // The payout row may not carry the package/business itself — fall back to
-  // the investment it belongs to.
-  const parent = row.investment_id ? investments.get(row.investment_id) : undefined;
-  const scheduledAmount = Number(row.scheduled_amount);
-  const paidAmount = row.paid_amount === null ? null : Number(row.paid_amount);
-  return {
-    id: `payout-${row.id}`,
-    kind: "payout",
-    title: row.business_name ?? row.package_name ?? parent?.business_name ?? parent?.package_name ?? "Payout",
-    packageType: row.package_type ?? parent?.package_type ?? null,
-    status: row.status,
-    date: row.paid_date ?? row.scheduled_date,
-    amountGhs: paidAmount ?? scheduledAmount,
-    scheduledAmountGhs: scheduledAmount,
-    paidAmountGhs: paidAmount,
-    scheduledDate: row.scheduled_date,
-    paidDate: row.paid_date,
-    seasonId: row.season_id,
-    investmentId: row.investment_id,
-  };
+/** "Late" is never stored — it's a still-scheduled payout whose date has passed. */
+export function displayStatus(payout: Payout): PayoutStatus {
+  const isLate = payout.status === "scheduled" && payout.scheduledDate.slice(0, 10) < new Date().toISOString().slice(0, 10);
+  return isLate ? "late" : payout.status;
 }
 
 /** Throws on failure (unlike most of lib/) so the page can show a retry
- *  state — an empty list would be indistinguishable from "no transactions". */
-export async function getMyTransactions(userId: string): Promise<Transaction[]> {
-  const [investmentsRes, payoutsRes] = await Promise.all([
-    apiFetch<InvestmentApiRow[]>(`/investments?user_id=${encodeURIComponent(userId)}`),
-    apiFetch<PayoutApiRow[]>("/payouts"),
-  ]);
+ *  state — an empty list would be indistinguishable from "no payouts". */
+export async function getMyPayouts(filters: PayoutFilters): Promise<PayoutPage> {
+  const params = new URLSearchParams({ page: String(filters.page), limit: String(filters.limit) });
+  if (filters.status) params.set("status", filters.status);
+  if (filters.seasonId) params.set("season_id", filters.seasonId);
+  if (filters.startDate) params.set("start_date", filters.startDate);
+  if (filters.endDate) params.set("end_date", filters.endDate);
+  if (filters.packageQuery) params.set("package", filters.packageQuery);
+  if (filters.firstPendingOnly) params.set("first_pending_only", "true");
 
-  const investmentsById = new Map(investmentsRes.data.map((row) => [row.id, row]));
+  const { data, pagination } = await apiFetchPaginated<PayoutApiRow>(`/payouts?${params.toString()}`);
+  return {
+    data: data.map(toPayout),
+    page: pagination.page,
+    totalPages: pagination.totalPages,
+    total: pagination.total,
+  };
+}
 
-  return [
-    ...investmentsRes.data.map(toInvestmentTransaction),
-    ...payoutsRes.data.map((row) => toPayoutTransaction(row, investmentsById)),
-  ];
+export async function getSeasons(): Promise<Season[]> {
+  try {
+    const { data } = await apiFetch<SeasonApiRow[]>("/seasons");
+    return data.map((row) => ({ id: row.id, name: row.name }));
+  } catch {
+    return [];
+  }
 }

@@ -13,8 +13,13 @@ export class ApiError extends Error {
 }
 
 type ApiEnvelope<T> = { success: true; message?: string; data: T };
+type PaginatedEnvelope<T> = {
+  success: true;
+  data: T[];
+  pagination: { page: number; limit: number; total: number; totalPages: number };
+};
 
-async function parseResponse<T>(res: Response): Promise<ApiEnvelope<T>> {
+async function parseResponse<T>(res: Response): Promise<T> {
   const json = await res.json().catch(() => null);
 
   if (!res.ok || !json?.success) {
@@ -25,7 +30,7 @@ async function parseResponse<T>(res: Response): Promise<ApiEnvelope<T>> {
     );
   }
 
-  return json as ApiEnvelope<T>;
+  return json as T;
 }
 
 export async function apiFetch<T = unknown>(
@@ -42,7 +47,19 @@ export async function apiFetch<T = unknown>(
     body: options.body !== undefined ? JSON.stringify(options.body) : undefined,
   });
 
-  return parseResponse<T>(res);
+  return parseResponse<ApiEnvelope<T>>(res);
+}
+
+export async function apiFetchPaginated<T = unknown>(
+  path: string,
+  options: { accessToken?: string | null | undefined } = {},
+): Promise<PaginatedEnvelope<T>> {
+  const res = await fetch(`${API_BASE_URL}${path}`, {
+    credentials: "include",
+    headers: options.accessToken ? { Authorization: `Bearer ${options.accessToken}` } : {},
+  });
+
+  return parseResponse<PaginatedEnvelope<T>>(res);
 }
 
 export async function apiUpload<T = unknown>(
@@ -59,5 +76,5 @@ export async function apiUpload<T = unknown>(
     body: formData,
   });
 
-  return parseResponse<T>(res);
+  return parseResponse<ApiEnvelope<T>>(res);
 }

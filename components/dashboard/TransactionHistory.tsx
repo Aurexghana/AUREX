@@ -1,52 +1,54 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { hoverScale } from "@/lib/motion";
 import { formatDisplayDate } from "@/lib/formatters";
 import { FormField, fieldClassName } from "@/components/apply/FormField";
 import CustomSelect from "@/components/apply/CustomSelect";
 import {
-  TRANSACTION_KIND_LABEL,
-  TRANSACTION_STATUS_LABEL,
-  type Transaction,
-  type TransactionKind,
-  type TransactionStatus,
+  PAYOUT_STATUS_LABEL,
+  displayStatus,
+  getMyPayouts,
+  getSeasons,
+  type Payout,
+  type PayoutStatus,
+  type Season,
 } from "@/lib/transactions";
-
-type KindFilter = "all" | TransactionKind;
-type SortOrder = "newest" | "oldest";
 
 const PAGE_SIZE = 10;
 
-const KIND_FILTERS: { value: KindFilter; label: string }[] = [
-  { value: "all", label: "All" },
-  { value: "investment", label: "Investments" },
-  { value: "payout", label: "Payouts" },
+const STATUS_OPTIONS: { value: "all" | PayoutStatus; label: string }[] = [
+  { value: "all", label: "All statuses" },
+  { value: "scheduled", label: PAYOUT_STATUS_LABEL.scheduled },
+  { value: "late", label: PAYOUT_STATUS_LABEL.late },
+  { value: "paid", label: PAYOUT_STATUS_LABEL.paid },
+  { value: "missed", label: PAYOUT_STATUS_LABEL.missed },
 ];
 
-const INVESTMENT_STATUSES: TransactionStatus[] = ["pending_payment", "active", "matured"];
-const PAYOUT_STATUSES: TransactionStatus[] = ["scheduled", "paid", "late", "missed"];
+type ViewMode = "all" | "firstPending";
 
-const SORT_OPTIONS: { value: SortOrder; label: string }[] = [
-  { value: "newest", label: "Newest first" },
-  { value: "oldest", label: "Oldest first" },
+const VIEW_OPTIONS: { value: ViewMode; label: string }[] = [
+  { value: "all", label: "All payouts" },
+  { value: "firstPending", label: "First pending payout only" },
 ];
 
-// Same "gold = in progress, green = good outcome, red = problem, neutral
-// otherwise" convention the Report and Listing status badges use.
-const STATUS_TONE: Record<TransactionStatus, string> = {
-  pending_payment: "border-grid-line text-cream-dim",
-  active: "border-gold/30 text-gold-bright",
-  matured: "border-grid-line text-cream-dim",
+const STATUS_TONE: Record<PayoutStatus, string> = {
   scheduled: "border-grid-line text-cream-dim",
   paid: "border-[#4ade80]/30 text-[#4ade80]",
   late: "border-gold/30 text-gold-bright",
   missed: "border-[#f87171]/30 text-[#f87171]",
 };
 
-/** Whole cedis when the amount is whole, otherwise two decimals — payouts
- *  can be fractional, which formatGhs (whole numbers only) would round. */
+type LoadedPayouts = {
+  key: string;
+  rows: Payout[];
+  page: number;
+  totalPages: number;
+  total: number;
+  error: boolean;
+};
+
 function formatAmount(amount: number): string {
   return `GHS ${amount.toLocaleString("en-US", { minimumFractionDigits: 0, maximumFractionDigits: 2 })}`;
 }
@@ -55,175 +57,196 @@ function formatDate(iso: string | null | undefined): string {
   return iso ? formatDisplayDate(iso) : "—";
 }
 
-function StatusBadge({ status }: { status: TransactionStatus }) {
+function StatusBadge({ status }: { status: PayoutStatus }) {
   return (
     <span
       className={`inline-flex w-fit shrink-0 items-center rounded-full border px-2.5 py-0.5 font-jakarta text-[10px] font-medium uppercase tracking-wide ${STATUS_TONE[status]}`}
     >
-      {TRANSACTION_STATUS_LABEL[status]}
+      {PAYOUT_STATUS_LABEL[status]}
     </span>
   );
 }
 
-function KindBadge({ kind }: { kind: TransactionKind }) {
-  return (
-    <span
-      className={`inline-flex w-fit shrink-0 items-center rounded-full border px-2 py-0.5 font-jakarta text-[10px] font-medium uppercase tracking-wide ${
-        kind === "investment" ? "border-gold/30 text-gold-bright" : "border-grid-line text-cream-dim"
-      }`}
-    >
-      {TRANSACTION_KIND_LABEL[kind]}
-    </span>
-  );
-}
-
-function detailLine(t: Transaction): string {
-  if (t.kind === "investment") {
-    return [
-      t.ratePercentLabel,
-      t.maturityDate ? `Matures ${formatDate(t.maturityDate)}` : null,
-      t.status !== "pending_payment" && t.earningsGhs !== undefined
-        ? `Earnings ${formatAmount(t.earningsGhs)}`
-        : null,
-    ]
-      .filter(Boolean)
-      .join(" · ");
-  }
-
+function detailLine(payout: Payout, seasonName: string | undefined): string {
   return [
-    t.seasonId ? `Season ${t.seasonId.slice(0, 8).toUpperCase()}` : null,
-    t.paidDate && t.scheduledDate && t.paidDate.slice(0, 10) !== t.scheduledDate.slice(0, 10)
-      ? `Scheduled ${formatDate(t.scheduledDate)}`
-      : null,
-    t.paidAmountGhs != null && t.scheduledAmountGhs !== undefined && t.paidAmountGhs !== t.scheduledAmountGhs
-      ? `Expected ${formatAmount(t.scheduledAmountGhs)}`
+    seasonName ?? null,
+    payout.paidDate ? `Paid ${formatDate(payout.paidDate)}` : null,
+    payout.paidAmountGhs !== null && payout.paidAmountGhs !== payout.scheduledAmountGhs
+      ? `Expected ${formatAmount(payout.scheduledAmountGhs)}`
       : null,
   ]
     .filter(Boolean)
     .join(" · ");
 }
 
-function SummaryStat({ label, value }: { label: string; value: string }) {
-  return (
-    <div className="flex flex-col gap-1">
-      <span className="font-sans text-xs uppercase tracking-wide text-cream-dim">{label}</span>
-      <span className="font-jakarta text-2xl font-bold text-cream sm:text-3xl">{value}</span>
-    </div>
-  );
-}
-
 /**
- * The Investor Dashboard's Transaction History — reached from the Earnings
- * tab's "Transaction History" link. Money in (investments) and money out
- * (payouts) in one list, filterable by type, status and date range.
- *
- * The summary figures follow the active filters, so narrowing the list to
- * e.g. "Payouts, this year" also answers "how much was I paid this year".
- * Dates compare as YYYY-MM-DD strings rather than Date objects, so a
- * timestamp near midnight can't slip across a day boundary by timezone.
+ * The Investor Dashboard's payout history — reached from the Earnings tab's
+ * "Transaction History" link. Same filters as the admin Payouts page (status,
+ * season, date range, package), minus the member search since the API already
+ * scopes every row to the signed-in investor. Filtering and paging happen
+ * server-side; "Load More" appends the next page.
  */
-export default function TransactionHistory({ transactions }: { transactions: Transaction[] }) {
-  const [kind, setKind] = useState<KindFilter>("all");
-  const [status, setStatus] = useState<"all" | TransactionStatus>("all");
+export default function TransactionHistory() {
+  const [status, setStatus] = useState<"all" | PayoutStatus>("all");
+  const [seasonId, setSeasonId] = useState("all");
+  const [pickedViewMode, setViewMode] = useState<ViewMode>("firstPending");
   const [from, setFrom] = useState("");
   const [to, setTo] = useState("");
-  const [sort, setSort] = useState<SortOrder>("newest");
-  const [visibleCount, setVisibleCount] = useState(PAGE_SIZE);
+  const [packageQuery, setPackageQuery] = useState("");
+  const [debouncedPackage, setDebouncedPackage] = useState("");
+  const [seasons, setSeasons] = useState<Season[]>([]);
+  const [loaded, setLoaded] = useState<LoadedPayouts | null>(null);
+  const [attempt, setAttempt] = useState(0);
+  const [loadingMore, setLoadingMore] = useState(false);
+  const [loadMoreFailed, setLoadMoreFailed] = useState(false);
 
-  const statusChoices =
-    kind === "investment"
-      ? INVESTMENT_STATUSES
-      : kind === "payout"
-        ? PAYOUT_STATUSES
-        : [...INVESTMENT_STATUSES, ...PAYOUT_STATUSES.filter((s) => !INVESTMENT_STATUSES.includes(s))];
-  // A status picked under one type filter may not exist under another.
-  const effectiveStatus = status !== "all" && statusChoices.includes(status) ? status : "all";
+  useEffect(() => {
+    let cancelled = false;
+    getSeasons().then((rows) => {
+      if (!cancelled) setSeasons(rows);
+    });
+    return () => {
+      cancelled = true;
+    };
+  }, []);
 
-  const filtered = transactions
-    .filter((t) => kind === "all" || t.kind === kind)
-    .filter((t) => effectiveStatus === "all" || t.status === effectiveStatus)
-    .filter((t) => !from || t.date.slice(0, 10) >= from)
-    .filter((t) => !to || t.date.slice(0, 10) <= to)
-    .sort((a, b) => (sort === "newest" ? b.date.localeCompare(a.date) : a.date.localeCompare(b.date)));
+  useEffect(() => {
+    const t = setTimeout(() => setDebouncedPackage(packageQuery.trim()), 300);
+    return () => clearTimeout(t);
+  }, [packageQuery]);
 
-  const visible = filtered.slice(0, visibleCount);
-  const hasMore = visibleCount < filtered.length;
+  const isViewLocked = status !== "all" && status !== "scheduled";
+  const viewMode: ViewMode = isViewLocked ? "all" : pickedViewMode;
 
-  const totalIn = filtered.filter((t) => t.kind === "investment").reduce((sum, t) => sum + t.amountGhs, 0);
-  const totalOut = filtered
-    .filter((t) => t.kind === "payout" && t.paidAmountGhs != null)
-    .reduce((sum, t) => sum + (t.paidAmountGhs ?? 0), 0);
+  const queryKey = [status, seasonId, viewMode, from, to, debouncedPackage, attempt].join("|");
 
-  const hasActiveFilters = kind !== "all" || effectiveStatus !== "all" || from !== "" || to !== "";
+  function currentFilters(page: number) {
+    return {
+      status: status === "all" ? undefined : status,
+      seasonId: seasonId === "all" ? undefined : seasonId,
+      startDate: from || undefined,
+      endDate: to || undefined,
+      packageQuery: debouncedPackage || undefined,
+      firstPendingOnly: viewMode === "firstPending",
+      page,
+      limit: PAGE_SIZE,
+    };
+  }
+
+  useEffect(() => {
+    let cancelled = false;
+    getMyPayouts(currentFilters(1))
+      .then((result) => {
+        if (cancelled) return;
+        setLoadMoreFailed(false);
+        setLoaded({
+          key: queryKey,
+          rows: result.data,
+          page: result.page,
+          totalPages: result.totalPages,
+          total: result.total,
+          error: false,
+        });
+      })
+      .catch(() => {
+        if (!cancelled) setLoaded({ key: queryKey, rows: [], page: 1, totalPages: 1, total: 0, error: true });
+      });
+    return () => {
+      cancelled = true;
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [status, seasonId, viewMode, from, to, debouncedPackage, attempt]);
+
+  const isLoading = loaded?.key !== queryKey;
+  const hasActiveFilters = status !== "all" || seasonId !== "all" || viewMode !== "firstPending" || from !== "" || to !== "" || packageQuery.trim() !== "";
+  const seasonNames = new Map(seasons.map((s) => [s.id, s.name]));
 
   const clearFilters = () => {
-    setKind("all");
     setStatus("all");
+    setSeasonId("all");
+    setViewMode("firstPending");
     setFrom("");
     setTo("");
-    setVisibleCount(PAGE_SIZE);
+    setPackageQuery("");
+    setDebouncedPackage("");
   };
 
-  // Every filter change also restarts pagination at the first page.
-  const withReset = <T,>(setter: (value: T) => void) => (value: T) => {
-    setter(value);
-    setVisibleCount(PAGE_SIZE);
+  const loadMore = async () => {
+    if (!loaded || loadingMore) return;
+    setLoadingMore(true);
+    setLoadMoreFailed(false);
+    try {
+      const result = await getMyPayouts(currentFilters(loaded.page + 1));
+      setLoaded((prev) =>
+        prev && prev.key === queryKey
+          ? {
+              ...prev,
+              rows: [...prev.rows, ...result.data],
+              page: result.page,
+              totalPages: result.totalPages,
+              total: result.total,
+            }
+          : prev,
+      );
+    } catch {
+      setLoadMoreFailed(true);
+    } finally {
+      setLoadingMore(false);
+    }
   };
+
+  const hasMore = loaded !== null && !isLoading && loaded.page < loaded.totalPages;
 
   return (
     <section className="flex flex-col gap-6">
       <div className="flex flex-col gap-1">
         <h2 className="font-jakarta text-xl font-semibold text-cream sm:text-2xl">Transaction History</h2>
-        <p className="font-sans text-sm text-cream-dim">
-          Every investment you&apos;ve made and every payout AUREX has scheduled or paid to you.
-        </p>
-      </div>
-
-      <div className="grid grid-cols-1 gap-6 border border-grid-line bg-panel/20 p-6 sm:grid-cols-2 sm:p-8">
-        <SummaryStat label="Invested · in view" value={formatAmount(totalIn)} />
-        <SummaryStat label="Paid out · in view" value={formatAmount(totalOut)} />
+        <p className="font-sans text-sm text-cream-dim">Every payout AUREX has scheduled or paid to you.</p>
       </div>
 
       <div className="flex flex-col gap-4 border border-gold/20 bg-panel/40 p-5 backdrop-blur-2xl sm:p-6">
-        <div className="flex flex-wrap items-center justify-between gap-3">
-          <div className="flex items-center gap-2 border border-grid-line p-1" role="group" aria-label="Transaction type">
-            {KIND_FILTERS.map((f) => (
-              <button
-                key={f.value}
-                type="button"
-                onClick={() => withReset(setKind)(f.value)}
-                aria-pressed={kind === f.value}
-                className={`px-3.5 py-1.5 font-jakarta text-sm font-medium transition-colors ${
-                  kind === f.value ? "bg-gold-bright text-amainblack" : "text-cream-dim hover:text-cream"
-                }`}
-              >
-                {f.label}
-              </button>
-            ))}
-          </div>
-
-          {hasActiveFilters && (
-            <button
-              type="button"
-              onClick={clearFilters}
-              className="font-jakarta text-sm font-medium text-gold-bright underline-offset-4 transition-colors hover:text-gold-light hover:underline"
-            >
-              Clear filters
-            </button>
-          )}
-        </div>
-
-        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           <FormField label="Status" htmlFor="tx-status">
             <CustomSelect
               id="tx-status"
-              value={effectiveStatus}
-              onChange={(v) => withReset(setStatus)(v as "all" | TransactionStatus)}
-              options={[
-                { value: "all", label: "All statuses" },
-                ...statusChoices.map((s) => ({ value: s, label: TRANSACTION_STATUS_LABEL[s] })),
-              ]}
+              value={status}
+              onChange={(v) => setStatus(v as "all" | PayoutStatus)}
+              options={STATUS_OPTIONS}
               triggerClassName="w-full"
+            />
+          </FormField>
+
+          {seasons.length > 0 && (
+            <FormField label="Season" htmlFor="tx-season">
+              <CustomSelect
+                id="tx-season"
+                value={seasonId}
+                onChange={setSeasonId}
+                options={[{ value: "all", label: "All seasons" }, ...seasons.map((s) => ({ value: s.id, label: s.name }))]}
+                triggerClassName="w-full"
+              />
+            </FormField>
+          )}
+
+          <FormField label="Show" htmlFor="tx-view">
+            <CustomSelect
+              id="tx-view"
+              value={viewMode}
+              disabled={isViewLocked}
+              onChange={(v) => setViewMode(v as ViewMode)}
+              options={VIEW_OPTIONS}
+              triggerClassName="w-full"
+            />
+          </FormField>
+
+          <FormField label="Package" htmlFor="tx-package">
+            <input
+              id="tx-package"
+              type="text"
+              value={packageQuery}
+              onChange={(e) => setPackageQuery(e.target.value)}
+              placeholder="e.g. spoty"
+              className={fieldClassName(false, "w-full")}
             />
           </FormField>
 
@@ -233,7 +256,7 @@ export default function TransactionHistory({ transactions }: { transactions: Tra
               type="date"
               value={from}
               max={to || undefined}
-              onChange={(e) => withReset(setFrom)(e.target.value)}
+              onChange={(e) => setFrom(e.target.value)}
               className={fieldClassName(false, "w-full")}
             />
           </FormField>
@@ -244,30 +267,50 @@ export default function TransactionHistory({ transactions }: { transactions: Tra
               type="date"
               value={to}
               min={from || undefined}
-              onChange={(e) => withReset(setTo)(e.target.value)}
+              onChange={(e) => setTo(e.target.value)}
               className={fieldClassName(false, "w-full")}
             />
           </FormField>
+        </div>
 
-          <FormField label="Sort" htmlFor="tx-sort">
-            <CustomSelect
-              id="tx-sort"
-              value={sort}
-              onChange={(v) => setSort(v as SortOrder)}
-              options={SORT_OPTIONS}
-              triggerClassName="w-full"
-            />
-          </FormField>
+        <div className="flex flex-wrap items-center justify-between gap-3">
+          <span className="font-sans text-xs text-cream-dim">
+            {loaded && !isLoading && !loaded.error ? `${loaded.total} ${loaded.total === 1 ? "payout" : "payouts"}` : ""}
+          </span>
+          {hasActiveFilters && (
+            <button
+              type="button"
+              onClick={clearFilters}
+              className="font-jakarta text-sm font-medium text-gold-bright underline-offset-4 transition-colors hover:text-gold-light hover:underline"
+            >
+              Clear filters
+            </button>
+          )}
         </div>
       </div>
 
-      {filtered.length > 0 ? (
+      {isLoading ? (
+        <p className="px-4 py-10 text-center font-sans text-sm text-cream-dim">Loading…</p>
+      ) : loaded.error ? (
+        <div className="flex flex-col items-center gap-3 border border-[#f87171]/30 bg-[#f87171]/5 py-12 text-center">
+          <p role="alert" className="font-sans text-sm text-[#f87171]">
+            Something went wrong loading your payouts.
+          </p>
+          <button
+            type="button"
+            onClick={() => setAttempt((n) => n + 1)}
+            className="font-jakarta text-sm font-medium text-gold-bright underline-offset-4 hover:underline"
+          >
+            Try again
+          </button>
+        </div>
+      ) : loaded.rows.length > 0 ? (
         <div className="flex flex-col gap-6">
           <div className="overflow-x-auto border border-grid-line bg-panel/20">
             <table className="w-full min-w-[640px] border-collapse text-left">
               <thead>
                 <tr className="border-b border-grid-line">
-                  {["Date", "Transaction", "Amount", "Status"].map((heading) => (
+                  {["Scheduled", "Package", "Amount", "Status"].map((heading) => (
                     <th
                       key={heading}
                       scope="col"
@@ -281,27 +324,26 @@ export default function TransactionHistory({ transactions }: { transactions: Tra
                 </tr>
               </thead>
               <tbody>
-                {visible.map((t) => {
-                  const detail = detailLine(t);
+                {loaded.rows.map((payout) => {
+                  const detail = detailLine(payout, payout.seasonId ? seasonNames.get(payout.seasonId) : undefined);
                   return (
-                    <tr key={t.id} className="border-b border-grid-line last:border-b-0">
+                    <tr key={payout.id} className="border-b border-grid-line last:border-b-0">
                       <td className="whitespace-nowrap px-4 py-4 align-top font-sans text-sm text-cream-dim">
-                        {formatDate(t.date)}
+                        {formatDate(payout.scheduledDate)}
                       </td>
                       <td className="px-4 py-4 align-top">
                         <div className="flex flex-col gap-1">
-                          <div className="flex flex-wrap items-center gap-2">
-                            <span className="font-jakarta text-sm font-semibold text-cream">{t.title}</span>
-                            <KindBadge kind={t.kind} />
-                          </div>
+                          <span className="font-jakarta text-sm font-semibold text-cream">
+                            {payout.businessName ?? payout.packageName}
+                          </span>
                           {detail && <span className="font-sans text-xs text-cream-dim">{detail}</span>}
                         </div>
                       </td>
                       <td className="whitespace-nowrap px-4 py-4 text-right align-top font-jakarta text-sm font-semibold text-cream">
-                        {formatAmount(t.amountGhs)}
+                        {formatAmount(payout.paidAmountGhs ?? payout.scheduledAmountGhs)}
                       </td>
                       <td className="px-4 py-4 align-top">
-                        <StatusBadge status={t.status} />
+                        <StatusBadge status={displayStatus(payout)} />
                       </td>
                     </tr>
                   );
@@ -312,16 +354,22 @@ export default function TransactionHistory({ transactions }: { transactions: Tra
 
           <div className="flex flex-col items-center gap-3">
             <p className="font-sans text-xs text-cream-dim">
-              Showing {visible.length} of {filtered.length}
+              Showing {loaded.rows.length} of {loaded.total}
             </p>
+            {loadMoreFailed && (
+              <p role="alert" className="font-sans text-xs text-[#f87171]">
+                Couldn&apos;t load more. Please try again.
+              </p>
+            )}
             {hasMore && (
               <motion.button
                 {...hoverScale}
                 type="button"
-                onClick={() => setVisibleCount((v) => v + PAGE_SIZE)}
-                className="flex items-center justify-center border border-gold/30 px-6 py-3 font-jakarta text-sm font-medium text-gold-bright transition-colors hover:border-gold hover:bg-gold/5"
+                onClick={loadMore}
+                disabled={loadingMore}
+                className="flex items-center justify-center border border-gold/30 px-6 py-3 font-jakarta text-sm font-medium text-gold-bright transition-colors hover:border-gold hover:bg-gold/5 disabled:opacity-60"
               >
-                Load More
+                {loadingMore ? "Loading…" : "Load More"}
               </motion.button>
             )}
           </div>
@@ -329,14 +377,14 @@ export default function TransactionHistory({ transactions }: { transactions: Tra
       ) : (
         <div className="flex flex-col items-center gap-2 border border-grid-line py-12 text-center">
           <p className="font-jakarta text-sm font-medium text-cream">
-            {transactions.length === 0 ? "No transactions yet." : "No transactions match these filters."}
+            {hasActiveFilters ? "No payouts match these filters." : "No pending payouts."}
           </p>
           <p className="max-w-sm font-sans text-sm text-cream-dim">
-            {transactions.length === 0
-              ? "Your investments and payouts will show up here once Admin records them."
-              : "Try a different type, status or date range."}
+            {hasActiveFilters
+              ? "Try a different status, season, view, package or date range."
+              : "Upcoming payouts will show up here once an investment of yours is active. Switch Show to All payouts to see past ones."}
           </p>
-          {transactions.length > 0 && hasActiveFilters && (
+          {hasActiveFilters && (
             <button
               type="button"
               onClick={clearFilters}
