@@ -92,18 +92,10 @@ export default function WhyAurex() {
 
               {/* Real photo per pillar (see PILLARS' own comment on why,
                   and where each one came from) instead of the small
-<<<<<<< HEAD
                   centered line-icon this tile used to hold. Photos are shown
                   in their own bright colors (only a faint bottom shade on
-                  top) — the old gold-brown wash was removed since it
+                  top) - the old gold-brown wash was removed since it
                   dulled them. */}
-=======
-                  centered line-icon this tile used to hold. A gold-tinted
-                  wash sits over every photo regardless of its own native
-                  colors - same idea as AboutVisualPanel's own photo
-                  treatment - so all four read as one consistent, on-brand
-                  set rather than four differently-toned stock photos. */}
->>>>>>> 801dd69 (Replace em dashes with context-appropriate punctuation)
               <div className="relative h-40 overflow-hidden border border-gold/20 lg:h-32 xl:h-40">
                 <Image
                   src={image}
