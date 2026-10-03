@@ -10,12 +10,13 @@ import SectionBackgroundVector from "@/components/SectionBackgroundVector";
 // design's own image tile is a small line-icon centered in a lot of empty
 // dark space (see its own node — a 24-33px glyph in a ~192px-tall box),
 // which read as an unfinished placeholder rather than a finished tile per
-// request, so each pillar gets a real photo instead: a gold key on black
-// silk for Exclusivity, a bank vault door for Security, the Reichstag's
-// glass dome for Transparency (a literal "glass = transparency" visual),
-// and an upward-trending candlestick chart for Growth. Sourced from
-// Unsplash (free license, no attribution required) rather than AI-
-// generated or a stock library the project doesn't otherwise use.
+// request, so each pillar gets a real photo instead. The first set read as
+// dated, so they were swapped for brighter, more current ones: a flowing
+// gold 3D ribbon for Exclusivity (Mohammed Kara), a phone showing a
+// "Secured" lock screen for Security (Dan Nelson), a sunlit glass facade
+// for Transparency (Joel Filipe), and a 3D orange/blue bar chart for
+// Growth (Nick Brunner). All from Unsplash (free license, no attribution
+// required).
 const PILLARS = [
   {
     title: "Exclusivity",
@@ -91,11 +92,10 @@ export default function WhyAurex() {
 
               {/* Real photo per pillar (see PILLARS' own comment on why,
                   and where each one came from) instead of the small
-                  centered line-icon this tile used to hold. A gold-tinted
-                  wash sits over every photo regardless of its own native
-                  colors — same idea as AboutVisualPanel's own photo
-                  treatment — so all four read as one consistent, on-brand
-                  set rather than four differently-toned stock photos. */}
+                  centered line-icon this tile used to hold. Photos are shown
+                  in their own bright colors (only a faint bottom shade on
+                  top) — the old gold-brown wash was removed since it
+                  dulled them. */}
               <div className="relative h-40 overflow-hidden border border-gold/20 lg:h-32 xl:h-40">
                 <Image
                   src={image}
@@ -104,10 +104,9 @@ export default function WhyAurex() {
                   sizes="(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw"
                   className="object-cover"
                 />
-                <div aria-hidden="true" className="absolute inset-0 bg-gold-brown/30 mix-blend-color" />
                 <div
                   aria-hidden="true"
-                  className="absolute inset-0 bg-gradient-to-t from-ink/70 via-ink/10 to-transparent light:from-black/50 light:via-black/5"
+                  className="absolute inset-0 bg-gradient-to-t from-black/25 via-transparent to-transparent"
                 />
               </div>
             </motion.div>
