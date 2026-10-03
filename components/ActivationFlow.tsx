@@ -36,7 +36,7 @@ function SpinnerIcon(props: SVGProps<SVGSVGElement>) {
 
 // Same "neutral, not exactly an error" circular badge ApplicationStatusScreen's
 // StatusIcon uses for its own "rejected" state (border-grid-line/text-cream-dim,
-// TrendFlatIcon rather than a dedicated warning glyph invented just for this) —
+// TrendFlatIcon rather than a dedicated warning glyph invented just for this) -
 // reused here for both the expired and already-used states, which are the same
 // kind of "this link doesn't work anymore" message, not a fault of anything the
 // applicant did.
@@ -78,7 +78,7 @@ function RequirementRow({ met, label }: { met: boolean; label: string }) {
 }
 
 // Same 2-entry role -> dashboard-route map LoginForm.tsx keeps locally
-// rather than a shared export — small enough, and specific enough to each
+// rather than a shared export - small enough, and specific enough to each
 // call site's own role/track naming, that duplicating it here reads more
 // clearly than a shared module both would need to import and reconcile
 // naming with.

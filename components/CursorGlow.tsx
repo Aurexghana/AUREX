@@ -5,7 +5,7 @@ import { useReducedMotion } from "framer-motion";
 
 /**
  * A soft gold glow that follows the mouse cursor across the whole app.
- * Not part of the Figma design — a custom interactive touch requested on
+ * Not part of the Figma design - a custom interactive touch requested on
  * top of it. Position is written directly to the DOM on every pointer
  * move (no React state) so it stays smooth without re-rendering the tree.
  *

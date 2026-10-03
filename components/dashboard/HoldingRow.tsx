@@ -28,11 +28,11 @@ function Stat({ label, value, emphasize = false }: { label: string; value: strin
 /**
  * One row of the "My Earnings" per-investment breakdown. Doubles as the
  * "My Investments" status view per the brief's own suggestion to combine
- * the two rather than duplicate a near-identical list — each row already
+ * the two rather than duplicate a near-identical list - each row already
  * shows this holding's status (active/matured) alongside its figures.
  *
  * Every figure here is exactly what Admin last recorded for this holding
- * (see lib/investorPortfolio.ts) — this row does no math of its own
+ * (see lib/investorPortfolio.ts) - this row does no math of its own
  * beyond picking a display label.
  */
 export default function HoldingRow({ holding }: { holding: InvestmentHolding }) {

@@ -8,13 +8,13 @@ import type { StepProps } from "@/components/apply/types";
 import type { BusinessOwnerFormData } from "@/components/apply/business/types";
 
 /**
- * Step 4 of 6 — "Optional Details". The Business Owner flow's version of
+ * Step 4 of 6 - "Optional Details". The Business Owner flow's version of
  * this step only asks one thing (referral source) rather than the
- * Investor flow's three — everything else that flow puts here
+ * Investor flow's three - everything else that flow puts here
  * (investment range, source of funds) doesn't apply to a business
  * applicant, who already gave their funding amount back in Step 1. Same
  * "always valid, reports itself skippable" shape as the Investor flow's
- * OptionalDetailsStep otherwise — see that file's own comment for the
+ * OptionalDetailsStep otherwise - see that file's own comment for the
  * reasoning behind the "Optional" badge and per-field "(optional)"
  * labeling instead of a separate visual treatment.
  */

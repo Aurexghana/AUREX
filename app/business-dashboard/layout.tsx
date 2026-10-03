@@ -2,7 +2,7 @@ import { Suspense } from "react";
 import BusinessDashboardShell from "@/components/dashboard/business/BusinessDashboardShell";
 
 /**
- * Thin wrapper only — see components/dashboard/InvestorDashboardShell.tsx's
+ * Thin wrapper only - see components/dashboard/InvestorDashboardShell.tsx's
  * own comment (same reasoning applies here): the real shell needs to be a
  * Client Component using useSearchParams(), which Next.js requires to sit
  * inside a <Suspense> boundary for static builds. A layout.tsx can't wrap

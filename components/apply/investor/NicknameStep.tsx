@@ -8,7 +8,7 @@ import type { StepProps } from "@/components/apply/types";
 import type { InvestorFormData } from "@/components/apply/investor/types";
 
 /**
- * Step 2 of 6 — "Nickname / Display Name". A single required field, but
+ * Step 2 of 6 - "Nickname / Display Name". A single required field, but
  * with two things Step 1's fields don't need:
  *   - A live preview (a mock Leaderboard row) so the applicant sees
  *     exactly how the name they're typing will actually appear on the
@@ -16,7 +16,7 @@ import type { InvestorFormData } from "@/components/apply/investor/types";
  *   - A two-part validity check: getNicknameFormatError runs synchronously
  *     on every keystroke (length, characters, impersonation guard);
  *     isNicknameAvailable is an async stub for the uniqueness check a real
- *     backend will eventually own (see lib/nickname.ts) — there isn't one
+ *     backend will eventually own (see lib/nickname.ts) - there isn't one
  *     yet, so it always resolves available, but the call site is already
  *     wired so swapping in a real API call later only means changing that
  *     function's body.
@@ -28,7 +28,7 @@ export default function NicknameStep({ values, updateValues, onValidityChange }:
   const formatError = getNicknameFormatError(values.nickname);
 
   useEffect(() => {
-    // Format already invalid — no point spending an availability check
+    // Format already invalid - no point spending an availability check
     // (real or stubbed) on a nickname that can't be used anyway. Not
     // resetting `isAvailable` here is fine, not just lazy: both `isValid`
     // and `availabilityError` below already gate on `!formatError` first,
@@ -51,7 +51,7 @@ export default function NicknameStep({ values, updateValues, onValidityChange }:
 
   useEffect(() => {
     onValidityChange(isValid);
-    // Only isValid should re-trigger this — see IdentityContactStep's
+    // Only isValid should re-trigger this - see IdentityContactStep's
     // identical pattern/reasoning for why onValidityChange itself isn't a
     // dependency here.
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -63,7 +63,7 @@ export default function NicknameStep({ values, updateValues, onValidityChange }:
     <div className="flex flex-col gap-6">
       <div className="flex flex-col gap-2">
         <h1 className="font-jakarta text-2xl font-semibold text-cream sm:text-3xl">Nickname / Display Name</h1>
-        {/* Deliberately smaller/more muted than Step 1's intro paragraph —
+        {/* Deliberately smaller/more muted than Step 1's intro paragraph -
             per the brief, this copy is context for the field below it,
             not the focus of the step. */}
         <p className="max-w-lg font-sans text-xs leading-5 text-cream-dim/80">

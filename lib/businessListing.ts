@@ -36,8 +36,8 @@ type ListingApiRow = {
 function toBusinessListing(row: ListingApiRow): BusinessListing {
   return {
     businessName: row.business_name,
-    ownerNickname: row.owner_nickname ?? "—",
-    ownerRealName: row.owner_real_name ?? "—",
+    ownerNickname: row.owner_nickname ?? "-",
+    ownerRealName: row.owner_real_name ?? "-",
     description: row.description ?? "",
     fundingPurpose: row.funding_purpose ?? "",
     fundingGoalGhs: row.funding_goal ? Number(row.funding_goal) : 0,

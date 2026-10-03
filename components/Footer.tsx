@@ -13,7 +13,7 @@ import { getSiteContact, type SiteContact } from "@/lib/siteContact";
 // (see components/PageBanner.tsx + HowItWorksProcess.tsx), "Contact" at
 // the standalone /contact page (components/ContactSection.tsx), and
 // "Privacy Policy"/"Terms and Conditions" at /privacy and /terms (see
-// app/privacy/page.tsx, app/terms/page.tsx — both public, no auth gate,
+// app/privacy/page.tsx, app/terms/page.tsx - both public, no auth gate,
 // same as every other page here) rather than coming-soon.
 const NAV_LINKS = [
   { label: "Home", href: "/" },

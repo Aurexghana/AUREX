@@ -2,12 +2,12 @@
 
 /**
  * Shared decorative backdrop for the whole app. Used to carry the AUREX
- * "Ambient Lighting Effects" from the Figma design — a soft gold glow
+ * "Ambient Lighting Effects" from the Figma design - a soft gold glow
  * behind the hero, a warm highlight bleeding in from the top right, and a
- * dark umber bloom bleeding in from the bottom left — all three removed per
+ * dark umber bloom bleeding in from the bottom left - all three removed per
  * request ("remove all golden glows happening in the bg of this platform").
  * What's left is just the faint full-bleed vignette overlay from the same
- * design (a ~2%-opacity black gradient, not gold — see public/brand/
+ * design (a ~2%-opacity black gradient, not gold - see public/brand/
  * ambient-lighting.svg), which adds a touch of depth without reading as a
  * glow.
  *

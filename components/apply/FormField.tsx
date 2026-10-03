@@ -4,7 +4,7 @@ import { useState, type ReactNode } from "react";
 import { EyeIcon, EyeOffIcon } from "@/components/icons";
 
 /**
- * Shared field chrome for every step's inputs — extracted from
+ * Shared field chrome for every step's inputs - extracted from
  * IdentityContactStep (Step 1) so Step 2 (and any future step) doesn't
  * re-implement the same label/input/error layout. Same visual language as
  * the rest of the site's forms (ContactForm's border/bg/padding/text),
@@ -20,7 +20,7 @@ import { EyeIcon, EyeOffIcon } from "@/components/icons";
  * vertically by default, but CustomSelect's trigger is a `<button>`
  * wrapping a `<span>`, which without an explicit flex box model can end up
  * a hair taller/shorter than a sibling input depending on the browser's
- * own button/line-height defaults — the exact "dropdown isn't the same
+ * own button/line-height defaults - the exact "dropdown isn't the same
  * height as other fields" drift this exists to rule out. Harmless on a
  * plain input (no children to lay out), so every field sharing this
  * function is guaranteed the same box model, not just the same paint.
@@ -45,7 +45,7 @@ export function FormField({
   htmlFor: string;
   error?: string | null;
   hint?: string;
-  /** Optional inline label-row action — e.g. LoginForm's "Forgot
+  /** Optional inline label-row action - e.g. LoginForm's "Forgot
    *  password?" link, right-aligned on the same row as the label rather
    *  than floating elsewhere in the form. */
   action?: ReactNode;
@@ -72,14 +72,14 @@ export function FormField({
 }
 
 /**
- * A password `<input>` with a show/hide toggle — every password field in
+ * A password `<input>` with a show/hide toggle - every password field in
  * the app (Login, Reset Password, and Create Your Account/activation) goes
  * through this instead of a raw `<input type="password">`, so the control
  * looks and behaves identically everywhere it appears. Wraps fieldClassName
  * exactly like a plain input would, plus room for the toggle button.
  *
  * The toggle is type="button" (never submits the form) and swaps the
- * input's own `type` between "password"/"text" — not a second shadow input
+ * input's own `type` between "password"/"text" - not a second shadow input
  * or a CSS trick, so paste/autofill/password managers keep working
  * normally regardless of which state it's in.
  */

@@ -20,12 +20,12 @@ function StatRow({ label, value }: { label: string; value: string }) {
 }
 
 /**
- * One published slot on the "Open Investment Slots" grid — this is the
+ * One published slot on the "Open Investment Slots" grid - this is the
  * dashboard's primary, most action-oriented surface (see
  * OpenSlotsSection's own comment), so it gets the app's usual glass-card
  * treatment plus a hover lift, same as InvestmentPackages' own cards.
  *
- * "Invest" never collects payment in-platform — it just opens a WhatsApp
+ * "Invest" never collects payment in-platform - it just opens a WhatsApp
  * chat with Admin, pre-filled with which slot was tapped (see
  * lib/whatsapp.ts). A closed slot renders a disabled "Closed" state
  * instead of a working link.

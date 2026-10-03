@@ -14,8 +14,8 @@ function CheckmarkIcon(props: SVGProps<SVGSVGElement>) {
 }
 
 // Success icon (pending/approved) and neutral icon (rejected) share the
-// same circular badge treatment — only the inner glyph and its tone
-// change — so the two states read as "the same kind of message, different
+// same circular badge treatment - only the inner glyph and its tone
+// change - so the two states read as "the same kind of message, different
 // outcome" rather than one looking like an error state.
 function StatusIcon({ status }: { status: ApplicationStatus }) {
   const isNeutral = status === "rejected";
@@ -25,8 +25,8 @@ function StatusIcon({ status }: { status: ApplicationStatus }) {
         isNeutral ? "border-grid-line text-cream-dim" : "border-gold/30 bg-gold/10 text-gold-bright"
       }`}
     >
-      {/* TrendFlatIcon — the same "neutral/no change" glyph Leaderboard.tsx
-          and NicknamePreview already use — reused here rather than a new
+      {/* TrendFlatIcon - the same "neutral/no change" glyph Leaderboard.tsx
+          and NicknamePreview already use - reused here rather than a new
           icon invented just for this one state, so "neutral" reads
           consistently across the app. */}
       {isNeutral ? <TrendFlatIcon className="size-6" /> : <CheckmarkIcon className="size-8" />}
@@ -36,31 +36,31 @@ function StatusIcon({ status }: { status: ApplicationStatus }) {
 
 type ApplicationStatusScreenProps = {
   status: ApplicationStatus;
-  /** Public display name from the flow's own Nickname step — shown as-is,
+  /** Public display name from the flow's own Nickname step - shown as-is,
    *  never the applicant's real name (this screen is reachable standalone,
    *  outside any authenticated context, so nothing private belongs on
    *  it). */
   nickname?: string;
-  /** Already formatted for display (e.g. "+233 24 111 2233") — this
+  /** Already formatted for display (e.g. "+233 24 111 2233") - this
    *  component doesn't know or care about calling codes/libphonenumber,
    *  it just renders whatever string it's given, or omits the mention
    *  entirely if there isn't one. */
   phone?: string;
   /** The clause completing "we've received your application to ___" in
-   *  the pending message — e.g. "invest with AUREX" (Investor flow) or
+   *  the pending message - e.g. "invest with AUREX" (Investor flow) or
    *  "list Acme Foods on AUREX" (Business Owner flow). Kept as one
    *  free-form clause rather than a flow enum + businessName prop so this
    *  component doesn't need to know how many application flows exist or
    *  what makes each one's pending copy different. */
   purpose: string;
-  /** e.g. "Investor Application" / "Business Owner Application" — used in
+  /** e.g. "Investor Application" / "Business Owner Application" - used in
    *  the approved message ("your AUREX {applicationLabel} has been
    *  approved"). */
   applicationLabel: string;
-  /** Where "Reapply" sends a rejected applicant — each flow's own start,
+  /** Where "Reapply" sends a rejected applicant - each flow's own start,
    *  e.g. /apply/investor or /apply-business. */
   reapplyHref: string;
-  /** Where "Go to Dashboard" sends an approved applicant — each role's own
+  /** Where "Go to Dashboard" sends an approved applicant - each role's own
    *  dashboard, since Investors and Business Owners land on two entirely
    *  separate screens (see components/dashboard/ vs components/dashboard/
    *  business/). Defaults to /dashboard (the Investor Dashboard) so the
@@ -70,19 +70,19 @@ type ApplicationStatusScreenProps = {
 
 /**
  * Shared terminal screen for both application flows (Investor and Business
- * Owner) — reachable two ways per flow:
+ * Owner) - reachable two ways per flow:
  *   - As that flow's own last step, immediately after a successful
  *     submission (see each flow's ConfirmationStep.tsx, which always
- *     passes status="pending" — there's no real review process yet to
+ *     passes status="pending" - there's no real review process yet to
  *     have already reached a verdict).
  *   - As that flow's own standalone route (/apply/status,
  *     /apply-business/status) for a returning applicant checking on an
- *     application submitted earlier — there's no backend/auth yet to look
+ *     application submitted earlier - there's no backend/auth yet to look
  *     one up for real, so those pages vary `status` via a stub
  *     query-string source instead.
  *
  * Deliberately doesn't reuse either flow's MultiStepFormShell chrome at
- * all (no progress bar, no Back/Continue) — this is an endpoint, not a
+ * all (no progress bar, no Back/Continue) - this is an endpoint, not a
  * step the applicant is filling out, and it needs to render identically
  * whether or not a shell is even mounted.
  */
@@ -165,7 +165,7 @@ export default function ApplicationStatusScreen({
             </Link>
           )}
 
-          {/* "Back to Home" — the pending state (what every applicant
+          {/* "Back to Home" - the pending state (what every applicant
               actually sees right after submitting; see this component's
               own comment) previously had no way out of this screen at all
               besides the browser's own Back button. Approved/rejected

@@ -7,21 +7,21 @@ export const metadata: Metadata = {
 };
 
 // TODO: Replace with the real Terms and Conditions markdown once it's
-// provided — everything below this line is placeholder legal content
+// provided - everything below this line is placeholder legal content
 // standing in for it, per the brief ("treat it as placeholder legal
 // content that will be finalized after legal review, not final copy").
 // Update LAST_UPDATED alongside the real content when that swap happens.
 const LAST_UPDATED = "27 August 2026";
 
 /**
- * Standalone /terms page — reached from the site footer's "Terms and
+ * Standalone /terms page - reached from the site footer's "Terms and
  * Conditions" link (see Footer.tsx) and accessible to anyone, no auth
  * required (there's no auth on this site at all yet, but this page in
  * particular is meant to stay public even once one exists).
  *
  * Shell/typography (logo+back-link header, title block, cross-link
  * footer, and each section's own AccordionSection/Paragraph/BulletList)
- * lives in components/legal/LegalDocument.tsx, shared with /privacy —
+ * lives in components/legal/LegalDocument.tsx, shared with /privacy -
  * this file only owns which sections go here and in what order.
  */
 export default function TermsPage() {

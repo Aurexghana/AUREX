@@ -15,26 +15,26 @@ import { MOCK_INVESTOR, getMyHoldings, type InvestmentHolding } from "@/lib/inve
 /**
  * Shared shell for the whole Investor Dashboard: logo/log-out header, the
  * welcome banner + running Total Invested figure, and the Investment /
- * Earnings / Leaderboard tab bar — all of which used to live inside one
+ * Earnings / Leaderboard tab bar - all of which used to live inside one
  * long-scrolling InvestorDashboard.tsx, now split into their own routes
  * (app/dashboard/{investment,earnings,leaderboard}/page.tsx) per request,
  * so each is its own real page instead of a section on one screen.
  *
  * Lives in its own file (rather than directly in app/dashboard/layout.tsx)
- * purely so that file can wrap this in a <Suspense> boundary —
+ * purely so that file can wrap this in a <Suspense> boundary -
  * DashboardTabs calls useSearchParams(), and Next.js requires that hook's
  * nearest client-component ancestor to sit inside Suspense for static
  * builds, which a route's own layout.tsx can't itself satisfy by wrapping
  * its own return value.
  *
  * The auth guard lives here, once, instead of in each of the three tab
- * pages — useRequireAuth's `if (isLoading || !user) return null` below
+ * pages - useRequireAuth's `if (isLoading || !user) return null` below
  * blocks every child route the same way the old single component did for
  * its one page.
  *
  * Holdings are fetched here too (not passed down from a page) purely to
  * compute the header's own Total Invested figure, which per the brief
- * needs to stay visible across every tab, not just the Earnings one — so
+ * needs to stay visible across every tab, not just the Earnings one - so
  * this and app/dashboard/earnings/page.tsx each fetch independently
  * rather than one passing data down to the other.
  */
@@ -55,7 +55,7 @@ export default function InvestorDashboardShell({ children }: { children: React.R
     };
   }, [isLoading, user]);
 
-  // "Total amount currently invested across all holdings" per the brief —
+  // "Total amount currently invested across all holdings" per the brief -
   // unlike EarningsSection's own headline figure (active investments
   // only), this deliberately includes matured holdings too.
   const totalInvested = holdings.reduce((sum, h) => sum + h.amountInvestedGhs, 0);

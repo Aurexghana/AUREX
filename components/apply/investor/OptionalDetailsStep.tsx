@@ -8,10 +8,10 @@ import type { StepProps } from "@/components/apply/types";
 import type { InvestorFormData } from "@/components/apply/investor/types";
 
 /**
- * Step 4 of 6 — "Optional Details". Every field here is genuinely
+ * Step 4 of 6 - "Optional Details". Every field here is genuinely
  * optional (per the brief), which changes this step's shape compared to
  * Steps 1-3 in two ways:
- *   - It reports itself valid once, on mount, and never re-evaluates —
+ *   - It reports itself valid once, on mount, and never re-evaluates -
  *     there's no combination of these three selects that could ever make
  *     "Continue" need to disable itself.
  *   - MultiStepFormShell renders a separate "Skip this step" action next
@@ -22,8 +22,8 @@ import type { InvestorFormData } from "@/components/apply/investor/types";
  *
  * De-emphasis (per the brief's design direction) is handled with a
  * subtle "Optional" badge next to the heading and "(optional)" appended
- * to each field's own label — the same wording Step 3's ID Type field
- * already uses for its one optional field — rather than a separate
+ * to each field's own label - the same wording Step 3's ID Type field
+ * already uses for its one optional field - rather than a separate
  * lighter color treatment invented just for this step.
  */
 export default function OptionalDetailsStep({ values, updateValues, onValidityChange }: StepProps<InvestorFormData>) {

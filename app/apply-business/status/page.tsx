@@ -9,7 +9,7 @@ export const metadata: Metadata = {
 
 /**
  * Standalone landing spot for a returning business applicant checking
- * their status later — the Business Owner flow's equivalent of
+ * their status later - the Business Owner flow's equivalent of
  * app/apply/status/page.tsx (see that file's own comment for the full
  * reasoning; identical approach here, just reading an extra `business`
  * query param since this flow's pending message needs to name the

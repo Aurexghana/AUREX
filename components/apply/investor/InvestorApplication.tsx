@@ -15,7 +15,7 @@ import type { StepDefinition } from "@/components/apply/types";
 // implemented; STEP_LABELS stays separate from STEPS below only because
 // MultiStepFormShell's progress indicator needs each label independent of
 // how many steps happen to be wired up (a holdover from when this flow was
-// built one step at a time — harmless to keep now that it's complete).
+// built one step at a time - harmless to keep now that it's complete).
 const STEP_LABELS = [
   "Identity & Contact",
   "Nickname",
@@ -32,8 +32,8 @@ const STEPS: StepDefinition<InvestorFormData>[] = [
   {
     id: "optional-details",
     label: STEP_LABELS[3],
-    // Every field on this step is optional — see OptionalDetailsStep's
-    // own comment — so it's the one step in this flow that opts into the
+    // Every field on this step is optional - see OptionalDetailsStep's
+    // own comment - so it's the one step in this flow that opts into the
     // shell's separate "Skip this step" action.
     skippable: true,
     render: (props) => <OptionalDetailsStep {...props} />,
@@ -42,12 +42,12 @@ const STEPS: StepDefinition<InvestorFormData>[] = [
     id: "review-submit",
     label: STEP_LABELS[4],
     // This step's primary action is an async submission with its own
-    // loading/error states, not a simple "valid, so enable Continue" — see
+    // loading/error states, not a simple "valid, so enable Continue" - see
     // its own comment for why it drives navigation itself via goToStep
     // instead.
     hideContinueButton: true,
     // This step renders its own "Save & Exit" beside its Submit button
-    // (see ReviewSubmitFooter's onSaveAndExit) — hides the shell's header
+    // (see ReviewSubmitFooter's onSaveAndExit) - hides the shell's header
     // copy so there isn't a second, disconnected one up top.
     hideExitLink: true,
     render: (props) => <ReviewSubmitStep {...props} />,
@@ -55,7 +55,7 @@ const STEPS: StepDefinition<InvestorFormData>[] = [
   {
     id: "confirmation",
     label: STEP_LABELS[5],
-    // Takes over the whole screen — see ConfirmationStep's and
+    // Takes over the whole screen - see ConfirmationStep's and
     // ApplicationStatusScreen's own comments for why. Not marked
     // skippable/hideContinueButton since fullScreen bypasses the shell's
     // entire nav row (this step's own) regardless.

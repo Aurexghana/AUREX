@@ -49,7 +49,7 @@ export function TrendUpIcon(props: SVGProps<SVGSVGElement>) {
 }
 
 /**
- * TrendDownIcon / TrendFlatIcon — not from Figma (there's no leaderboard
+ * TrendDownIcon / TrendFlatIcon - not from Figma (there's no leaderboard
  * design there; this section was built from the user's own spec). Kept in
  * the same shape/viewBox family as TrendUpIcon (a plain vertical arrow)
  * rather than a diagonal one, and a simple centered bar for "held
@@ -76,7 +76,7 @@ export function TrendFlatIcon(props: SVGProps<SVGSVGElement>) {
 }
 
 /**
- * Originally one of four "Why Aurex" feature icons (Figma node 85:11775) —
+ * Originally one of four "Why Aurex" feature icons (Figma node 85:11775) -
  * the other three (Exclusivity/Transparency/Growth) were removed once that
  * section switched from a small centered icon per card to a real photo
  * (see components/WhyAurex.tsx's own comment on why). This one lives on
@@ -96,7 +96,7 @@ export function SecurityIcon(props: SVGProps<SVGSVGElement>) {
 }
 
 /**
- * Generic document icon — not from Figma; introduced for the Investor
+ * Generic document icon - not from Figma; introduced for the Investor
  * Application's ID Upload step (a document-type file's fallback preview),
  * and reused by its Review & Submit step (confirming a file is attached
  * without re-rendering the document itself) rather than each defining its
@@ -116,7 +116,7 @@ export function DocumentIcon(props: SVGProps<SVGSVGElement>) {
   );
 }
 
-/** FAQ accordion chevron — per Figma node 85:11702. */
+/** FAQ accordion chevron - per Figma node 85:11702. */
 export function ChevronDownIcon(props: SVGProps<SVGSVGElement>) {
   return (
     <svg viewBox="0 0 12 7.4" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
@@ -126,7 +126,7 @@ export function ChevronDownIcon(props: SVGProps<SVGSVGElement>) {
 }
 
 /**
- * Footer icons — reproduced inline rather than referenced as <img> files.
+ * Footer icons - reproduced inline rather than referenced as <img> files.
  * The exported public/brand/icon-{social-1,social-2,social-3,email,phone}.svg
  * assets all carry `preserveAspectRatio="none"`, so any container that isn't
  * exactly square (e.g. a flex item getting shrunk unevenly on narrow
@@ -198,7 +198,7 @@ export function PhoneIcon(props: SVGProps<SVGSVGElement>) {
 }
 
 // Unlike every icon above, these two have no Figma source (there's no
-// password-visibility control anywhere in the design file) — stroke-based
+// password-visibility control anywhere in the design file) - stroke-based
 // rather than this file's usual filled-path reproduction, since that's
 // how a show/hide-password glyph is conventionally drawn everywhere it
 // appears. Shapes follow the widely-used Feather Icons "eye"/"eye-off"

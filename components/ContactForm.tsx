@@ -4,7 +4,7 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { staggerItem, hoverScale, easing } from "@/lib/motion";
 
-// Purely client-side — there's no backend/API route in this project (see
+// Purely client-side - there's no backend/API route in this project (see
 // how /coming-soon exists precisely because most of the site is UI-only
 // with no real submission endpoints yet). Submitting just validates the
 // required fields via the browser's own HTML5 validation, then swaps to a

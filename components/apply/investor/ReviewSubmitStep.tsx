@@ -21,13 +21,13 @@ import type { StepProps } from "@/components/apply/types";
 import type { InvestorFormData } from "@/components/apply/investor/types";
 
 /**
- * Step 5 of 6 — "Review & Submit". Read-only recap of every prior step's
+ * Step 5 of 6 - "Review & Submit". Read-only recap of every prior step's
  * data, grouped into the same sections those steps own, each with its own
- * "Edit" link back to that step (via goToStep — see StepProps) rather than
+ * "Edit" link back to that step (via goToStep - see StepProps) rather than
  * a single generic "Edit" that dumps the applicant back at Step 1.
  *
  * Unlike every step before it, this one doesn't drive the shell's shared
- * Continue button — see its `hideContinueButton: true` in
+ * Continue button - see its `hideContinueButton: true` in
  * InvestorApplication.tsx. Submission is asynchronous with its own
  * loading/error states that a plain "is this step valid" boolean can't
  * represent, so this step renders its own Submit action and calls
@@ -35,7 +35,7 @@ import type { InvestorFormData } from "@/components/apply/investor/types";
  *
  * The section/badge/row/submit-button chrome itself lives in
  * components/apply/ReviewSectionUI.tsx, shared with the Business Owner
- * flow's own Review & Submit step — this file only owns which fields go in
+ * flow's own Review & Submit step - this file only owns which fields go in
  * which section.
  */
 export default function ReviewSubmitStep({
@@ -46,7 +46,7 @@ export default function ReviewSubmitStep({
 }: StepProps<InvestorFormData>) {
   // Country names come from Intl.DisplayNames (see lib/countries.ts),
   // which can disagree between Node's SSR pass and the browser's own ICU
-  // data for a handful of regions — same hydration-mismatch reasoning as
+  // data for a handful of regions - same hydration-mismatch reasoning as
   // IdentityContactStep, and the same fix: compute it client-side-only in
   // an effect rather than during render.
   const [countryList, setCountryList] = useState<Country[]>([]);
@@ -60,7 +60,7 @@ export default function ReviewSubmitStep({
   const [submitError, setSubmitError] = useState<string | null>(null);
 
   const countryName = countryList.find((c) => c.code === values.countryOfResidence)?.name ?? values.countryOfResidence;
-  // getCountryCallingCode is static library data, not Intl-derived — safe
+  // getCountryCallingCode is static library data, not Intl-derived - safe
   // to call directly during render, unlike the country-name lookup above.
   const callingCode = getCountryCallingCode(values.phoneCountry as CountryCode);
   const formattedPhone = `+${callingCode} ${values.phoneNumber}`;
@@ -72,7 +72,7 @@ export default function ReviewSubmitStep({
     setSubmitError(null);
     const result = await submitInvestorApplication(values);
     if (result.success) {
-      // The application is submitted — there's no "resume this draft"
+      // The application is submitted - there's no "resume this draft"
       // concept anymore, so any earlier Save & Exit progress shouldn't
       // resurface if this applicant (or a rejected one, via Reapply) ever
       // returns to /apply/investor again.
@@ -110,7 +110,7 @@ export default function ReviewSubmitStep({
 
         <ReviewSection title="ID Document" visibility={PRIVATE} onEdit={() => goToStep("id-upload")}>
           {/* Confirms a file is attached without re-rendering the document
-              itself — a generic file-type icon, never the actual image/PDF
+              itself - a generic file-type icon, never the actual image/PDF
               content, regardless of what was uploaded. */}
           <div className="flex items-center gap-4">
             <div className="flex size-11 shrink-0 items-center justify-center border border-gold/20 bg-ink-light/50 text-gold-muted">

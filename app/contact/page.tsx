@@ -15,7 +15,7 @@ export const metadata: Metadata = {
 /**
  * Standalone /contact page, replacing the earlier placeholder that routed
  * "Contact" straight to /coming-soon (see Navbar.tsx / Footer.tsx, both
- * updated to point here instead). No Figma design exists for this page —
+ * updated to point here instead). No Figma design exists for this page -
  * built at my own discretion, following the same structure as
  * /how-it-works: a shared PageBanner title band, this page's own content
  * (ContactSection: a message form beside contact-method cards), then the

@@ -6,7 +6,7 @@ import { motion } from "framer-motion";
 import { hoverScale } from "@/lib/motion";
 
 /**
- * Shared building blocks for a "Review & Submit" step — extracted once the
+ * Shared building blocks for a "Review & Submit" step - extracted once the
  * Business Owner flow needed the exact same section/badge/row/submit-
  * button chrome as the Investor flow's own Review & Submit step, with only
  * the actual field content differing between the two. Each flow's own
@@ -114,10 +114,10 @@ export type SubmitState = "idle" | "submitting" | "error";
  * The confirmation checkbox + inline error + Submit/Try Again button
  * every flow's Review & Submit step ends with. `confirmationText` is the
  * one thing that varies (the Investor flow mentions "my uploaded ID", the
- * Business Owner flow "my uploaded documents") — everything else about
+ * Business Owner flow "my uploaded documents") - everything else about
  * this block's behavior is identical between flows.
  *
- * `onSaveAndExit`, if given, renders a "Save & Exit" link beside Submit —
+ * `onSaveAndExit`, if given, renders a "Save & Exit" link beside Submit -
  * this step hides the shell's own header copy of that action (see
  * StepDefinition.hideExitLink) and shows it here instead, right next to
  * the decision it's actually an alternative to, rather than up in the

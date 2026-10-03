@@ -7,36 +7,36 @@ import { useTheme } from "@/lib/theme";
 /**
  * The "Looper BG" decorative vector behind the hero, reproduced from its
  * exported SVG asset (already gold/white-gradient toned in the source file
- * — see public/brand/looper-bg.svg). Per request: this specific vector
+ * - see public/brand/looper-bg.svg). Per request: this specific vector
  * glows gold as the cursor moves near/along it. The general sitewide
- * cursor-glow has been turned off — this replaces it, scoped to just this
+ * cursor-glow has been turned off - this replaces it, scoped to just this
  * graphic.
  *
- * Implementation: the same image is layered twice — a dim resting copy,
+ * Implementation: the same image is layered twice - a dim resting copy,
  * and a brightened+glowing copy revealed only within a soft radius around
  * the pointer via a CSS radial-gradient mask. The mask position is written
  * directly to the DOM on pointermove (no React state) to stay smooth.
  * Skipped for touch input and prefers-reduced-motion.
  *
  * The resting copy's own asset (looper-bg.svg) carries near-zero baked-in
- * path opacity — fine against the dark theme's near-black page, where even
+ * path opacity - fine against the dark theme's near-black page, where even
  * a faint pale stroke shows up, but against the light theme it was
  * reading as fully invisible: no CSS filter can raise an SVG's own alpha,
  * so it stayed invisible until the boosted-opacity hover layer kicked in
  * ("not visible unless I hover on it"). Light mode's resting copy swaps to
- * that same boosted-opacity asset instead (looper-bg-glow.svg — the one
+ * that same boosted-opacity asset instead (looper-bg-glow.svg - the one
  * the hover glow already uses), dimmed down with a real opacity + a
  * darkening filter so it reads as quiet background linework rather than
  * the bright lit-up hover state.
  *
  * Dark mode's resting copy gets a mild brightness boost on top of its own
  * baked-in opacity (per request that it read a bit lighter at rest,
- * before the pointer-glow kicks in) — still nowhere near the hover
+ * before the pointer-glow kicks in) - still nowhere near the hover
  * layer's own brightness(2.2)+drop-shadow treatment, just enough for the
  * resting linework to read a little more clearly against the dark page.
  *
  * NOTE: a Figma-designed wave/dot/gold-tint texture was briefly tried here
- * for light mode (and on Leaderboard/How It Works/Contact) — reverted
+ * for light mode (and on Leaderboard/How It Works/Contact) - reverted
  * everywhere per request; none of those sections' light-mode backgrounds
  * were supposed to change. This component's own light-mode linework
  * treatment below is back to what it was before that attempt.
@@ -55,7 +55,7 @@ export default function HeroLooperVector() {
 
     // Chromium drops the `at <var> <var>` position clause of a
     // radial-gradient mask when it's set via an HTML style ATTRIBUTE
-    // string (i.e. a JSX inline `style` object) — reproducible in
+    // string (i.e. a JSX inline `style` object) - reproducible in
     // isolation, unrelated to React/Tailwind. Assigning the identical
     // value through the CSSOM property setter works correctly and keeps
     // tracking live updates to the custom properties afterward, so the
@@ -77,7 +77,7 @@ export default function HeroLooperVector() {
 
     const handleMove = (event: PointerEvent) => {
       // getBoundingClientRect() returns the axis-aligned box AFTER rotation,
-      // so its top-left is NOT the element's local (0,0) origin — only its
+      // so its top-left is NOT the element's local (0,0) origin - only its
       // center is reliable (rotation pivots on the center, which is
       // invariant under the transform). Take the mouse vector from that
       // center in viewport space, rotate it by -θ to undo the transform,
@@ -142,15 +142,15 @@ export default function HeroLooperVector() {
           its value caused a real hydration mismatch. Reduced-motion is
           instead handled entirely in the effect below (which never wires
           up the pointer listeners in that case), so this div's opacity
-          simply never leaves 0 — invisible without ever diverging from
+          simply never leaves 0 - invisible without ever diverging from
           the server-rendered markup. */}
       <div ref={glowRef} className="absolute inset-0 opacity-0 transition-opacity duration-300 ease-out">
         {/* Uses looper-bg-glow.svg, a boosted-opacity/thicker-stroke
-            variant generated from the same source paths — NOT just a
+            variant generated from the same source paths - NOT just a
             CSS-filtered copy of the resting asset. The resting SVG's
             strokes carry very low stroke-opacity/opacity (down to 0.01),
             and CSS brightness()/saturate() only scale color, never
-            alpha — so no filter on the original asset could make a
+            alpha - so no filter on the original asset could make a
             near-transparent stroke actually visible against the dark
             background. Boosting real opacity in the asset itself is
             what makes the lines legible when lit. Brightness/saturate

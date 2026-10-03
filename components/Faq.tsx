@@ -6,7 +6,7 @@ import { staggerContainer, staggerItem } from "@/lib/motion";
 import SectionBackgroundVector from "@/components/SectionBackgroundVector";
 import { ChevronDownIcon } from "@/components/icons";
 
-// Per Figma node 85:11651 — new section added between Client Perspectives
+// Per Figma node 85:11651 - new section added between Client Perspectives
 // and the closing CTA. The source design only shows each question in its
 // collapsed state (no expanded-answer content to reproduce), so the
 // answers below are original copy written to match AUREX's tone rather

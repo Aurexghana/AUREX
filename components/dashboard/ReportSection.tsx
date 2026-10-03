@@ -23,7 +23,7 @@ import {
   type ReportStatus,
 } from "@/lib/reports";
 
-// Tone per status — same "gold for actionable, green for a good/finished
+// Tone per status - same "gold for actionable, green for a good/finished
 // outcome, neutral otherwise" convention as ListingStatusSection's own
 // STATUS_TONE, reused here rather than inventing a fourth color scheme.
 const STATUS_TONE: Record<ReportStatus, string> = {
@@ -140,12 +140,12 @@ type ReportSectionProps = {
   role: ReportRole;
   /** Used only when there's no real signed-in nickname/name yet (see
    *  useAuth's own `nickname ?? MOCK_INVESTOR.nickname` fallback every
-   *  other dashboard screen already applies) — same mock-account
+   *  other dashboard screen already applies) - same mock-account
    *  situation, just centralized here instead of repeated per page. */
   fallbackNickname: string;
   fallbackRealName: string;
-  /** Built by the page itself — see lib/reports.ts's getMyInvestmentOptions
-   *  (investor) / getBusinessRelatedRecordOptions (business) — so this
+  /** Built by the page itself - see lib/reports.ts's getMyInvestmentOptions
+   *  (investor) / getBusinessRelatedRecordOptions (business) - so this
    *  component doesn't need to know how each role's records are shaped,
    *  only how to list them. */
   relatedRecordOptions: SelectOption[];
@@ -153,7 +153,7 @@ type ReportSectionProps = {
 };
 
 /**
- * The "Report" tab — one component shared by both dashboards (a role
+ * The "Report" tab - one component shared by both dashboards (a role
  * prop, not a role-specific copy, per the brief), submitting a report or
  * complaint to Admin plus the member's own report history. Nickname and
  * real name come from the logged-in account (via context, same pattern

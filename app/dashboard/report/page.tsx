@@ -11,7 +11,7 @@ import type { SelectOption } from "@/lib/optionalDetails";
  * The Investor Dashboard's "Report" tab. Client-fetched (rather than a
  * server component reading mock data) since both the member's own report
  * history and their investment options for the "Related Record" dropdown
- * come from authenticated API calls — see lib/reports.ts's getMyReports /
+ * come from authenticated API calls - see lib/reports.ts's getMyReports /
  * getMyInvestmentOptions.
  */
 export default function DashboardReportPage() {

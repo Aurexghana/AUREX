@@ -12,15 +12,15 @@ import type { BusinessOwnerFormData } from "@/components/apply/business/types";
 const FILE_HINT = "JPG, PNG, or PDF · up to 10MB · on a phone, your camera is usually offered as an option too";
 
 /**
- * Step 3 of 6 — "Document Upload". The Business Owner flow's equivalent
+ * Step 3 of 6 - "Document Upload". The Business Owner flow's equivalent
  * of the Investor flow's ID Upload step, but with two separate documents
  * instead of one: the applicant's own government-issued ID, and the
  * business's own registration/incorporation document. Both use the same
  * shared DocumentUploadField (drag-drop, preview, remove/replace,
- * JPG/PNG/PDF-under-10MB validation) as the Investor flow's single field —
+ * JPG/PNG/PDF-under-10MB validation) as the Investor flow's single field -
  * see that component's own comment.
  *
- * "Continue" needs *both* files, not just one — this is the highest-
+ * "Continue" needs *both* files, not just one - this is the highest-
  * friction step in either flow, so the trust messaging stays visible
  * (matching IdUploadStep's own reasoning) rather than being buried above
  * the fold.

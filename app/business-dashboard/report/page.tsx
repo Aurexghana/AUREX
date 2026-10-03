@@ -32,7 +32,7 @@ export default function BusinessDashboardReportPage() {
     <ReportSection
       role="business"
       fallbackNickname={listing?.ownerNickname ?? "there"}
-      fallbackRealName={listing?.ownerRealName ?? "—"}
+      fallbackRealName={listing?.ownerRealName ?? "-"}
       relatedRecordOptions={listing ? getBusinessRelatedRecordOptions(listing) : []}
       initialReports={reports}
     />

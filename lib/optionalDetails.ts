@@ -1,13 +1,13 @@
 /**
  * Option lists for Step 4 of the Investor Application ("Optional
- * Details") — see components/apply/investor/OptionalDetailsStep.tsx.
+ * Details") - see components/apply/investor/OptionalDetailsStep.tsx.
  * Every field built from these is genuinely optional; none of it is
  * validated, so this file is just data, not rules.
  */
 
 export type SelectOption = { value: string; label: string };
 
-// Deliberately bands, not a numeric free-text field — package choice
+// Deliberately bands, not a numeric free-text field - package choice
 // (Core/Ventures) happens later, on the dashboard, not during
 // application, so this is only meant to give a rough sense of intent.
 export const INVESTMENT_RANGE_OPTIONS: SelectOption[] = [

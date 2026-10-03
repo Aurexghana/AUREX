@@ -9,20 +9,20 @@ export const pageTransition: Variants = {
   exit: { opacity: 0, y: -12, transition: { duration: 0.25, ease: [0.4, 0, 1, 1] } },
 };
 
-// Same enter timing as pageTransition, opacity only — no `y`, and no
+// Same enter timing as pageTransition, opacity only - no `y`, and no
 // `exit`. Used for the route-level transition in
 // components/PageTransition.tsx, which:
 //   - can't use `y`: that wrapper sits around each page's whole tree,
 //     including its `fixed` Navbar, and any `transform` (exactly how
 //     Framer Motion animates `y`) on an ancestor creates a new containing
-//     block for `position: fixed` descendants — a y-animated wrapper would
+//     block for `position: fixed` descendants - a y-animated wrapper would
 //     briefly detach the navbar from the viewport and reattach it to the
 //     transitioning wrapper instead.
 //   - doesn't animate `exit` at all, on purpose: PageTransition used to
 //     pair this with <AnimatePresence mode="wait"> to play an exit fade
 //     before the next page mounted, but that's a well-documented source of
 //     the outgoing page's exit getting stuck and leaving a blank screen
-//     until a manual refresh — which a real user hit. There's no `exit`
+//     until a manual refresh - which a real user hit. There's no `exit`
 //     key here specifically so nothing reintroduces that pattern by
 //     wrapping this in AnimatePresence again without reading why it was
 //     removed.
@@ -49,7 +49,7 @@ export const slideInLeft: Variants = {
   animate: { opacity: 1, x: 0, transition: { duration: 0.5, ease: [0.22, 1, 0.36, 1] } },
 };
 
-// The mobile nav panel's own entrance/exit (Navbar.tsx) — a full slide from
+// The mobile nav panel's own entrance/exit (Navbar.tsx) - a full slide from
 // off-screen (not just a 24px nudge like slideInLeft/slideUp) since the
 // panel itself is the thing appearing, not content settling into a spot
 // that's already visible. `exit` is included (paired with AnimatePresence)
@@ -90,8 +90,8 @@ export const hoverLift = {
   transition: { duration: 0.2, ease: "easeOut" },
 } as const;
 
-// A much more emphatic version of hoverLift — noticeable lift, a visible
-// scale-up, and a slight tilt for the "should tilt or enlarge" feel — used
+// A much more emphatic version of hoverLift - noticeable lift, a visible
+// scale-up, and a slight tilt for the "should tilt or enlarge" feel - used
 // on the How it Works / Why Aurex cards specifically. Kept separate from
 // hoverLift rather than amplifying it in place, since InvestmentPackages
 // still uses the subtler original.

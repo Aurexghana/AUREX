@@ -7,7 +7,7 @@ import { easing } from "@/lib/motion";
 
 /**
  * The "grid card" visual beside the About section's heading. Cycles through
- * four center states — the AUREX logo, then the three proof-point stats
+ * four center states - the AUREX logo, then the three proof-point stats
  * from Figma nodes 37:2522 / 37:2541 / 37:2555 (same card, different center
  * content: $4.2B+ Global AUM, 60 Verified Members, 14.8% Performance Yield).
  *
@@ -17,9 +17,9 @@ import { easing } from "@/lib/motion";
  * independent of which center state is showing.
  *
  * Reduced-motion handling: the autoplay timer is gated on
- * useReducedMotion() inside the effect below (safe — effects only run
+ * useReducedMotion() inside the effect below (safe - effects only run
  * client-side, after hydration). The motion.* transform animations below
- * are always passed the same props on every render — they are NOT
+ * are always passed the same props on every render - they are NOT
  * conditionally branched on useReducedMotion() in JSX, because that value
  * resolves differently between the server render and the client's first
  * paint, which caused a real hydration mismatch when tried. Transform-based
@@ -94,7 +94,7 @@ export default function AboutVisualPanel() {
       // unmodified against it EXCEPT the photo (see below).
       className="relative aspect-square w-full cursor-pointer overflow-hidden border border-[#262626] light:bg-gradient-to-bl light:from-[#8a5f1e] light:via-[#cf9f45] light:to-[#f0cf7e] md:flex-1"
     >
-      {/* background stack — same treatment as the source design, now with a
+      {/* background stack - same treatment as the source design, now with a
           slow continuous breathing animation instead of sitting static */}
       <motion.div
         className="absolute inset-0"
@@ -104,7 +104,7 @@ export default function AboutVisualPanel() {
         {/* mix-blend-overlay against the new light-mode gold base would
             crush this photo's dark areas toward black (same reason
             PageBanner's wave photo swaps to mix-blend-screen in light
-            mode — see that component's comment for the blend-mode math) —
+            mode - see that component's comment for the blend-mode math) -
             light:mix-blend-screen keeps the gold showing through instead. */}
         <Image
           src="/brand/about-photo.png"
@@ -114,7 +114,7 @@ export default function AboutVisualPanel() {
           className="object-cover mix-blend-overlay light:mix-blend-screen"
         />
         {/* The bottom vignette fade is a plain dark ink (#191919) meant to
-            ground the dark photo — on the gold base that's now behind it
+            ground the dark photo - on the gold base that's now behind it
             in light mode, that same dark fade would paint a muddy brown
             band across the bottom, so light mode swaps it for a matching
             deep-gold fade instead (one raw inline gradient can't carry two
@@ -142,7 +142,7 @@ export default function AboutVisualPanel() {
             backgroundPosition: "top left",
           }}
         />
-        {/* stray lime-green tint substituted with the brand's gold — the
+        {/* stray lime-green tint substituted with the brand's gold - the
             source Figma layer used rgba(172,255,36,.2), which doesn't match
             AUREX's palette anywhere else and reads as a leftover from a
             different template. */}
@@ -209,7 +209,7 @@ export default function AboutVisualPanel() {
             {/* Deliberately a different asset from the navbar/footer
                 BrandMark, not just a recolor: this badge sits on a white
                 surface, and BrandMark's logo-mark.png renders "AUREX" in
-                white text — invisible here. Figma uses a dedicated dark-
+                white text - invisible here. Figma uses a dedicated dark-
                 text lockup for exactly this spot. */}
             <Image src="/brand/logo-mark-about.png" alt="AUREX" fill sizes="100px" className="object-contain" />
           </motion.div>

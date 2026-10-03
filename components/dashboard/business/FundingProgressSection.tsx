@@ -2,7 +2,7 @@ import { formatGhs } from "@/lib/formatters";
 import { getFundingPercent, type BusinessListing } from "@/lib/businessListing";
 
 /**
- * The visual focal point of this dashboard per the brief — large numbers,
+ * The visual focal point of this dashboard per the brief - large numbers,
  * a progress bar, nothing else competing for attention. Only rendered for
  * live/funded/closed listings (see BusinessOwnerDashboard).
  *
@@ -10,7 +10,7 @@ import { getFundingPercent, type BusinessListing } from "@/lib/businessListing";
  * lib/businessListing.ts's own comment); the only thing computed on the
  * fly is the percentage itself, purely to size the bar.
  *
- * Deliberately never lists who backed this business, only a count — a
+ * Deliberately never lists who backed this business, only a count - a
  * business owner doesn't get visibility into individual investors any
  * more than an investor gets visibility into other investors' identities
  * elsewhere on the platform.

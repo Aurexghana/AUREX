@@ -39,7 +39,7 @@ export default function Hero() {
           className="flex w-full flex-col items-center gap-4 pt-2 sm:w-auto sm:flex-row sm:gap-6"
         >
           {/* Both buttons are shorter, smaller-type, and auto (not full)
-              width on mobile — full desktop scale kicks back in from sm. */}
+              width on mobile - full desktop scale kicks back in from sm. */}
           <motion.a
             {...hoverScale}
             href="/apply/investor"
@@ -50,7 +50,7 @@ export default function Hero() {
           </motion.a>
           {/* This one's a page-level CTA, not part of the persistently-dark
               surfaces elsewhere in this section, so unlike those, it does
-              flip in light mode — matching Figma's light variant (a
+              flip in light mode - matching Figma's light variant (a
               white/50 blurred pill with dark text) rather than the
               token's usual "stay dark" behavior. */}
           <motion.a

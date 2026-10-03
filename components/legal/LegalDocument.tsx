@@ -8,7 +8,7 @@ import { ChevronDownIcon } from "@/components/icons";
 
 /**
  * Shared shell + typography primitives for the site's standalone legal
- * pages (/terms, /privacy) — extracted from the original /terms page once
+ * pages (/terms, /privacy) - extracted from the original /terms page once
  * /privacy needed the exact same document styling, per the brief's own
  * "same document styling as /terms" requirement. Both pages still own
  * their actual section content; this file only owns the repeated layout
@@ -36,13 +36,13 @@ export function BulletList({ items }: { items: string[] }) {
 }
 
 /**
- * One collapsible section of a legal document — per request, both /terms
+ * One collapsible section of a legal document - per request, both /terms
  * and /privacy pack a lot onto one screen (9-11 sections each, stacked
  * full-height), so collapsing each section behind its own heading cuts
  * the page down to a scannable list of headings instead of a wall of
  * text. Same accordion mechanics as the home page's own FAQ section
- * (components/Faq.tsx) — single-item open/close, AnimatePresence height
- * animation, rotating ChevronDownIcon — reused here rather than a new
+ * (components/Faq.tsx) - single-item open/close, AnimatePresence height
+ * animation, rotating ChevronDownIcon - reused here rather than a new
  * pattern, but each section keeps its OWN independent open state (an
  * array/index-based "only one open" model like FAQ's doesn't fit a
  * document someone might genuinely want several sections open in at
@@ -50,7 +50,7 @@ export function BulletList({ items }: { items: string[] }) {
  * Rights" side by side while scrolling).
  *
  * The heading stays a real `<h2>` (wrapping the toggle button, not
- * replaced by it) purely for accessibility — a screen reader's heading
+ * replaced by it) purely for accessibility - a screen reader's heading
  * navigation should still find "3. Investor Applications and Membership"
  * as a heading even though it's also interactive.
  */
@@ -100,13 +100,13 @@ export function AccordionSection({
 /**
  * The page-level shell both /terms and /privacy render their sections
  * inside. Deliberately skips the site's usual Navbar/PageBanner/Footer
- * chrome — per the brief, these should read like plain legal documents,
+ * chrome - per the brief, these should read like plain legal documents,
  * not marketing pages. Just the logo, a way back to the home page, and
  * the document itself, capped to a comfortable reading width (max-w-3xl)
  * rather than stretching full-width on large screens.
  *
  * `crossLink` renders a small "See also our ___" line at the bottom of
- * the document, pointing at the other legal page — these two documents
+ * the document, pointing at the other legal page - these two documents
  * reference each other in practice, so each should be one click from the
  * other rather than requiring a trip back through the footer.
  */
@@ -144,7 +144,7 @@ export function LegalPageShell({
           </div>
 
           {/* No gap here (unlike the gap-10 macro-spacing between this
-              block, the title, and the footer below) — each child is now
+              block, the title, and the footer below) - each child is now
               an AccordionSection, which supplies its own rhythm via its
               own border-b/padding, same as the FAQ section's own list.
               A gap-10 on top of that would leave an oversized, loose-

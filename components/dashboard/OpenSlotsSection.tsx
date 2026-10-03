@@ -15,11 +15,11 @@ const FILTERS: { value: Filter; label: string }[] = [
 ];
 
 /**
- * The Investment tab's own content (app/dashboard/investment/page.tsx) —
+ * The Investment tab's own content (app/dashboard/investment/page.tsx) -
  * every slot here is something Admin has actively published and wants
  * investors to act on, which is also why Investment is the tab
  * app/dashboard/page.tsx redirects to by default rather than Earnings or
- * Leaderboard. Filter state is plain useState, not persisted — the brief
+ * Leaderboard. Filter state is plain useState, not persisted - the brief
  * is explicit this dashboard uses React state only, no localStorage/
  * sessionStorage.
  */

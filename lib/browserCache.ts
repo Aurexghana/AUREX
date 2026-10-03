@@ -35,13 +35,13 @@ export async function cachedInBrowser<T>(
   fetcher: () => Promise<T>,
   options: {
     ttlMs?: number;
-    /** Cheap freshness check — if it returns something other than the
+    /** Cheap freshness check - if it returns something other than the
      *  cached entry's version, the cache is treated as stale even though
      *  its TTL hasn't expired yet. */
     getVersion?: () => Promise<string>;
     /** When provided, a fetched result that fails this check is never
      *  written to the cache (and any stale entry for this key is
-     *  dropped) — e.g. don't let an unset value get stuck for the full
+     *  dropped) - e.g. don't let an unset value get stuck for the full
      *  TTL once a real value exists. */
     isCacheable?: (data: T) => boolean;
   } = {},

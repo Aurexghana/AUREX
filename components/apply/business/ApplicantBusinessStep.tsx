@@ -32,16 +32,16 @@ function getPhoneCountryOptions(): PhoneCountryOption[] {
     .sort((a, b) => a.name.localeCompare(b.name));
 }
 
-// "A few sentences" per the brief — not enforced strictly, just enough of
+// "A few sentences" per the brief - not enforced strictly, just enough of
 // a floor that "N/A" or a single word can't pass as a real business pitch.
 const MIN_DESCRIPTION_LENGTH = 30;
 
 /**
- * Step 1 of 6 — "Applicant & Business Details". The Business Owner flow's
+ * Step 1 of 6 - "Applicant & Business Details". The Business Owner flow's
  * equivalent of the Investor flow's IdentityContactStep, with the same
  * name/email/phone/country pattern (identical validation approach,
  * including the same Intl-hydration-mismatch deferral for the country
- * lists — see that file's own comment) plus three business-specific
+ * lists - see that file's own comment) plus three business-specific
  * fields: business name, a short pitch (description + funding purpose),
  * and the funding amount sought.
  */

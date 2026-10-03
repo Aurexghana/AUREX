@@ -13,7 +13,7 @@ export const metadata: Metadata = {
  * The screen a "reset your password" email would link to (?token=...).
  * Same minimal chrome as /login and /forgot-password. ResetPasswordFlow
  * reads the token/email via useSearchParams, which Next.js requires a
- * Suspense boundary for on static builds — see that component's own
+ * Suspense boundary for on static builds - see that component's own
  * comment.
  */
 export default function ResetPasswordPage() {

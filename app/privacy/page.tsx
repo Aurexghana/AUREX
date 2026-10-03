@@ -7,19 +7,19 @@ export const metadata: Metadata = {
 };
 
 // TODO: Replace with the real Privacy Policy markdown once it's provided
-// — everything below this line is placeholder legal content standing in
+// - everything below this line is placeholder legal content standing in
 // for it, per the brief ("treat it as placeholder legal content pending
 // legal review, not final copy"). Update LAST_UPDATED alongside the real
 // content when that swap happens.
 const LAST_UPDATED = "27 August 2026";
 
 /**
- * Standalone /privacy page — reached from the site footer's "Privacy
+ * Standalone /privacy page - reached from the site footer's "Privacy
  * Policy" link (see Footer.tsx), same public-no-auth-required treatment
  * as /terms.
  *
  * Shell/typography shared with /terms via
- * components/legal/LegalDocument.tsx — this file only owns which
+ * components/legal/LegalDocument.tsx - this file only owns which
  * sections go here and in what order.
  */
 export default function PrivacyPage() {

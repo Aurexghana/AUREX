@@ -12,7 +12,7 @@ function DetailField({ label, value }: { label: string; value: string }) {
 }
 
 /**
- * Read-only, on purpose — there are no inputs, no edit buttons, nothing
+ * Read-only, on purpose - there are no inputs, no edit buttons, nothing
  * clickable on the listing's own content anywhere in this section. Only
  * Admin can change a listing's details, so the one action offered is a
  * WhatsApp hand-off to ask for a change, not an in-dashboard form (same

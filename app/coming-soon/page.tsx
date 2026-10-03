@@ -10,13 +10,13 @@ export const metadata: Metadata = {
 
 /**
  * Shared destination for every nav item, footer link, and CTA that
- * doesn't have a real page behind it yet — this build only fleshes out
+ * doesn't have a real page behind it yet - this build only fleshes out
  * the home page (Hero/About/Packages/Client Perspectives/CTA). Rather
  * than leaving those as dead "#" anchors that silently do nothing, they
  * route here so visiting them gives real feedback instead.
  *
  * Content lives in components/ComingSoonContent.tsx (a client component)
- * so this file can stay a plain Server Component and export `metadata` —
+ * so this file can stay a plain Server Component and export `metadata` -
  * same split used by app/not-found.tsx + components/NotFoundContent.tsx.
  */
 export default function ComingSoonPage() {

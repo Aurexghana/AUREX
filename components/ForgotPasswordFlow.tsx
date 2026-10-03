@@ -20,7 +20,7 @@ function SpinnerIcon(props: SVGProps<SVGSVGElement>) {
 }
 
 /**
- * The /forgot-password screen — reached from LoginForm's "Forgot password?"
+ * The /forgot-password screen - reached from LoginForm's "Forgot password?"
  * link. Two phases, same AnimatePresence phase-switch pattern as LoginFlow
  * (role picker -> form): "request" (just an email field) and "sent" (a
  * confirmation screen, same circular-icon-badge treatment as
@@ -28,7 +28,7 @@ function SpinnerIcon(props: SVGProps<SVGSVGElement>) {
  *
  * Mirrors account activation: the backend emails a single-use, high-entropy
  * token as a /reset-password?token=... link (see authService.forgotPassword)
- * rather than a code the applicant re-enters here — knowing someone's email
+ * rather than a code the applicant re-enters here - knowing someone's email
  * address alone was never supposed to be enough to start resetting their
  * password, only having the emailed link is.
  */
@@ -67,7 +67,7 @@ export default function ForgotPasswordFlow() {
       setResent(true);
       window.setTimeout(() => setResent(false), 3000);
     } catch {
-      // Resend failures aren't worth a dedicated error state here — the
+      // Resend failures aren't worth a dedicated error state here - the
       // "Enter Code" link below still lets the applicant continue with
       // whichever code they already have.
     } finally {

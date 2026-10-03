@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import { staggerContainer, staggerItem, hoverLift } from "@/lib/motion";
 import SectionBackgroundVector from "@/components/SectionBackgroundVector";
 
-// Per Figma node 110:13584 — the /how-it-works page's own 4-step
+// Per Figma node 110:13584 - the /how-it-works page's own 4-step
 // walkthrough. Distinct copy from the home page's HowItWorks.tsx summary
 // section (that one's STEPS are "Apply for Membership" / "Identity
 // Verification" / "Start Investing" / "Track Performance"); this is the
@@ -58,14 +58,14 @@ export default function HowItWorksProcess() {
             connecting lines. Built via gap-px + a bg-grid-line backdrop
             (the container's own background shows through the 1px gaps as
             the dividing lines) rather than each card drawing its own
-            border — a per-card border, even collapsed onto its neighbor
+            border - a per-card border, even collapsed onto its neighbor
             with a negative margin, produces two overlapping 1px lines at
             every shared edge, and the DOM-order-dependent paint order
             between them meant a hovered row-2 card's gold top edge could
             end up hidden under row-1's plain gray bottom edge. With the
             gap technique there's only ever one line, owned by the
             container, so there's nothing for a card's own hover outline
-            to compete with — outline-offset-0 just draws it flush along
+            to compete with - outline-offset-0 just draws it flush along
             that same 1px seam on all four sides. */}
         <div className="grid w-full grid-cols-1 gap-px border border-grid-line bg-grid-line sm:grid-cols-2">
           {STEPS.map((step) => (

@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import { staggerContainer, staggerItem, hoverLiftStrong } from "@/lib/motion";
 import SectionBackgroundVector from "@/components/SectionBackgroundVector";
 
-// Per Figma node 89:11886 — new section added between About and Why Aurex
+// Per Figma node 89:11886 - new section added between About and Why Aurex
 // walking a prospective member through the actual onboarding flow.
 const STEPS = [
   {
@@ -54,7 +54,7 @@ export default function HowItWorks() {
           How it Works
         </motion.h2>
 
-        {/* 4-up in one row from lg, matching Figma — but the section's own
+        {/* 4-up in one row from lg, matching Figma - but the section's own
             lg:px-[100px] stacks on top of <main>'s lg:px-20, so right at the
             lg breakpoint there's much less width per column than at, say,
             1440px. The card padding stays lean (p-6, not the usual sm:p-8

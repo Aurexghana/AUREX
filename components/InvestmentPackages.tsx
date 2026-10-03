@@ -9,7 +9,7 @@ import { ChevronDownIcon } from "@/components/icons";
 // Card copy: a short one-line summary shown by default, and the full
 // description (shown when "View Details" is expanded). Ventures' return
 // is explicitly tied to whichever business an investor backs rather than
-// a rate AUREX sets, so — unlike Core — it doesn't get a fixed APY figure.
+// a rate AUREX sets, so - unlike Core - it doesn't get a fixed APY figure.
 const PACKAGES = [
   {
     name: "AUREX Core",
@@ -69,7 +69,7 @@ export default function InvestmentPackages() {
                 {...(!isOpen ? hoverLift : {})}
                 // Expanding a card spans both columns from md up, so it
                 // actually takes over the row's full width while its
-                // details are open — not just a taller box in place.
+                // details are open - not just a taller box in place.
                 className={`relative flex flex-col items-start gap-6 overflow-hidden border border-gold/20 bg-panel/40 p-6 backdrop-blur-2xl sm:p-8 ${
                   isOpen ? "md:col-span-2" : ""
                 }`}

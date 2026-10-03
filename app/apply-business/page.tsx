@@ -11,7 +11,7 @@ export const metadata: Metadata = {
  * -> Documents -> Optional Details -> Review & Submit -> Confirmation).
  * Reached from the "List Your Business" option in JoinAurexModal.
  *
- * Lives at /apply-business rather than /apply/business — matching the
+ * Lives at /apply-business rather than /apply/business - matching the
  * brief's own standalone-status-route example (/apply-business/status)
  * rather than nesting under the Investor flow's /apply/investor segment,
  * since these are two parallel, independent flows sharing a shell, not one

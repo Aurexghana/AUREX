@@ -11,7 +11,7 @@ export default function CTASection() {
 
   return (
     // JoinAurexModal is rendered as a sibling of <section>, not nested
-    // inside it — same reasoning as Navbar.tsx's own copy of this modal:
+    // inside it - same reasoning as Navbar.tsx's own copy of this modal:
     // the section's inner pill has `backdrop-blur-md`, and nesting the
     // modal inside an ancestor with a `backdrop-filter` would resolve its
     // `fixed inset-0` against that ancestor's box instead of the viewport.
@@ -34,7 +34,7 @@ export default function CTASection() {
           </div>
 
           {/* Stays stacked (info block on top, "Join Aurex" below) through
-              tablet widths — only goes side-by-side from lg. At sm/md the
+              tablet widths - only goes side-by-side from lg. At sm/md the
               "Welcome to Aurex" label + pill text plus the button don't have
               room to sit in a row without crowding, so the row layout is
               pushed to lg instead of the site's usual sm. */}
@@ -43,14 +43,14 @@ export default function CTASection() {
               <p className="whitespace-nowrap font-sans text-lg font-semibold text-neutral-400 light:text-[#1a1a1a]">Welcome to Aurex</p>
               {/* Per Figma nodes 37:2203 (dark) / 284:2404 (light): this is
                   its own filled pill, not plain text sharing the outer
-                  container's surface — bg-amainblack/text-white in dark
+                  container's surface - bg-amainblack/text-white in dark
                   mode, bg-white/text-amainblack in light mode (amainblack
-                  is one of the tokens that never flips between themes —
-                  see globals.css — so it's the correct "near-black" for
+                  is one of the tokens that never flips between themes -
+                  see globals.css - so it's the correct "near-black" for
                   both the dark pill's own background and the light pill's
                   own text). A prior pass had removed this fill entirely; restored
                   here to match both reference nodes, at every breakpoint
-                  rather than just sm+ — the source design doesn't show a
+                  rather than just sm+ - the source design doesn't show a
                   "no pill on mobile" variant, so responsive padding (not
                   dropping the fill) is what actually keeps it tidy on
                   narrow screens. */}
@@ -59,7 +59,7 @@ export default function CTASection() {
                 Intersect to Shape the Future of Private Wealth.
               </p>
             </div>
-            {/* Was a plain "Start Project" link to /coming-soon — changed
+            {/* Was a plain "Start Project" link to /coming-soon - changed
                 to open the same JoinAurexModal the navbar's own "Join
                 Aurex" button opens (investor vs. business owner), rather
                 than a second, different destination for what's really the

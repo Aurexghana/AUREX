@@ -1,6 +1,6 @@
 /**
  * Document-upload field names for Step 3 of the Business Owner Application
- * (see components/apply/business/DocumentUploadStep.tsx) — the validation
+ * (see components/apply/business/DocumentUploadStep.tsx) - the validation
  * rules and ID-type list themselves are generic and shared with the
  * Investor flow's own ID Upload step; see lib/fileValidation.ts.
  */
