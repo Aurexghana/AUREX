@@ -35,12 +35,27 @@ const EMPTY: SiteContact = {
   linkedinUrl: null,
 };
 
+function hasAnyValue(contact: SiteContact): boolean {
+  return Boolean(
+    contact.whatsappNumber || contact.contactEmail || contact.facebookUrl || contact.twitterUrl || contact.linkedinUrl,
+  );
+}
+
+async function fetchVersion(): Promise<string> {
+  const { data } = await apiFetch<{ updated_at: string }>("/site-contact/version");
+  return data.updated_at;
+}
+
 export async function getSiteContact(): Promise<SiteContact> {
   try {
-    return await cachedInBrowser("site-contact", async () => {
-      const { data } = await apiFetch<SiteContactApiRow>("/site-contact");
-      return toSiteContact(data);
-    });
+    return await cachedInBrowser(
+      "site-contact",
+      async () => {
+        const { data } = await apiFetch<SiteContactApiRow>("/site-contact");
+        return toSiteContact(data);
+      },
+      { getVersion: fetchVersion, isCacheable: hasAnyValue },
+    );
   } catch {
     return EMPTY;
   }

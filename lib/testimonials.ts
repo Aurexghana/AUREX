@@ -21,12 +21,21 @@ function toTestimonial(row: TestimonialApiRow): Testimonial {
   };
 }
 
+async function fetchVersion(): Promise<string> {
+  const { data } = await apiFetch<{ count: number; latest: string | null }>("/testimonials/version");
+  return `${data.count}:${data.latest ?? "none"}`;
+}
+
 export async function getTestimonials(): Promise<Testimonial[]> {
   try {
-    return await cachedInBrowser("testimonials", async () => {
-      const { data } = await apiFetch<TestimonialApiRow[]>("/testimonials");
-      return data.map(toTestimonial);
-    });
+    return await cachedInBrowser(
+      "testimonials",
+      async () => {
+        const { data } = await apiFetch<TestimonialApiRow[]>("/testimonials");
+        return data.map(toTestimonial);
+      },
+      { getVersion: fetchVersion, isCacheable: (list) => list.length > 0 },
+    );
   } catch {
     return [];
   }
