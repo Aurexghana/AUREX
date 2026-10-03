@@ -15,14 +15,10 @@ import JoinAurexModal from "@/components/JoinAurexModal";
 // HowItWorksProcess.tsx), the nav link points there instead. Contact
 // likewise now has its own standalone page (components/ContactSection.tsx)
 // instead of routing to the coming-soon placeholder. "Insights" has been
-// removed per request. "Leaderboard" added pointing at the new standalone
-// /leaderboard page (see app/leaderboard/page.tsx) — no ?me= here, since
-// the navbar renders identically for every visitor regardless of who (if
-// anyone) is logged in; a logged-in investor's own highlighted view is
-// only reachable via their dashboard's own link, which does pass it.
+// removed per request. The public /leaderboard page and its nav link are
+// gone too — the leaderboard is only available inside the dashboards now.
 const NAV_LINKS = [
   { label: "How it Works", href: "/how-it-works" },
-  { label: "Leaderboard", href: "/leaderboard" },
   { label: "Contact", href: "/contact" },
 ];
 
