@@ -83,6 +83,10 @@ const MEDALS: Record<
 // (components/Leaderboard.tsx) for why this no longer needs an sm: split.
 const PODIUM_ORDER: Record<number, string> = { 1: "order-2", 2: "order-1", 3: "order-3" };
 
+// Always render all three podium slots; ranks with no investor yet get an
+// "Open spot" placeholder so 1-2 entries still read as a podium.
+const PODIUM_RANKS = [1, 2, 3];
+
 function isCurrentUser(nickname: string, currentUserNickname?: string) {
   if (!currentUserNickname) return false;
   return nickname.trim().toLowerCase() === currentUserNickname.trim().toLowerCase();
@@ -228,6 +232,20 @@ export default function LeaderboardView({
           </motion.div>
         )}
 
+        {entries.length === 0 && (
+          <motion.div
+            variants={staggerItem}
+            className="mx-auto flex w-full max-w-3xl flex-col items-center gap-2 border border-grid-line py-16 text-center"
+          >
+            <p className="font-jakarta text-lg font-semibold text-cream">No one is on the leaderboard yet.</p>
+            <p className="max-w-sm font-sans text-sm text-cream-dim">
+              Rankings appear here as soon as investors start investing. Check back soon.
+            </p>
+          </motion.div>
+        )}
+
+        {entries.length > 0 && (
+          <>
         {/* Podium: avatar + nickname float above a "step" block per rank
             (Figma's own literal podium metaphor), no glow blob behind the
             row anymore (removed per request to remove every golden glow
@@ -246,7 +264,39 @@ export default function LeaderboardView({
               the three steps sit flush against each other, not spaced apart
               like separate cards. */}
           <div className="relative mx-auto flex max-w-4xl flex-col items-stretch gap-6 sm:flex-row sm:items-end sm:justify-center sm:gap-0">
-            {topThree.map((entry) => {
+            {PODIUM_RANKS.map((rank) => {
+              const entry = topThree[rank - 1];
+              if (!entry) {
+                const emptyMedal = MEDALS[rank];
+                return (
+                  <div key={`empty-${rank}`} className={`${PODIUM_ORDER[rank]} flex flex-1 flex-col items-center`}>
+                    <div
+                      className={`flex items-center justify-center rounded-full border-2 border-dashed border-grid-line text-cream-dim ${
+                        rank === 1 ? "size-20 sm:size-24" : "size-16 sm:size-20"
+                      }`}
+                    >
+                      <span className="font-jakarta text-2xl font-bold">?</span>
+                    </div>
+                    <p className="mt-3 font-jakarta text-lg font-semibold italic text-cream-dim sm:text-xl">Open spot</p>
+                    <div className="mt-4 flex w-full flex-col items-center">
+                      <div
+                        aria-hidden="true"
+                        className="h-3 w-full bg-grid-line sm:h-4"
+                        style={{ clipPath: "polygon(15% 0%, 85% 0%, 100% 100%, 0% 100%)" }}
+                      />
+                      <div
+                        className={`flex w-full flex-col items-center justify-between gap-2 border-x border-b border-dashed border-grid-line px-4 pb-6 pt-4 text-center ${emptyMedal.stepHeight}`}
+                      >
+                        <span className="font-jakarta text-sm font-medium text-cream-dim">{emptyMedal.label}</span>
+                        <p className="border-t border-cream/10 pt-2 font-jakarta text-sm text-cream-dim">
+                          Waiting for an investor
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                );
+              }
+
               const medal = MEDALS[entry.rank];
               const isFirst = entry.rank === 1;
               const mine = isCurrentUser(entry.nickname, currentUserNickname);
@@ -331,7 +381,29 @@ export default function LeaderboardView({
               three blocks sit flush against each other in the reference,
               not spaced apart. */}
           <div className="relative mx-auto flex max-w-3xl items-end justify-center gap-0">
-            {topThree.map((entry) => {
+            {PODIUM_RANKS.map((rank) => {
+              const entry = topThree[rank - 1];
+              if (!entry) {
+                const emptyMedal = MEDALS[rank];
+                return (
+                  <div key={`empty-${rank}`} className={`${PODIUM_ORDER[rank]} flex flex-1 flex-col items-center`}>
+                    <div className="z-10 flex size-9 items-center justify-center rounded-full border-2 border-dashed border-grid-line bg-panel text-cream-dim">
+                      <span className="font-jakarta text-xs font-bold">?</span>
+                    </div>
+                    <div
+                      className={`relative -mt-4 flex w-full flex-col items-center gap-0.5 border border-dashed border-grid-line px-2 pb-2 pt-6 text-center ${emptyMedal.mobileStepHeight}`}
+                    >
+                      <span className="w-full truncate font-jakarta text-xs font-semibold italic text-cream-dim">
+                        Open spot
+                      </span>
+                      <span className="mt-auto font-jakarta font-black leading-none text-cream-dim/60 text-3xl">
+                        {rank}
+                      </span>
+                    </div>
+                  </div>
+                );
+              }
+
               const medal = MEDALS[entry.rank];
               const mine = isCurrentUser(entry.nickname, currentUserNickname);
               const initials = entry.nickname.slice(0, 2).toUpperCase();
@@ -418,6 +490,9 @@ export default function LeaderboardView({
             </motion.button>
           )}
         </motion.div>
+
+          </>
+        )}
 
         {/* Bottom CTA — hidden entirely for a viewer we already know is a
             registered member (currentUserNickname set), per the brief. */}
