@@ -4,6 +4,7 @@ import { MotionConfig } from "framer-motion";
 import AnimatedBackground from "@/components/AnimatedBackground";
 import PageTransition from "@/components/PageTransition";
 import ThemeToggle from "@/components/ThemeToggle";
+import OfflineBanner from "@/components/OfflineBanner";
 import { AuthProvider } from "@/lib/auth/AuthContext";
 import { THEME_INIT_SCRIPT } from "@/lib/theme";
 import "./globals.css";
@@ -86,6 +87,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
             file is kept in place in case it's wanted again later. */}
         <MotionConfig reducedMotion="user">
           <AuthProvider>
+            <OfflineBanner />
             <AnimatedBackground />
             <PageTransition>{children}</PageTransition>
             {/* Fixed to the viewport (not the navbar) so it stays put at the
