@@ -79,6 +79,113 @@ function detailLine(payout: Payout, seasonName: string | undefined): string {
     .join(" · ");
 }
 
+type FilterValues = {
+  status: "all" | PayoutStatus;
+  seasonId: string;
+  viewMode: ViewMode;
+  from: string;
+  to: string;
+  packageQuery: string;
+};
+
+const DEFAULT_FILTERS: FilterValues = {
+  status: "all",
+  seasonId: "all",
+  viewMode: "firstPending",
+  from: "",
+  to: "",
+  packageQuery: "",
+};
+
+/** The six filter inputs, shared by the desktop panel (live values) and the
+ *  mobile modal (a draft that only applies on "Apply"). */
+function FilterFields({
+  idPrefix,
+  values,
+  onChange,
+  seasons,
+  className,
+}: {
+  idPrefix: string;
+  values: FilterValues;
+  onChange: (patch: Partial<FilterValues>) => void;
+  seasons: Season[];
+  className: string;
+}) {
+  const isViewLocked = values.status !== "all" && values.status !== "scheduled";
+  const viewMode: ViewMode = isViewLocked ? "all" : values.viewMode;
+
+  return (
+    <div className={className}>
+      <FormField label="Status" htmlFor={`${idPrefix}-status`}>
+        <CustomSelect
+          id={`${idPrefix}-status`}
+          value={values.status}
+          onChange={(v) => onChange({ status: v as "all" | PayoutStatus })}
+          options={STATUS_OPTIONS}
+          triggerClassName="w-full"
+        />
+      </FormField>
+
+      {seasons.length > 0 && (
+        <FormField label="Season" htmlFor={`${idPrefix}-season`}>
+          <CustomSelect
+            id={`${idPrefix}-season`}
+            value={values.seasonId}
+            onChange={(v) => onChange({ seasonId: v })}
+            options={[{ value: "all", label: "All seasons" }, ...seasons.map((s) => ({ value: s.id, label: s.name }))]}
+            triggerClassName="w-full"
+          />
+        </FormField>
+      )}
+
+      <FormField label="Show" htmlFor={`${idPrefix}-view`}>
+        <CustomSelect
+          id={`${idPrefix}-view`}
+          value={viewMode}
+          disabled={isViewLocked}
+          onChange={(v) => onChange({ viewMode: v as ViewMode })}
+          options={VIEW_OPTIONS}
+          triggerClassName="w-full"
+        />
+      </FormField>
+
+      <FormField label="Package" htmlFor={`${idPrefix}-package`}>
+        <input
+          id={`${idPrefix}-package`}
+          type="text"
+          value={values.packageQuery}
+          onChange={(e) => onChange({ packageQuery: e.target.value })}
+          placeholder="e.g. spoty"
+          className={fieldClassName(false, "w-full")}
+        />
+      </FormField>
+
+      <FormField label="From" htmlFor={`${idPrefix}-from`}>
+        <input
+          id={`${idPrefix}-from`}
+          type="date"
+          value={values.from}
+          max={values.to || undefined}
+          onChange={(e) => onChange({ from: e.target.value })}
+          className={fieldClassName(false, "w-full")}
+        />
+      </FormField>
+
+      <FormField label="To" htmlFor={`${idPrefix}-to`}>
+        <input
+          id={`${idPrefix}-to`}
+          type="date"
+          value={values.to}
+          min={values.from || undefined}
+          onChange={(e) => onChange({ to: e.target.value })}
+          className={fieldClassName(false, "w-full")}
+        />
+      </FormField>
+    </div>
+  );
+}
+
 /**
  * The Investor Dashboard's payout history (the Transactions
  * tab). Same filters as the admin Payouts page (status,
@@ -99,6 +206,8 @@ export default function TransactionHistory() {
   const [attempt, setAttempt] = useState(0);
   const [loadingMore, setLoadingMore] = useState(false);
   const [loadMoreFailed, setLoadMoreFailed] = useState(false);
+  const [filtersOpen, setFiltersOpen] = useState(false);
+  const [draft, setDraft] = useState<FilterValues>(DEFAULT_FILTERS);
 
   useEffect(() => {
     let cancelled = false;
@@ -171,6 +280,37 @@ export default function TransactionHistory() {
     setDebouncedPackage("");
   };
 
+  const liveFilters: FilterValues = { status, seasonId, viewMode, from, to, packageQuery };
+
+  const applyFilters = (next: FilterValues) => {
+    setStatus(next.status);
+    setSeasonId(next.seasonId);
+    setViewMode(next.viewMode);
+    setFrom(next.from);
+    setTo(next.to);
+    setPackageQuery(next.packageQuery);
+    setDebouncedPackage(next.packageQuery.trim());
+  };
+
+  const openFilters = () => {
+    setDraft(liveFilters);
+    setFiltersOpen(true);
+  };
+
+  useEffect(() => {
+    if (!filtersOpen) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setFiltersOpen(false);
+    };
+    document.addEventListener("keydown", onKey);
+    const prevOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.removeEventListener("keydown", onKey);
+      document.body.style.overflow = prevOverflow;
+    };
+  }, [filtersOpen]);
+
   const loadMore = async () => {
     if (!loaded || loadingMore) return;
     setLoadingMore(true);
@@ -199,79 +339,50 @@ export default function TransactionHistory() {
 
   return (
     <section className="flex flex-col gap-6">
-      <div className="flex flex-col gap-1">
-        <h2 className="font-jakarta text-xl font-semibold text-cream sm:text-2xl">Transaction History</h2>
-        <p className="font-sans text-sm text-cream-dim">Every payout AUREX has scheduled or paid to you.</p>
+      <div className="flex items-start justify-between gap-4">
+        <div className="flex flex-col gap-1">
+          <h2 className="font-jakarta text-xl font-semibold text-cream sm:text-2xl">Transaction History</h2>
+          <p className="font-sans text-sm text-cream-dim">Every payout AUREX has scheduled or paid to you.</p>
+        </div>
+        <button
+          type="button"
+          onClick={openFilters}
+          aria-haspopup="dialog"
+          className="relative flex shrink-0 items-center gap-2 border border-gold/30 px-3.5 py-2 font-jakarta text-sm font-medium text-gold-bright transition-colors hover:border-gold hover:bg-gold/5 md:hidden"
+        >
+          <svg viewBox="0 0 20 20" fill="none" className="size-4" aria-hidden="true">
+            <path d="M3 5h14M6 10h8M9 15h2" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
+          </svg>
+          Filters
+          {hasActiveFilters && <span className="size-2 rounded-full bg-gold-bright" aria-label="Filters applied" />}
+        </button>
       </div>
 
-      <div className="flex flex-col gap-4 border border-gold/20 bg-panel/40 p-5 backdrop-blur-2xl sm:p-6">
-        <div className="grid gap-4 sm:grid-cols-2 lg:grid-flow-col lg:auto-cols-fr lg:gap-3">
-          <FormField label="Status" htmlFor="tx-status">
-            <CustomSelect
-              id="tx-status"
-              value={status}
-              onChange={(v) => setStatus(v as "all" | PayoutStatus)}
-              options={STATUS_OPTIONS}
-              triggerClassName="w-full"
-            />
-          </FormField>
+      {/* Phones: just the result count (and a way to clear) - the filters
+          themselves live in the modal the button above opens. */}
+      <div className="flex items-center justify-between gap-3 md:hidden">
+        <span className="font-sans text-xs text-cream-dim">
+          {loaded && !isLoading && !loaded.error ? `${loaded.total} ${loaded.total === 1 ? "payout" : "payouts"}` : ""}
+        </span>
+        {hasActiveFilters && (
+          <button
+            type="button"
+            onClick={clearFilters}
+            className="font-jakarta text-sm font-medium text-gold-bright underline-offset-4 hover:underline"
+          >
+            Clear filters
+          </button>
+        )}
+      </div>
 
-          {seasons.length > 0 && (
-            <FormField label="Season" htmlFor="tx-season">
-              <CustomSelect
-                id="tx-season"
-                value={seasonId}
-                onChange={setSeasonId}
-                options={[{ value: "all", label: "All seasons" }, ...seasons.map((s) => ({ value: s.id, label: s.name }))]}
-                triggerClassName="w-full"
-              />
-            </FormField>
-          )}
-
-          <FormField label="Show" htmlFor="tx-view">
-            <CustomSelect
-              id="tx-view"
-              value={viewMode}
-              disabled={isViewLocked}
-              onChange={(v) => setViewMode(v as ViewMode)}
-              options={VIEW_OPTIONS}
-              triggerClassName="w-full"
-            />
-          </FormField>
-
-          <FormField label="Package" htmlFor="tx-package">
-            <input
-              id="tx-package"
-              type="text"
-              value={packageQuery}
-              onChange={(e) => setPackageQuery(e.target.value)}
-              placeholder="e.g. spoty"
-              className={fieldClassName(false, "w-full")}
-            />
-          </FormField>
-
-          <FormField label="From" htmlFor="tx-from">
-            <input
-              id="tx-from"
-              type="date"
-              value={from}
-              max={to || undefined}
-              onChange={(e) => setFrom(e.target.value)}
-              className={fieldClassName(false, "w-full")}
-            />
-          </FormField>
-
-          <FormField label="To" htmlFor="tx-to">
-            <input
-              id="tx-to"
-              type="date"
-              value={to}
-              min={from || undefined}
-              onChange={(e) => setTo(e.target.value)}
-              className={fieldClassName(false, "w-full")}
-            />
-          </FormField>
-        </div>
+      <div className="hidden flex-col gap-4 border border-gold/20 bg-panel/40 p-6 backdrop-blur-2xl md:flex">
+        <FilterFields
+          idPrefix="tx"
+          values={liveFilters}
+          onChange={(patch) => applyFilters({ ...liveFilters, ...patch })}
+          seasons={seasons}
+          className="grid gap-4 sm:grid-cols-2 lg:grid-flow-col lg:auto-cols-fr lg:gap-3"
+        />
 
         <div className="flex flex-wrap items-center justify-between gap-3">
           <span className="font-sans text-xs text-cream-dim">
@@ -289,10 +400,69 @@ export default function TransactionHistory() {
         </div>
       </div>
 
+      {filtersOpen && (
+        <div
+          className="fixed inset-0 z-50 flex items-end justify-center bg-black/60 md:hidden"
+          onClick={() => setFiltersOpen(false)}
+        >
+          <div
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="tx-filters-title"
+            onClick={(e) => e.stopPropagation()}
+            className="flex max-h-[90vh] w-full flex-col gap-5 overflow-y-auto border-t border-gold/20 bg-ink p-5 pb-6 shadow-2xl"
+          >
+            <div className="flex items-center justify-between gap-3">
+              <h3 id="tx-filters-title" className="font-jakarta text-lg font-semibold text-cream">
+                Filters
+              </h3>
+              <button
+                type="button"
+                aria-label="Close filters"
+                onClick={() => setFiltersOpen(false)}
+                className="flex size-8 items-center justify-center text-cream-dim transition-colors hover:text-gold-bright"
+              >
+                <svg viewBox="0 0 20 20" fill="none" className="size-4" aria-hidden="true">
+                  <path d="M5 5L15 15M15 5L5 15" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
+                </svg>
+              </button>
+            </div>
+
+            <FilterFields
+              idPrefix="txm"
+              values={draft}
+              onChange={(patch) => setDraft((d) => ({ ...d, ...patch }))}
+              seasons={seasons}
+              className="flex flex-col gap-4"
+            />
+
+            <div className="flex gap-3 pt-1">
+              <button
+                type="button"
+                onClick={() => setDraft(DEFAULT_FILTERS)}
+                className="flex-1 border border-grid-line px-4 py-3 font-jakarta text-sm font-medium text-cream transition-colors hover:border-gold/40"
+              >
+                Reset
+              </button>
+              <button
+                type="button"
+                onClick={() => {
+                  applyFilters(draft);
+                  setFiltersOpen(false);
+                }}
+                className="flex-1 bg-gradient-to-r from-gold via-gold-light via-50% to-gold px-4 py-3 font-jakarta text-sm font-medium text-amainblack"
+              >
+                Apply filters
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
       {isLoading ? (
         <p className="px-4 py-10 text-center font-sans text-sm text-cream-dim">Loading…</p>
       ) : loaded.error ? (
-        <div className="flex flex-col items-center gap-3 border border-[#f87171]/30 bg-[#f87171]/5 py-12 text-center">
+        <div className="flex flex-col items-center gap-3 border border-[#f87171]/30 bg-[#f87171]/5 px-6 py-12 text-center">
           <p role="alert" className="font-sans text-sm text-[#f87171]">
             Something went wrong loading your payouts.
           </p>
@@ -375,7 +545,7 @@ export default function TransactionHistory() {
           </div>
         </div>
       ) : (
-        <div className="flex flex-col items-center gap-2 border border-grid-line py-12 text-center">
+        <div className="flex flex-col items-center gap-2 border border-grid-line px-6 py-12 text-center">
           <p className="font-jakarta text-sm font-medium text-cream">
             {hasActiveFilters ? "No payouts match these filters." : "No pending payouts."}
           </p>
