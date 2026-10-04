@@ -27,16 +27,25 @@ const TABS = [
  * rather than inventing a new tab-bar style, since this is the same
  * "which of a few top-level destinations am I on" job.
  */
-export default function DashboardTabs({ basePath }: { basePath: string }) {
+export default function DashboardTabs({
+  basePath,
+  extraTabs = [],
+}: {
+  basePath: string;
+  /** Role-specific tabs, inserted before Report (e.g. the investor's Transactions). */
+  extraTabs?: { slug: string; label: string }[];
+}) {
   const pathname = usePathname();
   // Carries the current query string across tab switches, so any
   // ?param a tab relies on (e.g. the leaderboard's own ?me=) survives
   // switching tabs instead of being silently dropped.
   const queryString = useSearchParams().toString();
 
+  const tabs = [...TABS.slice(0, 3), ...extraTabs, ...TABS.slice(3)];
+
   return (
-    <nav aria-label="Dashboard sections" className="flex items-center gap-6 border-b border-grid-line sm:gap-8">
-      {TABS.map(({ slug, label }) => {
+    <nav aria-label="Dashboard sections" className="flex items-center gap-6 overflow-x-auto border-b border-grid-line sm:gap-8">
+      {tabs.map(({ slug, label }) => {
         const href = `${basePath}/${slug}${queryString ? `?${queryString}` : ""}`;
         const isActive = pathname === `${basePath}/${slug}`;
         return (
@@ -45,8 +54,8 @@ export default function DashboardTabs({ basePath }: { basePath: string }) {
             href={href}
             className={
               isActive
-                ? "border-b-2 border-gold bg-gradient-to-r from-gold via-gold-light via-50% to-gold bg-clip-text pb-3 font-jakarta text-sm font-semibold tracking-[0.3px] text-transparent"
-                : "border-b-2 border-transparent pb-3 font-sans text-sm font-medium tracking-[0.3px] text-neutral-200 transition-colors hover:text-cream light:text-[#1a1a1a] light:hover:text-gold-deep"
+                ? "shrink-0 whitespace-nowrap border-b-2 border-gold bg-gradient-to-r from-gold via-gold-light via-50% to-gold bg-clip-text pb-3 font-jakarta text-sm font-semibold tracking-[0.3px] text-transparent"
+                : "shrink-0 whitespace-nowrap border-b-2 border-transparent pb-3 font-sans text-sm font-medium tracking-[0.3px] text-neutral-200 transition-colors hover:text-cream light:text-[#1a1a1a] light:hover:text-gold-deep"
             }
           >
             {label}

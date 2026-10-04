@@ -1,9 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import Link from "next/link";
 import EarningsSection from "@/components/dashboard/EarningsSection";
-import { ArrowUpRightIcon } from "@/components/icons";
 import { useAuth } from "@/lib/auth/AuthContext";
 import { getMyHoldings } from "@/lib/investorPortfolio";
 import type { InvestmentHolding } from "@/lib/investorPortfolio";
@@ -30,16 +28,6 @@ export default function DashboardEarningsPage() {
   return (
     <div className="flex flex-col gap-8">
       <EarningsSection holdings={holdings} />
-
-      <div className="flex items-center justify-end border-t border-grid-line pt-6">
-        <Link
-          href="/dashboard/transactions"
-          className="flex items-center gap-1.5 font-jakarta text-sm font-medium text-gold-bright underline-offset-4 transition-colors hover:text-gold-light hover:underline"
-        >
-          Transaction History
-          <ArrowUpRightIcon className="size-3" />
-        </Link>
-      </div>
     </div>
   );
 }
