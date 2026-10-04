@@ -27,7 +27,7 @@ import { EyeIcon, EyeOffIcon } from "@/components/icons";
  */
 export function fieldClassName(hasError: boolean, extra = "") {
   return [
-    "flex items-center border bg-ink-light/20 px-4 py-3 font-sans text-sm text-cream placeholder:text-cream-dim/60 outline-none transition-colors light:bg-white/60",
+    "flex items-center border bg-ink-light/20 px-4 py-3 font-sans text-sm text-cream placeholder:text-cream-dim/35 outline-none transition-colors light:bg-white/60",
     hasError ? "border-[#f87171] focus:border-[#f87171]" : "border-grid-line focus:border-gold",
     extra,
   ].join(" ");

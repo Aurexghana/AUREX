@@ -12,11 +12,11 @@ import { getMyListing, type BusinessListing } from "@/lib/businessListing";
 
 /**
  * Shared shell for the Business Owner Dashboard - logo/log-out header,
- * welcome banner, and the same Investment / Earnings / Leaderboard tab
- * bar the Investor Dashboard uses, reinterpreted for this role: Investment
- * is the listing itself (status + details), Earnings is the funding
- * raised so far, Leaderboard is the same investor leaderboard every
- * member can see. See each tab's own page for the actual content.
+ * welcome banner, and the Investment / Earnings / Report tab bar,
+ * reinterpreted for this role: Investment is the listing itself (status +
+ * details), Earnings is the funding raised so far. Business owners have no
+ * Leaderboard - that's an investor-only feature. See each tab's own page
+ * for the actual content.
  *
  * Lives in its own file (rather than directly in
  * app/business-dashboard/layout.tsx) purely so that file can wrap this
@@ -71,7 +71,7 @@ export default function BusinessDashboardShell({ children }: { children: React.R
           </motion.div>
 
           <motion.div variants={staggerItem}>
-            <DashboardTabs basePath="/business-dashboard" />
+            <DashboardTabs basePath="/business-dashboard" hiddenSlugs={["leaderboard"]} />
           </motion.div>
 
           <motion.div variants={staggerItem}>{children}</motion.div>

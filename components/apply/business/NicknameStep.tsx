@@ -3,14 +3,14 @@
 import { useEffect, useState } from "react";
 import { getNicknameFormatError, isNicknameAvailable, NICKNAME_MAX_LENGTH } from "@/lib/nickname";
 import { FormField, fieldClassName } from "@/components/apply/FormField";
-import NicknamePreview from "@/components/apply/NicknamePreview";
 import type { StepProps } from "@/components/apply/types";
 import type { BusinessOwnerFormData } from "@/components/apply/business/types";
 
 /**
  * Step 2 of 6 - "Nickname / Display Name". Identical behavior to the
  * Investor flow's own Nickname step (same lib/nickname.ts format rules,
- * same isNicknameAvailable stub, same NicknamePreview) - see that file's
+ * same isNicknameAvailable stub, minus the leaderboard preview, which
+ * business owners never appear on) - see that file's
  * own comment for the full reasoning. The only real difference is this
  * step's intro copy, which mentions the business name alongside the
  * applicant's real name per the brief, since here there are two identities
@@ -51,7 +51,7 @@ export default function NicknameStep({ values, updateValues, onValidityChange }:
         <h1 className="font-jakarta text-2xl font-semibold text-cream sm:text-3xl">Nickname / Display Name</h1>
         <p className="max-w-lg font-sans text-xs leading-5 text-cream-dim/80">
           This is what other members will see instead of your real name or business name, anywhere your identity
-          appears on AUREX (members list, leaderboard, etc.). Your real name stays private and is only visible to
+          appears on AUREX. Your real name stays private and is only visible to
           AUREX admin.
         </p>
       </div>
@@ -77,14 +77,6 @@ export default function NicknameStep({ values, updateValues, onValidityChange }:
             className={fieldClassName(touched && !!error)}
           />
         </FormField>
-
-        <div className="flex flex-col gap-2">
-          <span className="font-jakarta text-xs font-medium uppercase tracking-[1.4px] text-cream-dim">
-            Preview
-          </span>
-          <p className="font-sans text-xs text-cream-dim/70">This is how you&apos;ll appear on the Investor Leaderboard.</p>
-          <NicknamePreview nickname={values.nickname} />
-        </div>
       </div>
     </div>
   );

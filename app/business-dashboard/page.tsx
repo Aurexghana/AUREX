@@ -1,8 +1,8 @@
 import { redirect } from "next/navigation";
 
 /**
- * `/business-dashboard` itself is no longer a page - it's the three tabs
- * living at app/business-dashboard/{investment,earnings,leaderboard}/
+ * `/business-dashboard` itself is no longer a page - it's the tabs
+ * living at app/business-dashboard/{investment,earnings,report}/
  * page.tsx now. Redirects to Investment (the listing itself), the same
  * "status always renders first" ordering the old single-page dashboard
  * used. Carries `?status=` along so the dev-preview stub
