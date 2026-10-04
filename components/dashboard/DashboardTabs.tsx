@@ -44,7 +44,7 @@ export default function DashboardTabs({
   const tabs = [...TABS.slice(0, 3), ...extraTabs, ...TABS.slice(3)];
 
   return (
-    <nav aria-label="Dashboard sections" className="flex items-center gap-6 overflow-x-auto border-b border-grid-line sm:gap-8">
+    <nav aria-label="Dashboard sections" className="no-scrollbar flex items-center gap-4 overflow-x-auto border-b border-grid-line sm:gap-8">
       {tabs.map(({ slug, label }) => {
         const href = `${basePath}/${slug}${queryString ? `?${queryString}` : ""}`;
         const isActive = pathname === `${basePath}/${slug}`;
