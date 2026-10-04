@@ -80,8 +80,8 @@ function detailLine(payout: Payout, seasonName: string | undefined): string {
 }
 
 /**
- * The Investor Dashboard's payout history — reached from the Earnings tab's
- * "Transaction History" link. Same filters as the admin Payouts page (status,
+ * The Investor Dashboard's payout history (the Transactions
+ * tab). Same filters as the admin Payouts page (status,
  * season, date range, package), minus the member search since the API already
  * scopes every row to the signed-in investor. Filtering and paging happen
  * server-side; "Load More" appends the next page.
@@ -205,7 +205,7 @@ export default function TransactionHistory() {
       </div>
 
       <div className="flex flex-col gap-4 border border-gold/20 bg-panel/40 p-5 backdrop-blur-2xl sm:p-6">
-        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-flow-col lg:auto-cols-fr lg:gap-3">
           <FormField label="Status" htmlFor="tx-status">
             <CustomSelect
               id="tx-status"

@@ -2,14 +2,12 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
 import { staggerContainer, staggerItem } from "@/lib/motion";
 import { formatGhs } from "@/lib/formatters";
 import BrandMark from "@/components/BrandMark";
-import { LogoutIcon } from "@/components/icons";
+import LogoutButton from "@/components/dashboard/LogoutButton";
 import DashboardTabs from "@/components/dashboard/DashboardTabs";
-import { useAuth } from "@/lib/auth/AuthContext";
 import { useRequireAuth } from "@/lib/auth/useRequireAuth";
 import { MOCK_INVESTOR, getMyHoldings, type InvestmentHolding } from "@/lib/investorPortfolio";
 
@@ -41,8 +39,6 @@ import { MOCK_INVESTOR, getMyHoldings, type InvestmentHolding } from "@/lib/inve
  */
 export default function InvestorDashboardShell({ children }: { children: React.ReactNode }) {
   const { user, isLoading } = useRequireAuth();
-  const { logout } = useAuth();
-  const router = useRouter();
   const [holdings, setHoldings] = useState<InvestmentHolding[]>([]);
 
   useEffect(() => {
@@ -65,11 +61,6 @@ export default function InvestorDashboardShell({ children }: { children: React.R
 
   const displayName = user.nickname ?? MOCK_INVESTOR.nickname;
 
-  const handleLogout = async () => {
-    await logout();
-    router.push("/");
-  };
-
   return (
     <main className="flex flex-1 flex-col items-center px-4 pb-16 pt-8 sm:px-6 lg:px-10">
       <div className="flex w-full max-w-6xl flex-col gap-8">
@@ -77,14 +68,7 @@ export default function InvestorDashboardShell({ children }: { children: React.R
           <Link href="/" aria-label="AUREX home">
             <BrandMark variant="nav" />
           </Link>
-          <button
-            type="button"
-            onClick={handleLogout}
-            className="flex items-center gap-2 border border-[#f87171]/40 px-4 py-2 font-jakarta text-sm font-medium text-[#f87171] transition-colors hover:border-[#f87171] hover:bg-[#f87171]/10"
-          >
-            <LogoutIcon className="size-4" />
-            Log out
-          </button>
+          <LogoutButton />
         </div>
 
         <motion.div variants={staggerContainer} initial="initial" animate="animate" className="flex flex-col gap-8">
@@ -109,7 +93,7 @@ export default function InvestorDashboardShell({ children }: { children: React.R
           </motion.div>
 
           <motion.div variants={staggerItem}>
-            <DashboardTabs basePath="/dashboard" />
+            <DashboardTabs basePath="/dashboard" extraTabs={[{ slug: "transactions", label: "Transactions" }]} />
           </motion.div>
 
           <motion.div variants={staggerItem}>{children}</motion.div>
