@@ -11,26 +11,23 @@ import { ArrowUpRightIcon } from "@/components/icons";
 // app/apply/investor/page.tsx / app/apply-business/page.tsx and
 // components/apply/.
 //
-// Images: public/brand/modal-invest.jpg (Flickr, "Graph With Stacks Of
-// Coins" by kenteegardin, CC BY-SA 2.0) and modal-business.jpg (Flickr,
-// "Women In Tech - 81" by wocintechchat.com / Mike Ngo, CC BY 2.0) - both
-// freely reusable stock photography picked for actually matching their
-// option's theme (gold coins + a growth line for investing, a business
-// conversation for the venture/listing side) rather than generic filler.
-// Both licenses require attribution if this ships publicly; swap in
-// licensed/branded photography before launch if that's not workable.
+// Images: bright flat illustrations (public/brand/modal-invest.svg and
+// modal-business.svg) - a rising gold bar chart with a coin for investing,
+// a storefront with a growth coin for listing a business. They replace the
+// earlier dark stock photos, which read as dated; being our own artwork they
+// also carry no attribution requirement.
 const OPTIONS = [
   {
     title: "Invest with AUREX",
     description: "Grow your money through AUREX Core or AUREX Ventures.",
     href: "/apply/investor",
-    image: "/brand/modal-invest.jpg",
+    image: "/brand/modal-invest.svg",
   },
   {
     title: "List Your Business",
     description: "Raise funding from AUREX investors.",
     href: "/apply-business",
-    image: "/brand/modal-business.jpg",
+    image: "/brand/modal-business.svg",
   },
 ];
 
@@ -144,13 +141,6 @@ export default function JoinAurexModal({
                         sizes="(min-width: 640px) 340px, 100vw"
                         className="object-cover transition-transform duration-300 group-hover:scale-105"
                       />
-                      {/* Gold tint + bottom fade ties the photo into the
-                          rest of the app's gold/dark palette instead of
-                          sitting on the card as an untouched stock photo -
-                          same mix-blend-color approach AboutVisualPanel
-                          uses over its own background photo. */}
-                      <div className="absolute inset-0 bg-gold/15 mix-blend-color" />
-                      <div className="absolute inset-0 bg-gradient-to-t from-ink-light/60 via-transparent to-transparent" />
                     </div>
 
                     <div className="flex flex-1 items-center justify-between gap-3 p-5">
