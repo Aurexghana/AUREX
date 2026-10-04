@@ -11,23 +11,23 @@ import { ArrowUpRightIcon } from "@/components/icons";
 // app/apply/investor/page.tsx / app/apply-business/page.tsx and
 // components/apply/.
 //
-// Images: public/brand/modal-invest.jpg (a sprout growing from a pile of
-// coins) and modal-business.jpg (a team meeting in a bright brick-walled
-// office), both bright, modern Unsplash photos (free to use under the
-// Unsplash License, no attribution required) replacing the earlier dated
-// stock shots. Shown in their own colors, with no tint over them.
+// Images: bright 3D-style illustrations (public/brand/modal-invest.svg - gold
+// coin stacks, a rising chart and a big coin; modal-business.svg - a shop
+// front with an awning, a growth coin and a bar-chart card). Our own
+// artwork, so no attribution is needed; shown in their own colors with no
+// tint over them.
 const OPTIONS = [
   {
     title: "Invest with AUREX",
     description: "Grow your money through AUREX Core or AUREX Ventures.",
     href: "/apply/investor",
-    image: "/brand/modal-invest.jpg",
+    image: "/brand/modal-invest.svg",
   },
   {
     title: "List Your Business",
     description: "Raise funding from AUREX investors.",
     href: "/apply-business",
-    image: "/brand/modal-business.jpg",
+    image: "/brand/modal-business.svg",
   },
 ];
 
