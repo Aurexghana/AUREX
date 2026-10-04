@@ -173,7 +173,7 @@ export default function ActivationFlow() {
     setSubmitError(null);
     try {
       await activateAccount(token ?? "", values.password);
-      await login(email, values.password);
+      await login(email, values.password, track);
       setPhase("success");
     } catch {
       setSubmitError("Something went wrong setting up your account. Please try again.");

@@ -14,6 +14,7 @@ export type AuthUser = {
   verified: boolean;
   isActive: boolean;
   role: string | null;
+  roles: string[];
   createdAt: string;
 };
 
@@ -22,7 +23,7 @@ type LoginResponse = { user: AuthUser; accessToken: string; refreshToken: string
 type AuthContextValue = {
   user: AuthUser | null;
   isLoading: boolean;
-  login: (email: string, password: string) => Promise<AuthUser>;
+  login: (email: string, password: string, role: "investor" | "business") => Promise<AuthUser>;
   logout: () => Promise<void>;
 };
 
@@ -65,8 +66,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     setState({ user: next.user, isLoading: false });
   };
 
-  const login = async (email: string, password: string) => {
-    const { data } = await apiFetch<LoginResponse>("/auth/login", { method: "POST", body: { email, password } });
+  const login = async (email: string, password: string, role: "investor" | "business") => {
+    const { data } = await apiFetch<LoginResponse>("/auth/login", { method: "POST", body: { email, password, role } });
     persist(data);
     return data.user;
   };

@@ -24,14 +24,9 @@ const DASHBOARD_HREF: Record<string, string> = {
   business: "/business-dashboard",
 };
 
-const ROLE_LABEL: Record<LoginRole, string> = {
-  investor: "Investor",
-  business: "Business Owner",
-};
-
 export default function LoginForm({ role }: { role: LoginRole }) {
   const router = useRouter();
-  const { login, logout } = useAuth();
+  const { login } = useAuth();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [submitting, setSubmitting] = useState(false);
@@ -42,12 +37,7 @@ export default function LoginForm({ role }: { role: LoginRole }) {
     setSubmitting(true);
     setSubmitError(null);
     try {
-      const user = await login(email, password);
-      if (user.role !== role) {
-        await logout();
-        setSubmitError(`This account isn't registered as a${role === "investor" ? "n" : ""} ${ROLE_LABEL[role]}.`);
-        return;
-      }
+      await login(email, password, role);
       router.push(DASHBOARD_HREF[role]);
     } catch (err) {
       setSubmitError(err instanceof ApiError ? err.message : "Something went wrong. Please try again.");
