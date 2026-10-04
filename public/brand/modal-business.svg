@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 240" preserveAspectRatio="xMidYMid slice">
+<defs>
+<linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#e6f4ff"/><stop offset="1" stop-color="#ffeec2"/></linearGradient>
+<linearGradient id="wall" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffffff"/><stop offset="1" stop-color="#f3e9d2"/></linearGradient>
+<linearGradient id="glass" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#e3f4ff"/><stop offset="1" stop-color="#a8d4f0"/></linearGradient>
+<linearGradient id="gold" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffd966"/><stop offset="1" stop-color="#e0a416"/></linearGradient>
+<linearGradient id="teal" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2dd4bf"/><stop offset="1" stop-color="#0d9488"/></linearGradient>
+<linearGradient id="door" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#1e3a5f"/><stop offset="1" stop-color="#2f5d8f"/></linearGradient>
+<radialGradient id="coin" cx=".4" cy=".35" r=".8"><stop offset="0" stop-color="#fff6c4"/><stop offset=".6" stop-color="#ffd24d"/><stop offset="1" stop-color="#e9ad1e"/></radialGradient>
+<filter id="sh" x="-30%" y="-30%" width="160%" height="170%"><feDropShadow dx="0" dy="8" stdDeviation="7" flood-color="#1e3a5f" flood-opacity=".22"/></filter>
+</defs>
+<rect width="400" height="240" fill="url(#bg)"/>
+<circle cx="60" cy="45" r="80" fill="#fff" opacity=".6"/><circle cx="360" cy="215" r="90" fill="#fff" opacity=".45"/>
+<g fill="#fff" opacity=".9"><ellipse cx="320" cy="40" rx="30" ry="9"/><ellipse cx="340" cy="34" rx="20" ry="8"/><ellipse cx="90" cy="30" rx="26" ry="8"/></g>
+<rect x="0" y="206" width="400" height="34" fill="#d9ead3" opacity=".85"/>
+<g filter="url(#sh)">
+<rect x="96" y="92" width="208" height="114" rx="5" fill="url(#wall)"/>
+<rect x="114" y="122" width="96" height="66" rx="5" fill="url(#glass)"/>
+<path d="M126 188 L164 122 M158 188 L206 126" stroke="#fff" stroke-width="6" opacity=".55"/>
+<rect x="232" y="122" width="52" height="84" rx="5" fill="url(#door)"/>
+<rect x="238" y="128" width="40" height="46" rx="3" fill="#bfe3f7" opacity=".8"/>
+<circle cx="272" cy="170" r="3.5" fill="#ffd24d"/>
+<rect x="240" y="100" width="36" height="14" rx="7" fill="#16a34a"/>
+<text x="258" y="110.5" text-anchor="middle" font-family="Arial,sans-serif" font-weight="700" font-size="9" fill="#fff">OPEN</text>
+</g>
+<g filter="url(#sh)">
+<path d="M88 94 L112 56 H288 L312 94 Z" fill="url(#gold)"/>
+<path d="M112 56 L100 94 M148 56 L142 94 M184 56 L184 94 M216 56 L216 94 M252 56 L258 94 M288 56 L300 94" stroke="#fff" stroke-width="12" opacity=".92"/>
+<path d="M88 94 q11.2 15 22.4 0 q11.2 15 22.4 0 q11.2 15 22.4 0 q11.2 15 22.4 0 q11.2 15 22.4 0 q11.2 15 22.4 0 q11.2 15 22.4 0 q11.2 15 22.4 0 q11.2 15 22.4 0 q11.2 15 22.4 0 " fill="url(#gold)"/>
+<rect x="88" y="50" width="224" height="10" rx="3" fill="#e0a416"/>
+</g>
+<g filter="url(#sh)">
+<rect x="318" y="96" width="62" height="74" rx="9" fill="#fff"/>
+<rect x="328" y="138" width="9" height="22" rx="2" fill="url(#teal)"/><rect x="342" y="126" width="9" height="34" rx="2" fill="url(#teal)"/><rect x="356" y="110" width="9" height="50" rx="2" fill="url(#gold)"/>
+<rect x="328" y="104" width="22" height="5" rx="2.5" fill="#cbd5e1"/>
+</g>
+<g filter="url(#sh)"><circle cx="46" cy="104" r="26" fill="url(#coin)"/><circle cx="46" cy="104" r="19" fill="none" stroke="#c88a0c" stroke-width="2.5" opacity=".55"/><path d="M36 114 L43 105 L49 111 L58 96" fill="none" stroke="#b97c06" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/></g>
+<g filter="url(#sh)"><path d="M54 206 l-4 -36 h30 l-4 36z" fill="#f97316"/><rect x="48" y="164" width="34" height="8" rx="3" fill="#fb923c"/><g fill="#22c55e"><ellipse cx="58" cy="152" rx="7" ry="14" transform="rotate(-22 58 152)"/><ellipse cx="72" cy="150" rx="7" ry="15" transform="rotate(20 72 150)"/><ellipse cx="65" cy="146" rx="6" ry="15"/></g></g>
+</svg>
