@@ -30,7 +30,7 @@ type ViewMode = "all" | "firstPending";
 
 const VIEW_OPTIONS: { value: ViewMode; label: string }[] = [
   { value: "all", label: "All payouts" },
-  { value: "firstPending", label: "First pending payout only" },
+  { value: "firstPending", label: "Next payout only" },
 ];
 
 const STATUS_TONE: Record<PayoutStatus, string> = {
