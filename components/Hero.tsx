@@ -5,20 +5,25 @@ import { staggerContainer, staggerItem, hoverScale } from "@/lib/motion";
 import { ArrowUpRightIcon } from "@/components/icons";
 import HeroLooperVector from "@/components/HeroLooperVector";
 
+// Below lg the section's height comes from fixed padding rather than a
+// viewport-height minimum, so the space above and below the content is the
+// same on every phone instead of stretching with the screen's height. The
+// mobile heading size scales with the viewport width (clamp) for the same
+// reason.
 export default function Hero() {
   return (
     <motion.section
       variants={staggerContainer}
       initial="initial"
       animate="animate"
-      className="relative flex min-h-[60vh] w-full flex-col items-center justify-center gap-12 overflow-hidden sm:gap-16"
+      className="relative flex w-full flex-col items-center justify-center gap-10 overflow-hidden py-10 sm:gap-16 sm:py-14 lg:min-h-[60vh] lg:py-0"
     >
       <HeroLooperVector />
 
       <div className="relative flex max-w-4xl flex-col items-center gap-6 text-center">
         <motion.h1
           variants={staggerItem}
-          className="font-jakarta text-4xl font-semibold tracking-tight text-cream sm:text-5xl md:text-6xl lg:text-7xl lg:leading-[1.1] lg:tracking-[-0.04em]"
+          className="font-jakarta text-[clamp(1.75rem,8.5vw,2.25rem)] font-semibold tracking-tight text-cream sm:text-5xl md:text-6xl lg:text-7xl lg:leading-[1.1] lg:tracking-[-0.04em]"
         >
           <span className="block">Invest with purpose.</span>
           <span className="block bg-gradient-to-r from-gold-bright via-gold-deep via-50% to-gold-bright bg-clip-text text-transparent">
