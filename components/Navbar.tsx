@@ -47,12 +47,9 @@ function mobileLinkClassName(isActive: boolean) {
 // reference design's "Download/Work with us/Business" + "Instagram/
 // Facebook/LinkedIn" pattern surfaces (real links a mobile visitor
 // otherwise has to scroll all the way to the footer for), not anything
-// already shown on the main navbar. Login is the one exception - it's a
-// primary nav-level link, but the header only shows it from sm: up (see
-// its `hidden sm:inline-block` above), so on true mobile this panel is
-// still the only place it appears.
+// already shown on the main navbar. Login now sits in the numbered primary list instead
+// (see the panel below) so it stands out on mobile.
 const SECONDARY_LINKS = [
-  { label: "Login", href: "/login" },
   { label: "Privacy Policy", href: "/privacy" },
   { label: "Terms and Conditions", href: "/terms" },
 ];
@@ -285,7 +282,8 @@ export default function Navbar() {
               <div aria-hidden="true" className="flex-1" />
 
               <div className="flex flex-wrap items-baseline gap-x-1 gap-y-2">
-                {[{ label: "Home", href: "/" }, ...NAV_LINKS].map(({ label, href }, i) => (
+                {[{ label: "Home", href: "/" }, ...NAV_LINKS, { label: "Login", href: "/login" }].map(
+                  ({ label, href }, i, all) => (
                   <a
                     key={label}
                     href={href}
@@ -295,12 +293,19 @@ export default function Navbar() {
                     <span className="relative -top-2 mr-0.5 font-jakarta text-[10px] font-medium text-cream-dim sm:text-xs">
                       0{i + 1}
                     </span>
-                    <span className={mobileLinkClassName(pathname === href)}>
+                    <span
+                      className={
+                        href === "/login"
+                          ? "font-jakarta text-2xl font-bold tracking-tight text-gold-bright underline decoration-gold decoration-2 underline-offset-4 transition-colors hover:text-gold-light sm:text-3xl"
+                          : mobileLinkClassName(pathname === href)
+                      }
+                    >
                       {label}
-                      {i < NAV_LINKS.length ? "," : "."}
+                      {i < all.length - 1 ? "," : "."}
                     </span>
                   </a>
-                ))}
+                  ),
+                )}
               </div>
 
               <div className="mt-10 grid grid-cols-2 gap-6 border-t border-grid-line pt-8">
