@@ -30,10 +30,13 @@ const TABS = [
 export default function DashboardTabs({
   basePath,
   extraTabs = [],
+  hiddenSlugs = [],
 }: {
   basePath: string;
   /** Role-specific tabs, inserted before Report (e.g. the investor's Transactions). */
   extraTabs?: { slug: string; label: string }[];
+  /** Default tabs a role doesn't get (e.g. business owners have no Leaderboard). */
+  hiddenSlugs?: string[];
 }) {
   const pathname = usePathname();
   // Carries the current query string across tab switches, so any
@@ -41,7 +44,7 @@ export default function DashboardTabs({
   // switching tabs instead of being silently dropped.
   const queryString = useSearchParams().toString();
 
-  const tabs = [...TABS.slice(0, 3), ...extraTabs, ...TABS.slice(3)];
+  const tabs = [...TABS.slice(0, 3), ...extraTabs, ...TABS.slice(3)].filter((t) => !hiddenSlugs.includes(t.slug));
 
   return (
     <nav aria-label="Dashboard sections" className="no-scrollbar flex items-center gap-4 overflow-x-auto border-b border-grid-line sm:gap-8">

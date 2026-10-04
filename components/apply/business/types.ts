@@ -26,7 +26,7 @@ export type BusinessOwnerFormData = {
   /** One of lib/fundingRange.ts's own banded options. */
   fundingAmount: string;
   /** Step 2 - the public display name shown anywhere the applicant's
-   *  identity appears on AUREX (members list, leaderboard, etc.). */
+   *  identity appears on AUREX (members list, etc.). */
   nickname: string;
   /** Step 3 - held as a real File object in memory only, per the brief:
    *  no localStorage/sessionStorage. */
