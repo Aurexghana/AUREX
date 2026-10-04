@@ -49,7 +49,7 @@ export default function LogoutButton() {
 
       {open && (
         <div
-          className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 px-4"
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 px-4"
           onClick={() => !busy && setOpen(false)}
         >
           <div
@@ -57,7 +57,7 @@ export default function LogoutButton() {
             aria-modal="true"
             aria-labelledby="logout-title"
             onClick={(e) => e.stopPropagation()}
-            className="flex w-full max-w-sm flex-col gap-5 border border-gold/20 bg-ink-light p-6 shadow-2xl"
+            className="flex w-full max-w-sm flex-col gap-5 border border-gold/20 bg-ink p-6 shadow-2xl"
           >
             <div className="flex flex-col gap-2">
               <h2 id="logout-title" className="font-jakarta text-lg font-semibold text-cream">
