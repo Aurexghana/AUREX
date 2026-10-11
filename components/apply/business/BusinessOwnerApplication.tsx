@@ -16,7 +16,7 @@ import type { StepDefinition } from "@/components/apply/types";
 // (skippable, hideContinueButton, fullScreen) reused identically here.
 const STEP_LABELS = [
   "Applicant & Business",
-  "Nickname",
+  "Anonymous Name",
   "Documents",
   "Optional Details",
   "Review & Submit",

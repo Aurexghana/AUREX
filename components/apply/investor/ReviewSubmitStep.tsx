@@ -104,7 +104,7 @@ export default function ReviewSubmitStep({
           </div>
         </ReviewSection>
 
-        <ReviewSection title="Nickname" visibility={PUBLIC} onEdit={() => goToStep("nickname")}>
+        <ReviewSection title="Anonymous Name" visibility={PUBLIC} onEdit={() => goToStep("nickname")}>
           <NicknamePreview nickname={values.nickname} bare />
         </ReviewSection>
 

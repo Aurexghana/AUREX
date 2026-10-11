@@ -83,7 +83,7 @@ export default function TermsPage() {
         <Paragraph>
           Information collected during an application (including identity documents) is used solely to verify
           applications and administer memberships, and is shared only with AUREX Admin, not with other members or
-          the public, except where you&apos;ve explicitly consented to a detail (such as a nickname) being shown
+          the public, except where you&apos;ve explicitly consented to a detail (such as an anonymous name) being shown
           publicly. See our Privacy Policy for the full detail on how this information is handled.
         </Paragraph>
       </AccordionSection>
