@@ -8,7 +8,7 @@ import type { StepProps } from "@/components/apply/types";
 import type { InvestorFormData } from "@/components/apply/investor/types";
 
 /**
- * Step 2 of 6 - "Nickname / Display Name". A single required field, but
+ * Step 2 of 6 - "Anonymous Name". A single required field, but
  * with two things Step 1's fields don't need:
  *   - A live preview (a mock Leaderboard row) so the applicant sees
  *     exactly how the name they're typing will actually appear on the
@@ -45,7 +45,7 @@ export default function NicknameStep({ values, updateValues, onValidityChange }:
     };
   }, [values.nickname, formatError]);
 
-  const availabilityError = !formatError && isAvailable === false ? "That nickname is already taken." : null;
+  const availabilityError = !formatError && isAvailable === false ? "That anonymous name is already taken." : null;
   const error = formatError ?? availabilityError;
   const isValid = !formatError && isAvailable === true;
 
@@ -62,12 +62,12 @@ export default function NicknameStep({ values, updateValues, onValidityChange }:
   return (
     <div className="flex flex-col gap-6">
       <div className="flex flex-col gap-2">
-        <h1 className="font-jakarta text-2xl font-semibold text-cream sm:text-3xl">Nickname / Display Name</h1>
+        <h1 className="font-jakarta text-2xl font-semibold text-cream sm:text-3xl">Anonymous Name</h1>
         {/* Deliberately smaller/more muted than Step 1's intro paragraph -
             per the brief, this copy is context for the field below it,
             not the focus of the step. */}
         <p className="max-w-lg font-sans text-xs leading-5 text-cream-dim/80">
-          Choose a nickname: this is what other members will see instead of your real name, anywhere your
+          Choose an anonymous name: this is what other members will see instead of your real name, anywhere your
           identity appears on AUREX (members list, leaderboard, etc.). Your real name stays private and is only
           visible to AUREX admin.
         </p>
@@ -75,7 +75,7 @@ export default function NicknameStep({ values, updateValues, onValidityChange }:
 
       <div className="flex flex-col gap-5">
         <FormField
-          label="Nickname"
+          label="Anonymous Name"
           htmlFor="nickname"
           error={touched ? error : null}
           hint={`${trimmed.length}/${NICKNAME_MAX_LENGTH} characters`}

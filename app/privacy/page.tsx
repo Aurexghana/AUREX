@@ -43,7 +43,7 @@ export default function PrivacyPage() {
           items={[
             "Identity information: your full legal name, email address, phone number, and country of residence or business operation, provided during an Investor or Business Owner application.",
             "Verification documents: a government-issued ID and, for Business Owners, a business registration document, uploaded during the application flow.",
-            "Public display information: the nickname you choose, and for Business Owners, your business name, description, and funding purpose.",
+            "Public display information: the anonymous name you choose, and for Business Owners, your business name, description, and funding purpose.",
             "Application details: optional details like intended investment range, source of funds, or how you heard about AUREX.",
           ]}
         />
@@ -64,7 +64,7 @@ export default function PrivacyPage() {
       <AccordionSection title="4. How We Share Your Information">
         <Paragraph>
           Identity information and verification documents are visible only to AUREX Admin and are never shown to
-          other members or the public. Information you&apos;ve explicitly chosen to make public (your nickname, and
+          other members or the public. Information you&apos;ve explicitly chosen to make public (your anonymous name, and
           for Business Owners, your business name, description, and funding purpose) may be shown to other members,
           for example on the leaderboard or an open investment slot, or to prospective investors browsing listed
           businesses. AUREX does not sell your information to third parties.

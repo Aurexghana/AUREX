@@ -272,7 +272,7 @@ export default function ReportSection({
 
           <div className="flex flex-wrap items-center gap-x-8 gap-y-2 border-y border-grid-line py-4">
             <div className="flex flex-col gap-0.5">
-              <span className="font-sans text-[11px] uppercase tracking-wide text-cream-dim">Nickname</span>
+              <span className="font-sans text-[11px] uppercase tracking-wide text-cream-dim">Anonymous name</span>
               <span className="font-jakarta text-sm font-medium text-cream">{nickname}</span>
             </div>
             <div className="flex flex-col gap-0.5">

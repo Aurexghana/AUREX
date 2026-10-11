@@ -27,7 +27,7 @@ const PREVIEW_POINTS = "1,240";
  */
 export default function NicknamePreview({ nickname, bare = false }: { nickname: string; bare?: boolean }) {
   const trimmed = nickname.trim();
-  const previewName = trimmed || "Your Nickname";
+  const previewName = trimmed || "Your Anonymous Name";
   const previewInitials = trimmed.slice(0, 2).toUpperCase() || "?";
 
   return (

@@ -7,7 +7,7 @@ import type { StepProps } from "@/components/apply/types";
 import type { BusinessOwnerFormData } from "@/components/apply/business/types";
 
 /**
- * Step 2 of 6 - "Nickname / Display Name". Identical behavior to the
+ * Step 2 of 6 - "Anonymous Name". Identical behavior to the
  * Investor flow's own Nickname step (same lib/nickname.ts format rules,
  * same isNicknameAvailable stub, minus the leaderboard preview, which
  * business owners never appear on) - see that file's
@@ -34,7 +34,7 @@ export default function NicknameStep({ values, updateValues, onValidityChange }:
     };
   }, [values.nickname, formatError]);
 
-  const availabilityError = !formatError && isAvailable === false ? "That nickname is already taken." : null;
+  const availabilityError = !formatError && isAvailable === false ? "That anonymous name is already taken." : null;
   const error = formatError ?? availabilityError;
   const isValid = !formatError && isAvailable === true;
 
@@ -48,7 +48,7 @@ export default function NicknameStep({ values, updateValues, onValidityChange }:
   return (
     <div className="flex flex-col gap-6">
       <div className="flex flex-col gap-2">
-        <h1 className="font-jakarta text-2xl font-semibold text-cream sm:text-3xl">Nickname / Display Name</h1>
+        <h1 className="font-jakarta text-2xl font-semibold text-cream sm:text-3xl">Anonymous Name</h1>
         <p className="max-w-lg font-sans text-xs leading-5 text-cream-dim/80">
           This is what other members will see instead of your real name or business name, anywhere your identity
           appears on AUREX. Your real name stays private and is only visible to
@@ -58,7 +58,7 @@ export default function NicknameStep({ values, updateValues, onValidityChange }:
 
       <div className="flex flex-col gap-5">
         <FormField
-          label="Nickname"
+          label="Anonymous Name"
           htmlFor="nickname"
           error={touched ? error : null}
           hint={`${trimmed.length}/${NICKNAME_MAX_LENGTH} characters`}

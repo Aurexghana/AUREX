@@ -31,10 +31,10 @@ function normalizeForReservedCheck(value: string): string {
 export function getNicknameFormatError(nickname: string): string | null {
   const trimmed = nickname.trim();
 
-  if (!trimmed) return "Enter a nickname.";
+  if (!trimmed) return "Enter an anonymous name.";
 
   if (trimmed.length < NICKNAME_MIN_LENGTH || trimmed.length > NICKNAME_MAX_LENGTH) {
-    return `Nickname must be ${NICKNAME_MIN_LENGTH}–${NICKNAME_MAX_LENGTH} characters.`;
+    return `Anonymous name must be ${NICKNAME_MIN_LENGTH}–${NICKNAME_MAX_LENGTH} characters.`;
   }
 
   if (!ALLOWED_CHARACTERS_PATTERN.test(trimmed)) {
@@ -42,7 +42,7 @@ export function getNicknameFormatError(nickname: string): string | null {
   }
 
   if (RESERVED_SUBSTRINGS.some((word) => normalizeForReservedCheck(trimmed).includes(word))) {
-    return "That nickname isn't available: it can't reference AUREX or Admin.";
+    return "That anonymous name isn't available: it can't reference AUREX or Admin.";
   }
 
   return null;

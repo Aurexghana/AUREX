@@ -18,7 +18,7 @@ import type { StepDefinition } from "@/components/apply/types";
 // built one step at a time - harmless to keep now that it's complete).
 const STEP_LABELS = [
   "Identity & Contact",
-  "Nickname",
+  "Anonymous Name",
   "ID Upload",
   "Optional Details",
   "Review & Submit",
