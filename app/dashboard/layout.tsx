@@ -1,5 +1,10 @@
+import type { Metadata } from "next";
 import { Suspense } from "react";
 import InvestorDashboardShell from "@/components/dashboard/InvestorDashboardShell";
+
+export const metadata: Metadata = {
+  robots: { index: false, follow: false },
+};
 
 /**
  * Thin wrapper only - the actual shell (header, tabs, auth guard) is a

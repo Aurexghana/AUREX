@@ -4,7 +4,8 @@ import BrandMark from "@/components/BrandMark";
 import LoginFlow from "@/components/LoginFlow";
 
 export const metadata: Metadata = {
-  title: "Log In | AUREX",
+  title: "Log In",
+  robots: { index: false, follow: false },
   description: "Log in to your AUREX account as an Investor or a Business Owner.",
 };
 

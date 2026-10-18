@@ -2,7 +2,8 @@ import type { Metadata } from "next";
 import { LegalPageShell, AccordionSection, Paragraph, BulletList } from "@/components/legal/LegalDocument";
 
 export const metadata: Metadata = {
-  title: "Terms and Conditions | AUREX",
+  title: "Terms and Conditions",
+  alternates: { canonical: "/terms" },
   description: "The terms and conditions governing use of the AUREX platform.",
 };
 

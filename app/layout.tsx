@@ -8,6 +8,7 @@ import ThemeToggle from "@/components/ThemeToggle";
 import OfflineBanner from "@/components/OfflineBanner";
 import { AuthProvider } from "@/lib/auth/AuthContext";
 import { THEME_INIT_SCRIPT } from "@/lib/theme";
+import { SITE_DESCRIPTION, SITE_NAME, SITE_URL, SOCIAL_IMAGE } from "@/lib/site";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -52,8 +53,35 @@ const barlow = Barlow({
 });
 
 export const metadata: Metadata = {
-  title: "AUREX",
-  description: "Invest with purpose. Grow with confidence.",
+  metadataBase: new URL(SITE_URL),
+  title: {
+    default: "AUREX | Private Investment Platform for Strategic Growth",
+    template: "%s | AUREX",
+  },
+  description: SITE_DESCRIPTION,
+  applicationName: SITE_NAME,
+  keywords: [
+    "AUREX",
+    "private investment platform",
+    "invest in businesses",
+    "investment opportunities",
+    "business funding",
+    "Ghana investment",
+  ],
+  openGraph: {
+    type: "website",
+    siteName: SITE_NAME,
+    title: "AUREX | Invest with purpose. Grow with confidence.",
+    description: SITE_DESCRIPTION,
+    url: "/",
+    images: [{ url: SOCIAL_IMAGE, width: 512, height: 279, alt: "AUREX" }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "AUREX | Invest with purpose. Grow with confidence.",
+    description: SITE_DESCRIPTION,
+    images: [SOCIAL_IMAGE],
+  },
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {

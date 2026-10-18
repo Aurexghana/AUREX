@@ -2,7 +2,8 @@ import type { Metadata } from "next";
 import BusinessOwnerApplication from "@/components/apply/business/BusinessOwnerApplication";
 
 export const metadata: Metadata = {
-  title: "Business Owner Application | AUREX",
+  title: "Raise Funding: Business Owner Application",
+  alternates: { canonical: "/apply-business" },
   description: "Apply to list your business on AUREX and raise funding from AUREX investors.",
 };
 
