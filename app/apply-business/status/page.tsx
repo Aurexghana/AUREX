@@ -3,7 +3,8 @@ import ApplicationStatusScreen from "@/components/apply/ApplicationStatusScreen"
 import { parseApplicationStatus, parseStringParam } from "@/lib/applicationStatusParams";
 
 export const metadata: Metadata = {
-  title: "Application Status | AUREX",
+  title: "Application Status",
+  robots: { index: false, follow: false },
   description: "Check the status of your AUREX Business Owner Application.",
 };
 

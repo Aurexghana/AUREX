@@ -1,5 +1,10 @@
+import type { Metadata } from "next";
 import { Suspense } from "react";
 import BusinessDashboardShell from "@/components/dashboard/business/BusinessDashboardShell";
+
+export const metadata: Metadata = {
+  robots: { index: false, follow: false },
+};
 
 /**
  * Thin wrapper only - see components/dashboard/InvestorDashboardShell.tsx's

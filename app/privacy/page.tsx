@@ -2,7 +2,8 @@ import type { Metadata } from "next";
 import { LegalPageShell, AccordionSection, Paragraph, BulletList } from "@/components/legal/LegalDocument";
 
 export const metadata: Metadata = {
-  title: "Privacy Policy | AUREX",
+  title: "Privacy Policy",
+  alternates: { canonical: "/privacy" },
   description: "How AUREX collects, uses, and protects your information.",
 };
 
