@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono, Plus_Jakarta_Sans, DM_Sans, Inter, Manrope, Barlow } from "next/font/google";
 import { MotionConfig } from "framer-motion";
+import { Analytics } from "@vercel/analytics/next";
 import AnimatedBackground from "@/components/AnimatedBackground";
 import PageTransition from "@/components/PageTransition";
 import ThemeToggle from "@/components/ThemeToggle";
@@ -95,6 +96,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
             <ThemeToggle />
           </AuthProvider>
         </MotionConfig>
+        <Analytics />
       </body>
     </html>
   );
