@@ -35,8 +35,8 @@ export default function Hero() {
           variants={staggerItem}
           className="max-w-2xl font-jakarta text-base leading-7 text-cream-dim sm:text-lg md:text-xl md:leading-8"
         >
-          Aurex is an exclusive private investment club focused on funding
-          supporting and growing promising businesses through collective
+          Aurex is an exclusive private investment club focused on funding,
+          supporting, and growing promising businesses through collective
           capital of private circle of investors.
         </motion.p>
 
