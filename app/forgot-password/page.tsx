@@ -4,7 +4,8 @@ import BrandMark from "@/components/BrandMark";
 import ForgotPasswordFlow from "@/components/ForgotPasswordFlow";
 
 export const metadata: Metadata = {
-  title: "Forgot Password | AUREX",
+  title: "Forgot Password",
+  robots: { index: false, follow: false },
   description: "Reset the password on your AUREX account.",
 };
 

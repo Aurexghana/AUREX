@@ -2,7 +2,8 @@ import type { Metadata } from "next";
 import InvestorApplication from "@/components/apply/investor/InvestorApplication";
 
 export const metadata: Metadata = {
-  title: "Investor Application | AUREX",
+  title: "Apply to Become an AUREX Investor",
+  alternates: { canonical: "/apply/investor" },
   description: "Apply to become an AUREX investor with a short, guided application to get started.",
 };
 

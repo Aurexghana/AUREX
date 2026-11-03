@@ -4,7 +4,8 @@ import Footer from "@/components/Footer";
 import ComingSoonContent from "@/components/ComingSoonContent";
 
 export const metadata: Metadata = {
-  title: "Coming Soon | AUREX",
+  title: "Coming Soon",
+  robots: { index: false, follow: false },
   description: "This part of AUREX is on its way. Check back soon.",
 };
 

@@ -7,7 +7,8 @@ import HowItWorksProcess from "@/components/HowItWorksProcess";
 import PageBanner from "@/components/PageBanner";
 
 export const metadata: Metadata = {
-  title: "How It Works | AUREX",
+  title: "How AUREX Works: Explore, Apply, Invest and Track",
+  alternates: { canonical: "/how-it-works" },
   description:
     "Discover how AUREX makes strategic investing simple, transparent, and seamless, from exploring carefully selected opportunities and understanding potential returns to applying, investing, and tracking your investment with confidence.",
 };

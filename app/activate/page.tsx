@@ -5,7 +5,8 @@ import BrandMark from "@/components/BrandMark";
 import ActivationFlow from "@/components/ActivationFlow";
 
 export const metadata: Metadata = {
-  title: "Create Your Account | AUREX",
+  title: "Create Your Account",
+  robots: { index: false, follow: false },
   description: "Set a password to finish activating your AUREX account.",
 };
 

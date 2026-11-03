@@ -4,7 +4,7 @@ import Footer from "@/components/Footer";
 import NotFoundContent from "@/components/NotFoundContent";
 
 export const metadata: Metadata = {
-  title: "Page Not Found | AUREX",
+  title: "Page Not Found",
   description: "The page you're looking for doesn't exist or may have been moved.",
 };
 
