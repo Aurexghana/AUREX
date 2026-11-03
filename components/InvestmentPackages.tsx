@@ -9,16 +9,18 @@ import { ChevronDownIcon } from "@/components/icons";
 // Card copy: a short one-line summary shown by default, and the full
 // description (shown when "View Details" is expanded). Ventures' return
 // is explicitly tied to whichever business an investor backs rather than
-// a rate AUREX sets, so - unlike Core - it doesn't get a fixed APY figure.
+// a rate AUREX sets. Core has no fixed public rate either: the admin sets
+// the interest for each opening, and it's only revealed to registered
+// users on their dashboard.
 const PACKAGES = [
   {
     name: "AUREX Core",
-    rate: "8.0%",
-    rateLabel: "APY",
+    rate: "Set per Opening",
+    rateLabel: "Shown on your dashboard",
     description:
       "Invest directly into AUREX and let us do the work. Your funds join AUREX's own investment pool for steady, predictable growth.",
     details:
-      "Invest directly into AUREX and let us do the work. When you invest in Core, your funds go into AUREX's own investment pool, so you're not tied to any single business or outcome. AUREX manages where and how that pool is deployed, and your return is set by AUREX and paid out on a defined schedule. You don't need to track individual businesses, follow performance updates, or make ongoing decisions: Core is built for investors who want steady, predictable growth without the extra layer of choosing what to back. It's the simplest way to become part of the AUREX investment club.",
+      "Invest directly into AUREX and let us do the work. When you invest in Core, your funds go into AUREX's own investment pool, so you're not tied to any single business or outcome. AUREX manages where and how that pool is deployed. The interest rate is set by AUREX for each opening and revealed to registered members on their dashboard, with returns paid out on a defined schedule. You don't need to track individual businesses, follow performance updates, or make ongoing decisions: Core is built for investors who want steady, predictable growth without the extra layer of choosing what to back. It's the simplest way to become part of the AUREX investment club.",
     cta: { style: "solid" as const },
     glow: true,
   },
