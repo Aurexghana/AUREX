@@ -168,6 +168,10 @@ export default function Leaderboard() {
             The top 10 AUREX members this cycle, ranked by points earned on
             capital invested.
           </motion.p>
+          <motion.p variants={staggerItem} className="max-w-xl font-sans text-xs italic text-cream-dim/80 sm:text-sm">
+            Note: the leaderboard shown here is not real. It is dummy data
+            used to represent how the live leaderboard will look.
+          </motion.p>
         </div>
 
         {/* Podium: avatar + nickname float above a "step" block per rank
