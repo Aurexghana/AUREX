@@ -10,8 +10,8 @@ import { staggerItem, hoverScale, easing } from "@/lib/motion";
 // required fields via the browser's own HTML5 validation, then swaps to a
 // confirmation state; nothing is actually sent anywhere.
 const FIELDS = [
-  { name: "name", label: "Full Name", type: "text", placeholder: "Osman Zakaria", full: false },
-  { name: "email", label: "Email Address", type: "email", placeholder: "osman.zakaria@aurexgh.com", full: false },
+  { name: "name", label: "Full Name", type: "text", placeholder: "Jefferey Adu Poku", full: false },
+  { name: "email", label: "Email Address", type: "email", placeholder: "aurexghana@gmail.com", full: false },
   { name: "subject", label: "Subject", type: "text", placeholder: "How can we help?", full: true },
 ] as const;
 
